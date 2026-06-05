@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <meta name="description" content="Case studies as an editorial poster gallery — built from Markdown.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="fonts-link" rel="stylesheet" href="">
+  <link rel="stylesheet" href="assets/site.css">
+  <link rel="stylesheet" href="assets/reader.css">
+  <link rel="stylesheet" href="assets/portfolio.css">
+  <script>
+    if (localStorage.getItem('md-portfolio-theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</head>
+<body id="app">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <section class="page-landing" id="landing" aria-label="Case studies">
+    <header class="site-header">
+      <div class="header-inner">
+        <span class="brand"><span class="brand-mark">◆</span> <span id="site-brand">Portfolio</span></span>
+        <div class="app-chrome-actions" role="group" aria-label="View options">
+          <button type="button" class="btn-icon btn-ghost theme-toggle" id="theme-toggle" aria-label="Dark mode" aria-pressed="false">
+            <span class="theme-toggle__icons" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="landing-main landing-main--portfolio" id="main">
+      <div class="landing-shell">
+        <header class="landing-hero">
+          <h1 class="landing-hero__title" id="landing-hero-title">Portfolio</h1>
+          <p class="landing-hero__tagline" id="landing-hero-tagline">Case studies</p>
+        </header>
+        <div class="landing-gallery landing-gallery--home" id="landing-gallery">
+          <div class="landing-gallery__head">
+            <p class="landing-gallery__count mono-label" id="landing-gallery-count"></p>
+          </div>
+          <div id="landing-gallery-grid" class="landing-gallery__grid landing-mini-grid" role="list"></div>
+        </div>
+      </div>
+    </main>
+    <footer class="landing-foot mono-label">
+      <div class="landing-foot__row">
+        <p class="landing-foot__lead">Sections split on <code>##</code> headings · images in <code>content/src/</code></p>
+        <p class="landing-foot__meta">
+          <span class="landing-foot__credit">Built with MD Portfolio</span>
+        </p>
+      </div>
+    </footer>
+  </section>
+
+  <section class="page-reader" id="reader" hidden aria-label="Case study reader">
+    <header class="site-header site-header--reader">
+      <div class="header-inner">
+        <button type="button" class="brand brand--reader brand-home" id="reader-home" aria-label="All case studies">
+          <span id="reader-site-brand">Portfolio</span>
+        </button>
+        <div class="reader-actions">
+          <div class="reader-controls" role="group" aria-label="View options">
+            <button type="button" class="btn-icon btn-ghost" id="zoom-out" aria-label="Zoom out">
+              <span data-icon="zoomOut" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn-icon btn-ghost" id="zoom-in" aria-label="Zoom in">
+              <span data-icon="zoomIn" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn-icon btn-ghost theme-toggle" aria-label="Dark mode" aria-pressed="false">
+              <span class="theme-toggle__icons" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="nav-toc-wrap">
+            <button type="button" class="btn-ghost btn-with-icon" id="toc-toggle" aria-expanded="false" aria-controls="toc-panel">
+              <span class="btn-icon-slot" data-icon="list" aria-hidden="true"></span>
+              <span class="btn-label">Contents</span>
+            </button>
+            <div class="toc-panel" id="toc-panel" role="navigation" aria-label="Table of contents">
+              <p class="toc-panel__label">Contents</p>
+              <div id="toc-root"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main id="main-reader" class="content-feed collection-feed"></main>
+    <button type="button" id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+  </section>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "marked": "./node_modules/marked/lib/marked.esm.js",
+      "dompurify": "./node_modules/dompurify/dist/purify.es.mjs",
+      "isomorphic-dompurify": "./node_modules/isomorphic-dompurify/dist/browser.mjs",
+      "html2canvas": "./node_modules/html2canvas/dist/html2canvas.esm.js"
+    }
+  }
+  </script>
+  <script type="module" src="assets/portfolio.js"></script>
+</body>
+</html>

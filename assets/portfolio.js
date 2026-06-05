@@ -1,0 +1,529 @@
+import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
+import { renderDocument, renderToc, setRenderContentPath } from '../lib/render-document.js';
+import { renderLandingGallery } from '../lib/render-landing-gallery.js';
+import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
+import { fitPosterTitles } from '../lib/fit-poster-title.js';
+import {
+  isExternalHref,
+  isLocalMarkdownHref,
+  resolveRelativeMarkdownPath
+} from '../lib/local-md-links.js';
+import { fetchBundledMarkdown } from '../lib/bundled-md.js';
+import {
+  fetchContentIndex,
+  fetchSiteConfig,
+  resolveCaseStudyItems
+} from '../lib/portfolio-content.js';
+import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
+import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
+import { enhancePosterImageHalftone } from '../lib/image-halftone.js';
+import { setupImageLightbox } from '../lib/image-lightbox.js';
+import { ICONS } from './icons.js';
+
+(function () {
+  'use strict';
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const THEME_KEY = 'md-portfolio-theme';
+  const ZOOM_KEY = 'md-portfolio-zoom';
+
+  const landing = document.getElementById('landing');
+  const reader = document.getElementById('reader');
+  const landingMain = document.getElementById('main');
+  const siteBrand = document.getElementById('site-brand');
+  const landingHeroTitle = document.getElementById('landing-hero-title');
+  const landingHeroTagline = document.getElementById('landing-hero-tagline');
+  const landingGalleryGrid = document.getElementById('landing-gallery-grid');
+  const landingGalleryCount = document.getElementById('landing-gallery-count');
+  const mainReader = document.getElementById('main-reader');
+  const readerHome = document.getElementById('reader-home');
+  const readerSiteBrand = document.getElementById('reader-site-brand');
+  const zoomOut = document.getElementById('zoom-out');
+  const zoomIn = document.getElementById('zoom-in');
+  const themeToggles = document.querySelectorAll('.theme-toggle');
+  const tocToggle = document.getElementById('toc-toggle');
+  const tocPanel = document.getElementById('toc-panel');
+  const tocRoot = document.getElementById('toc-root');
+  const backToTop = document.getElementById('back-to-top');
+
+  const ZOOM_MIN = 0.85;
+  const ZOOM_MAX = 1.5;
+  const ZOOM_STEP = 0.1;
+  const SCROLL_GAP_PX = 8;
+
+  let readerZoom = clampZoom(parseFloat(localStorage.getItem(ZOOM_KEY) || '1', 10));
+  let posterEls = [];
+  let titleScaleFrame = 0;
+  let titleFitObserver = null;
+  /** @type {{ path: string, title: string, index: number, subtext?: string }[] | null} */
+  let caseStudyItems = null;
+  let currentRelativePath = '';
+  let openCaseText = '';
+  let homeIndexSignature = '';
+  let contentWatchTimer = 0;
+  let siteKicker = 'Case study';
+
+  const CONTENT_POLL_MS = 1500;
+  const isLocalDev =
+    location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+  function injectIcons() {
+    document.querySelectorAll('[data-icon]').forEach((slot) => {
+      const key = slot.getAttribute('data-icon');
+      if (ICONS[key]) slot.innerHTML = ICONS[key];
+    });
+    document.querySelectorAll('.theme-toggle__icons').forEach((wrap) => {
+      wrap.innerHTML = ICONS.moon + ICONS.sun;
+    });
+  }
+
+  function updateScrollOffset() {
+    if (reader.hidden) return;
+    const header = document.querySelector('.site-header--reader');
+    if (!header) return;
+    const height = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--scroll-offset', `${Math.ceil(height) + SCROLL_GAP_PX}px`);
+  }
+
+  function resolveScrollTarget(el) {
+    if (el.classList.contains('post-card')) {
+      return el.querySelector('.post-header') || el;
+    }
+    return el;
+  }
+
+  function scrollToEl(el, { behavior } = {}) {
+    const target = resolveScrollTarget(el);
+    updateScrollOffset();
+    target.scrollIntoView({
+      behavior: behavior ?? (prefersReducedMotion ? 'auto' : 'smooth'),
+      block: 'start'
+    });
+    const hashId = el.id;
+    if (hashId) history.replaceState(null, '', `#${hashId}`);
+  }
+
+  function realignScrollToHash() {
+    const id = location.hash.slice(1);
+    if (!id || reader.hidden) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    scrollToEl(el, { behavior: 'auto' });
+  }
+
+  function renderGlyphs() {
+    renderPosterGlyphPatterns(posterEls, getGalleryConfig());
+  }
+
+  function schedulePosterTitleFit() {
+    cancelAnimationFrame(titleScaleFrame);
+    titleScaleFrame = requestAnimationFrame(() => {
+      void mainReader.offsetHeight;
+      fitPosterTitles(posterEls, getGalleryConfig().titleScale);
+      renderGlyphs();
+      if (location.hash) realignScrollToHash();
+    });
+  }
+
+  function setupTitleFitObserver() {
+    titleFitObserver?.disconnect();
+    if (!posterEls.length || typeof ResizeObserver === 'undefined') return;
+    let resizeTick = 0;
+    titleFitObserver = new ResizeObserver(() => {
+      cancelAnimationFrame(resizeTick);
+      resizeTick = requestAnimationFrame(schedulePosterTitleFit);
+    });
+    posterEls.forEach((card) => titleFitObserver.observe(card));
+  }
+
+  function clampZoom(value) {
+    if (Number.isNaN(value)) return 1;
+    return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(value * 100) / 100));
+  }
+
+  function applyZoom() {
+    readerZoom = clampZoom(readerZoom);
+    document.documentElement.style.setProperty('--reader-zoom', String(readerZoom));
+    localStorage.setItem(ZOOM_KEY, String(readerZoom));
+    zoomOut.disabled = readerZoom <= ZOOM_MIN;
+    zoomIn.disabled = readerZoom >= ZOOM_MAX;
+    updateScrollOffset();
+    schedulePosterTitleFit();
+  }
+
+  function applyTheme(theme) {
+    const dark = theme === 'dark';
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    themeToggles.forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(dark));
+      btn.setAttribute('aria-label', dark ? 'Light mode' : 'Dark mode');
+    });
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+  }
+
+  function landingMiniPosterEls() {
+    return Array.from(document.querySelectorAll('#landing .mini-poster[data-slug]'));
+  }
+
+  function scheduleLandingMiniGlyphs() {
+    requestAnimationFrame(() => {
+      renderPosterGlyphPatterns(landingMiniPosterEls(), getGalleryConfig());
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(() => {
+          renderPosterGlyphPatterns(landingMiniPosterEls(), getGalleryConfig());
+        });
+      }
+    });
+  }
+
+  function showReader() {
+    landing.classList.add('is-hidden');
+    reader.hidden = false;
+    reader.classList.add('is-active');
+    document.body.classList.remove('page-landing');
+    document.body.classList.add('page-collection');
+  }
+
+  function showLanding() {
+    landing.classList.remove('is-hidden');
+    reader.hidden = true;
+    reader.classList.remove('is-active');
+    document.body.classList.add('page-landing');
+    document.body.classList.remove('page-collection');
+    tocPanel.classList.remove('is-open');
+    tocToggle.setAttribute('aria-expanded', 'false');
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  }
+
+  function renderHomeGallery(items) {
+    caseStudyItems = items;
+    const count = items.length;
+    landingGalleryCount.textContent = `${count} case stud${count === 1 ? 'y' : 'ies'}`;
+    landingGalleryGrid.innerHTML = renderLandingGallery(
+      items.map(({ path, title, index, subtext }) => ({
+        path,
+        title,
+        index,
+        subtext: subtext || path.split('/').pop() || path
+      }))
+    );
+    scheduleLandingMiniGlyphs();
+  }
+
+  function indexSignature(index) {
+    return `${index.generatedAt || ''}|${index.cases.join('\n')}`;
+  }
+
+  function goHome() {
+    showLanding();
+    history.pushState({ view: 'home' }, '', '#');
+  }
+
+  function applySiteConfig(site) {
+    if (site.title) {
+      if (landingHeroTitle) landingHeroTitle.textContent = site.title;
+      if (siteBrand) siteBrand.textContent = site.title;
+      if (readerSiteBrand) readerSiteBrand.textContent = site.title;
+      document.title = site.title;
+    }
+    if (site.tagline && landingHeroTagline) {
+      landingHeroTagline.textContent = site.tagline;
+    }
+  }
+
+  function renderEmptyHome() {
+    caseStudyItems = [];
+    landingGalleryCount.textContent = 'No case studies yet';
+    landingGalleryGrid.innerHTML =
+      '<p class="landing-error mono-label">Add a <code>.md</code> file under <code>content/</code> (not dot-prefixed).</p>';
+  }
+
+  async function loadHome({ cacheBust = false } = {}) {
+    const [index, site] = await Promise.all([
+      fetchContentIndex(undefined, undefined, { cacheBust }),
+      fetchSiteConfig(undefined, undefined, { cacheBust })
+    ]);
+    applySiteConfig(site);
+    homeIndexSignature = indexSignature(index);
+    if (!index.cases.length) {
+      renderEmptyHome();
+      return;
+    }
+    const items = await resolveCaseStudyItems(index, undefined, { cacheBust });
+    renderHomeGallery(items);
+  }
+
+  function enhanceReaderContent() {
+    enhanceCodeBlocks(mainReader, { copyIcon: ICONS.copy });
+    injectIcons();
+    enhancePosterImageHalftone(mainReader, getGalleryConfig());
+    setupImageLightbox(mainReader, {
+      icons: { zoomIn: ICONS.zoomIn, zoomOut: ICONS.zoomOut, xmark: ICONS.xmark }
+    });
+  }
+
+  function openMarkdown(text, relativePath, { updateHistory = true } = {}) {
+    const filename = relativePath.split('/').pop() || relativePath;
+    currentRelativePath = relativePath;
+    openCaseText = text;
+    setRenderContentPath(relativePath);
+    const doc = parseDocument(text, filename);
+    const { subtext: description } = peekCaseStudyListing(text, filename);
+    mainReader.innerHTML = renderDocument(doc, filename, {
+      kicker: siteKicker,
+      contentPath: relativePath,
+      description
+    });
+    tocRoot.innerHTML = renderToc(doc.toc);
+    showReader();
+
+    posterEls = Array.from(mainReader.querySelectorAll('.post-card'));
+
+    enhanceReaderContent();
+    setupTitleFitObserver();
+    updateScrollOffset();
+    schedulePosterTitleFit();
+    requestAnimationFrame(renderGlyphs);
+    requestAnimationFrame(() => enhancePosterImageHalftone(mainReader, getGalleryConfig()));
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        schedulePosterTitleFit();
+        renderGlyphs();
+        enhancePosterImageHalftone(mainReader, getGalleryConfig());
+      });
+    }
+    if (updateHistory) {
+      history.pushState({ view: 'read', file: relativePath }, '', '#read');
+    }
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  }
+
+  async function openCaseStudy(relativePath, { updateHistory = true } = {}) {
+    const { text, relativePath: path } = await fetchBundledMarkdown(relativePath);
+    openMarkdown(text, path, { updateHistory });
+  }
+
+  async function followLocalMarkdownLink(href) {
+    const targetPath = resolveRelativeMarkdownPath(currentRelativePath, href);
+    if (!targetPath) return;
+    try {
+      await openCaseStudy(targetPath);
+    } catch (err) {
+      console.error(err);
+      alert(`Could not open "${targetPath}".`);
+    }
+  }
+
+  async function refreshContentIfChanged() {
+    if (!isLocalDev) return;
+
+    if (!reader.hidden && currentRelativePath) {
+      const { text } = await fetchBundledMarkdown(currentRelativePath, location.href, {
+        cacheBust: true
+      });
+      if (text !== openCaseText) {
+        openMarkdown(text, currentRelativePath, { updateHistory: false });
+      }
+      return;
+    }
+
+    if (reader.hidden) {
+      const index = await fetchContentIndex(undefined, undefined, { cacheBust: true });
+      const sig = indexSignature(index);
+      if (sig === homeIndexSignature) return;
+      await loadHome({ cacheBust: true });
+    }
+  }
+
+  function startContentWatch() {
+    if (!isLocalDev) return;
+    if (contentWatchTimer) return;
+    contentWatchTimer = window.setInterval(() => {
+      void refreshContentIfChanged().catch(() => {});
+    }, CONTENT_POLL_MS);
+  }
+
+  async function boot() {
+    await reloadGalleryConfig();
+    injectIcons();
+    applyZoom();
+    applyTheme(localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
+    try {
+      await loadHome();
+      startContentWatch();
+    } catch (err) {
+      console.error(err);
+      landingGalleryCount.textContent = 'Could not load case studies';
+      landingGalleryGrid.innerHTML =
+        '<p class="landing-error mono-label">Add <code>.md</code> case studies under <code>content/</code> and use <code>npm start</code>.</p>';
+    }
+  }
+
+  boot();
+  history.replaceState({ view: 'home' }, '', '#');
+
+  const readerHeader = document.querySelector('.site-header--reader');
+  if (readerHeader && typeof ResizeObserver !== 'undefined') {
+    const headerResize = new ResizeObserver(() => updateScrollOffset());
+    headerResize.observe(readerHeader);
+  }
+
+  landingGalleryGrid?.addEventListener('click', (e) => {
+    const pick = e.target.closest('.mini-poster[data-md-path]');
+    if (!pick) return;
+    const path = pick.getAttribute('data-md-path');
+    if (!path) return;
+    void openCaseStudy(path).catch((err) => {
+      console.error(err);
+      alert('Could not open this case study.');
+    });
+  });
+
+  window.addEventListener('popstate', (e) => {
+    const state = e.state || {};
+    const view = state.view || (location.hash === '#read' ? 'read' : 'home');
+    if (view === 'read' && state.file) {
+      void openCaseStudy(state.file, { updateHistory: false }).catch(() => showLanding());
+      return;
+    }
+    showLanding();
+  });
+
+  mainReader.addEventListener('click', (e) => {
+    const copyBtn = e.target.closest('.code-block__copy');
+    if (copyBtn) {
+      e.preventDefault();
+      void copyCodeFromButton(copyBtn).then((ok) => {
+        if (!ok) return;
+        copyBtn.classList.add('is-copied');
+        copyBtn.setAttribute('aria-label', 'Copied');
+        window.setTimeout(() => {
+          copyBtn.classList.remove('is-copied');
+          copyBtn.setAttribute('aria-label', 'Copy code');
+        }, 2000);
+      });
+      return;
+    }
+
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href) return;
+
+    if (href.startsWith('#')) {
+      const id = href.slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      scrollToEl(el);
+      tocPanel.classList.remove('is-open');
+      tocToggle.setAttribute('aria-expanded', 'false');
+      return;
+    }
+
+    if (isLocalMarkdownHref(href)) {
+      e.preventDefault();
+      void followLocalMarkdownLink(href);
+      return;
+    }
+
+    if (isExternalHref(href)) {
+      e.preventDefault();
+      window.open(href, '_blank', 'noopener,noreferrer');
+    }
+  });
+
+  tocRoot.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-toc-link]');
+    if (!a) return;
+    e.preventDefault();
+    const id = a.getAttribute('href')?.slice(1);
+    const el = id && document.getElementById(id);
+    if (el) scrollToEl(el);
+    tocPanel.classList.remove('is-open');
+    tocToggle.setAttribute('aria-expanded', 'false');
+  });
+
+  readerHome?.addEventListener('click', () => goHome());
+
+  zoomOut.addEventListener('click', () => {
+    readerZoom = clampZoom(readerZoom - ZOOM_STEP);
+    applyZoom();
+  });
+
+  zoomIn.addEventListener('click', () => {
+    readerZoom = clampZoom(readerZoom + ZOOM_STEP);
+    applyZoom();
+  });
+
+  themeToggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+      applyTheme(dark ? 'dark' : 'light');
+    });
+  });
+
+  tocToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = !tocPanel.classList.contains('is-open');
+    tocPanel.classList.toggle('is-open', open);
+    tocToggle.setAttribute('aria-expanded', String(open));
+  });
+
+  document.addEventListener('click', (e) => {
+    const wrap = tocToggle.closest('.nav-toc-wrap');
+    if (tocPanel.contains(e.target) || wrap?.contains(e.target)) return;
+    tocPanel.classList.remove('is-open');
+    tocToggle.setAttribute('aria-expanded', 'false');
+  });
+
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 300);
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
+
+  let resizeTimer;
+  let configReloadTimer;
+
+  async function reloadConfigAndRefresh() {
+    await reloadGalleryConfig();
+    enhancePosterImageHalftone(mainReader, getGalleryConfig());
+    schedulePosterTitleFit();
+    if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
+  }
+
+  function scheduleConfigReload() {
+    clearTimeout(configReloadTimer);
+    configReloadTimer = setTimeout(() => void reloadConfigAndRefresh(), 250);
+  }
+
+  window.addEventListener('focus', scheduleConfigReload);
+  window.addEventListener('pageshow', scheduleConfigReload);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    scheduleConfigReload();
+  });
+
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      updateScrollOffset();
+      schedulePosterTitleFit();
+      renderGlyphs();
+      enhancePosterImageHalftone(mainReader, getGalleryConfig());
+      if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
+      if (location.hash) realignScrollToHash();
+    }, 120);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tocPanel.classList.contains('is-open')) {
+      tocPanel.classList.remove('is-open');
+      tocToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();

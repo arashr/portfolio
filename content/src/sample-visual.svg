@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" role="img" aria-label="Sample portfolio visual">
+  <rect width="800" height="480" fill="#f4f0eb"/>
+  <rect x="48" y="48" width="704" height="384" fill="#c8102e" opacity="0.12"/>
+  <text x="400" y="252" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="#1a1a1a">content/src/sample-visual.svg</text>
+</svg>
