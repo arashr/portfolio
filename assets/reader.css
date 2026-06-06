@@ -116,8 +116,12 @@ button.mini-poster:active {
 button.mini-poster .poster__title,
 button.mini-poster .mini-poster__title {
   margin: 0;
-  font-size: clamp(1.35rem, 4.5cqi, 2.75rem);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: var(--poster-title-size, clamp(1.35rem, 4.5cqi, 2.75rem));
   line-height: 0.95;
+  padding: 0.06em 0 0.1em;
   text-wrap: balance;
 }
 
@@ -138,6 +142,11 @@ button.mini-poster .mini-poster__lede {
 button.mini-poster .mini-poster__head {
   flex: 1 1 auto;
   min-width: 0;
+  overflow: visible;
+}
+
+button.mini-poster .post-title-bounds {
+  overflow: visible;
 }
 
 button.mini-poster > *:not(.post-card__glyph-layer) {

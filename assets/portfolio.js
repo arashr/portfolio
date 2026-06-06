@@ -2,7 +2,7 @@ import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
 import { renderDocument, renderToc, setRenderContentPath } from '../lib/render-document.js';
 import { renderLandingGallery } from '../lib/render-landing-gallery.js';
 import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
-import { fitPosterTitles } from '../lib/fit-poster-title.js';
+import { fitMiniPosterTitles, fitPosterTitles } from '../lib/fit-poster-title.js';
 import {
   isExternalHref,
   isLocalMarkdownHref,
@@ -168,10 +168,14 @@ import { ICONS } from './icons.js';
 
   function scheduleLandingMiniGlyphs() {
     requestAnimationFrame(() => {
-      renderPosterGlyphPatterns(landingMiniPosterEls(), getGalleryConfig());
+      const miniPosters = landingMiniPosterEls();
+      fitMiniPosterTitles(miniPosters, getGalleryConfig().titleScale);
+      renderPosterGlyphPatterns(miniPosters, getGalleryConfig());
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
-          renderPosterGlyphPatterns(landingMiniPosterEls(), getGalleryConfig());
+          const readyMiniPosters = landingMiniPosterEls();
+          fitMiniPosterTitles(readyMiniPosters, getGalleryConfig().titleScale);
+          renderPosterGlyphPatterns(readyMiniPosters, getGalleryConfig());
         });
       }
     });
