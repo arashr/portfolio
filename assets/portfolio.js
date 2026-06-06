@@ -44,12 +44,15 @@ import { ICONS } from './icons.js';
   const tocToggle = document.getElementById('toc-toggle');
   const tocPanel = document.getElementById('toc-panel');
   const tocRoot = document.getElementById('toc-root');
+  const tocRail = document.getElementById('reader-toc-rail');
+  const tocRailRoot = document.getElementById('toc-rail-root');
   const backToTop = document.getElementById('back-to-top');
 
   const ZOOM_MIN = 0.85;
   const ZOOM_MAX = 1.5;
   const ZOOM_STEP = 0.1;
   const SCROLL_GAP_PX = 8;
+  const TOC_RAIL_MQ = window.matchMedia('(min-width: 900px)');
 
   let readerZoom = clampZoom(parseFloat(localStorage.getItem(ZOOM_KEY) || '1', 10));
   let posterEls = [];
@@ -75,6 +78,56 @@ import { ICONS } from './icons.js';
     document.querySelectorAll('.theme-toggle__icons').forEach((wrap) => {
       wrap.innerHTML = ICONS.moon + ICONS.sun;
     });
+  }
+
+  function closeTocPanel() {
+    tocPanel.classList.remove('is-open');
+    tocToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function updateTocRailOffset() {
+    if (!tocRail || reader.hidden) return;
+    const firstPoster = mainReader.querySelector('.post-card-wrap');
+    if (!firstPoster) {
+      tocRail.style.marginTop = '0px';
+      return;
+    }
+    const offset =
+      firstPoster.getBoundingClientRect().top - mainReader.getBoundingClientRect().top;
+    tocRail.style.marginTop = `${Math.max(0, Math.round(offset))}px`;
+  }
+
+  function updateTocLayout() {
+    if (reader.hidden) {
+      reader.classList.remove('has-toc');
+      tocRail?.setAttribute('aria-hidden', 'true');
+      return;
+    }
+
+    const hasToc = Boolean(tocRoot.querySelector('.toc-list'));
+    reader.classList.toggle('has-toc', hasToc);
+    const useRail = hasToc && TOC_RAIL_MQ.matches;
+    tocRail?.setAttribute('aria-hidden', useRail ? 'false' : 'true');
+    if (useRail) {
+      updateTocRailOffset();
+      closeTocPanel();
+    }
+  }
+
+  function setTocHtml(html) {
+    tocRoot.innerHTML = html;
+    if (tocRailRoot) tocRailRoot.innerHTML = html;
+    updateTocLayout();
+  }
+
+  function handleTocLinkClick(e) {
+    const a = e.target.closest('[data-toc-link]');
+    if (!a) return;
+    e.preventDefault();
+    const id = a.getAttribute('href')?.slice(1);
+    const el = id && document.getElementById(id);
+    if (el) scrollToEl(el);
+    closeTocPanel();
   }
 
   function updateScrollOffset() {
@@ -121,6 +174,7 @@ import { ICONS } from './icons.js';
       void mainReader.offsetHeight;
       fitPosterTitles(posterEls, getGalleryConfig().titleScale);
       renderGlyphs();
+      updateTocLayout();
       if (location.hash) realignScrollToHash();
     });
   }
@@ -149,6 +203,7 @@ import { ICONS } from './icons.js';
     zoomIn.disabled = readerZoom >= ZOOM_MAX;
     updateScrollOffset();
     schedulePosterTitleFit();
+    updateTocLayout();
   }
 
   function applyTheme(theme) {
@@ -195,8 +250,8 @@ import { ICONS } from './icons.js';
     reader.classList.remove('is-active');
     document.body.classList.add('page-landing');
     document.body.classList.remove('page-collection');
-    tocPanel.classList.remove('is-open');
-    tocToggle.setAttribute('aria-expanded', 'false');
+    closeTocPanel();
+    updateTocLayout();
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   }
 
@@ -279,8 +334,8 @@ import { ICONS } from './icons.js';
       contentPath: relativePath,
       description
     });
-    tocRoot.innerHTML = renderToc(doc.toc);
     showReader();
+    setTocHtml(renderToc(doc.toc));
 
     posterEls = Array.from(mainReader.querySelectorAll('.post-card'));
 
@@ -288,6 +343,10 @@ import { ICONS } from './icons.js';
     setupTitleFitObserver();
     updateScrollOffset();
     schedulePosterTitleFit();
+    requestAnimationFrame(() => {
+      updateTocLayout();
+      requestAnimationFrame(updateTocLayout);
+    });
     requestAnimationFrame(renderGlyphs);
     requestAnimationFrame(() => enhancePosterImageHalftone(mainReader, getGalleryConfig()));
     if (document.fonts?.ready) {
@@ -364,6 +423,8 @@ import { ICONS } from './icons.js';
     }
   }
 
+  TOC_RAIL_MQ.addEventListener('change', () => updateTocLayout());
+
   boot();
   history.replaceState({ view: 'home' }, '', '#');
 
@@ -371,6 +432,11 @@ import { ICONS } from './icons.js';
   if (readerHeader && typeof ResizeObserver !== 'undefined') {
     const headerResize = new ResizeObserver(() => updateScrollOffset());
     headerResize.observe(readerHeader);
+  }
+
+  if (mainReader && typeof ResizeObserver !== 'undefined') {
+    const readerContentResize = new ResizeObserver(() => updateTocLayout());
+    readerContentResize.observe(mainReader);
   }
 
   landingGalleryGrid?.addEventListener('click', (e) => {
@@ -421,8 +487,7 @@ import { ICONS } from './icons.js';
       if (!el) return;
       e.preventDefault();
       scrollToEl(el);
-      tocPanel.classList.remove('is-open');
-      tocToggle.setAttribute('aria-expanded', 'false');
+      closeTocPanel();
       return;
     }
 
@@ -438,16 +503,8 @@ import { ICONS } from './icons.js';
     }
   });
 
-  tocRoot.addEventListener('click', (e) => {
-    const a = e.target.closest('[data-toc-link]');
-    if (!a) return;
-    e.preventDefault();
-    const id = a.getAttribute('href')?.slice(1);
-    const el = id && document.getElementById(id);
-    if (el) scrollToEl(el);
-    tocPanel.classList.remove('is-open');
-    tocToggle.setAttribute('aria-expanded', 'false');
-  });
+  tocRoot.addEventListener('click', handleTocLinkClick);
+  tocRailRoot?.addEventListener('click', handleTocLinkClick);
 
   readerHome?.addEventListener('click', () => goHome());
 
@@ -478,8 +535,7 @@ import { ICONS } from './icons.js';
   document.addEventListener('click', (e) => {
     const wrap = tocToggle.closest('.nav-toc-wrap');
     if (tocPanel.contains(e.target) || wrap?.contains(e.target)) return;
-    tocPanel.classList.remove('is-open');
-    tocToggle.setAttribute('aria-expanded', 'false');
+    closeTocPanel();
   });
 
   if (backToTop) {
@@ -516,6 +572,7 @@ import { ICONS } from './icons.js';
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       updateScrollOffset();
+      updateTocLayout();
       schedulePosterTitleFit();
       renderGlyphs();
       enhancePosterImageHalftone(mainReader, getGalleryConfig());
@@ -526,8 +583,7 @@ import { ICONS } from './icons.js';
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && tocPanel.classList.contains('is-open')) {
-      tocPanel.classList.remove('is-open');
-      tocToggle.setAttribute('aria-expanded', 'false');
+      closeTocPanel();
     }
   });
 })();

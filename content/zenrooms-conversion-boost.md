@@ -4,13 +4,19 @@ description: 2019 . A full-service budget & mid-range hospitality group in South
 
 # ZENRooms Conversion Boost
 
-| Conversion Uplift | Sessions Tested | Platforms |
-|---:|---:|---:|
-| 16% | +10K | 3 |
+## Overview
+
+![ZENRooms Conversion Boost](src/zen-conversion-hero.png)
 
 ZENRooms was a full-service budget and mid-range hospitality group in Southeast Asia.
 
 ZENRooms.com has since shut down operations.
+
+| Conversion Uplift | Sessions Tested | Platforms |
+|---:|---:|---:|
+| 16% | +10K | 3 |
+
+## Case Study
 
 The ZENRooms website was my first major project at ZENRooms. I was responsible for the overhaul of the product experience.
 
@@ -24,13 +30,11 @@ For this project, I had time to observe a lot of user behavior through:
 - Existing A/B test data
 - Competitive analysis
 
-## See Prototype
-
 ## Research
 
 We used the tools and data we already had, including heatmaps, screen recordings, analytics, previous A/B testing results, and competitive analysis.
 
-## Key Findings
+### Key Findings
 
 The research showed that we had inefficient user flows, flawed interaction patterns, and inconsistent interface elements.
 
@@ -100,7 +104,7 @@ Even a small design system gave us enough structure to move faster and keep the 
 
 After implementation, we ran two major test phases to validate the new experience.
 
-## Phase 1: Checkout Process
+### Phase 1: Checkout Process
 
 The first phase focused only on the checkout pages.
 
@@ -108,11 +112,13 @@ This was one of the most important parts of the journey because we already knew 
 
 The A/B test showed strong improvements across three major flow points:
 
-- **6.08% uplift** for payment method selection
-- **16.55% uplift** for successful online payments
-- **20.14% uplift** for pay-at-hotel bookings
+| Step | Outcome |
+|---:|---:|
+| payment method selection | **6.08% uplift**  |
+| successful online payments | **16.55% uplift** |
+| pay-at-hotel bookings | **20.14% uplift** |
 
-## Phase 2: Hotel Details Page
+### Phase 2: Hotel Details Page
 
 The next phase introduced the new search results and hotel details pages.
 
@@ -120,13 +126,17 @@ These pages were important because many new users first engaged with the product
 
 The results showed:
 
-- **15% uplift** from search results page to hotel details page
-- **28% uplift** from hotel details page to checkout page
+| Step | Outcome |
+|---:|---:|
+| search results page to hotel details page | **15% uplift** |
+| hotel details page to checkout page | **28% uplift** |
 
 This uplift also carried through the rest of the flow:
 
-- **38.32% uplift** for successful online payments
-- **25.89% uplift** for pay-at-hotel booking conversion
+| Step | Outcome |
+|---:|---:|
+| successful online payments | **38.32% uplift** |
+| pay-at-hotel booking conversion | **25.89% uplift** |
 
 ## Outcome
 

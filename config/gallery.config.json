@@ -55,6 +55,20 @@
         "angleDeg": 0,
         "pattern": "grid"
       },
+      "imageIsometric": {
+        "perspective": false,
+        "perspectiveOrigin": "50% 50%",
+        "rotateX": 0,
+        "rotateY": 0,
+        "rotateZ": 0,
+        "solidShadowX": 8,
+        "solidShadowY": 8,
+        "softShadowY": 0,
+        "softShadowBlur": 0,
+        "softShadowSpread": 0,
+        "softShadowOpacity": 0,
+        "stroke": "#000000"
+      },
       "heroGlyph": {
         "roll": {
           "probability": 0.4
@@ -99,7 +113,7 @@
           "modes": ["exclusion", "screen", "multiply", "overlay", "color-dodge"],
           "opacity": {
             "plain": { "min": 0.05, "max": 0.12 },
-            "exclusion": { "min": 0.7, "max": 0.7 },
+            "exclusion": { "min": 0.4, "max": 0.6 },
             "screen": { "min": 0.4, "max": 0.6 },
             "multiply": { "min": 0.01, "max": 0.08 },
             "overlay": { "min": 0.5, "max": 0.8 },
@@ -150,6 +164,7 @@
           "regionInsetPx": 12,
           "alignToCardEdge": true,
           "regionPreference": ["bottom", "between", "top", "right","left"],
+          "bottomBandHeightRatio": 2.5,
           "fallbackBandWidth": 88,
           "fallbackSide": "right",
           "sideBandWidthRatio": 2,

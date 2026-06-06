@@ -1,7 +1,9 @@
 ---
 description: 2024 . Modern, on-brand design that lifted clicks by 8% without sacrificing conversion
 ---
-# Conversion Growth
+# Atolls Conversion Growth
+
+![Atolls Conversion Growth](src/atolls-conversion-hero.png)
 
 At Atolls, formerly Global Savings Group, we built a white-label coupon and deal platform in partnership with over 50 well-known publishers.
 
@@ -33,6 +35,10 @@ A user wants new shoes, Googles for a coupon, lands on our publisher-branded pag
 Our only shot at revenue was that single click on the offer.
 
 A razor-thin window for conversion.
+
+| Google Search&nbsp;&nbsp;&nbsp;&nbsp; | Landing Page / Conversion Point (Redesign Task) | Post Click-out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Retailer&nbsp;&nbsp; |
+|---|---|---|---|
+| ![Google Search](src/atolls-flow-1.png "Google Search") | ![Landing Page](src/atolls-flow-2.png "Retailer Landing Page") | ![Post Click-out](src/atolls-flow-3.png) | ![Retailer](src/atolls-flow-4.png) |
 
 ## The Challenge: Modernize Without Sacrificing Revenue
 

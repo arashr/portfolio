@@ -136,8 +136,8 @@ body {
 
 /* Ground surface + foreground tokens come from config (lib/gallery-config.js → #gallery-config-grounds) */
 [class*='ground-'] {
-  --on-ground-edge-1: var(--on-ground-body);
-  --on-ground-edge: var(--on-ground-body);
+  --on-ground-edge-1: var(--on-ground-display);
+  --on-ground-edge: var(--on-ground-display);
   --poster-ink-shadow: 4px 4px 0 0 var(--on-ground-edge);
   --glyph-pattern-color: var(--on-ground-glyph-pattern-color, var(--on-ground-display));
   --glyph-pattern-opacity: var(--on-ground-glyph-pattern-opacity, var(--config-glyph-pattern-opacity, 0.07));
@@ -515,6 +515,7 @@ a.collection-card[class*='ground-'] .card-lede {
 
 .collection-hero .doc-meta {
   color: var(--hero-muted);
+  max-width: min(var(--measure), 100%);
 }
 
 .collection-hero .case-hero__sub {
@@ -1083,8 +1084,62 @@ h2.poster__title.post-title,
   border: 0;
 }
 
-.halftone:not(.halftone--active) .halftone__canvas {
+.prose .halftone:not(.halftone--active) .halftone__canvas {
   display: none;
+}
+
+/* Isometric UI frame — opt in via image title: ![](path "isometric") */
+.prose-img-iso {
+  margin: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(2rem, 5vw, 3.25rem);
+  max-width: min(var(--poster-width), 100%);
+  perspective: var(--config-iso-perspective, 1400px);
+  perspective-origin: var(--config-iso-perspective-origin, 50% 42%);
+}
+
+.prose-img-iso__frame {
+  display: block;
+  width: 100%;
+  transform: rotateX(var(--config-iso-rotate-x, 7deg)) rotateY(var(--config-iso-rotate-y, -16deg))
+    rotateZ(var(--config-iso-rotate-z, -1.5deg));
+  transform-origin: center center;
+  border: var(--chrome-stroke-width) solid var(--config-iso-stroke, #000);
+  background: var(--paper);
+  box-shadow:
+    var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
+      var(--config-iso-stroke, #000),
+    0 var(--config-iso-soft-shadow-y, 28px) var(--config-iso-soft-shadow-blur, 52px)
+      var(--config-iso-soft-shadow-spread, -16px) var(--config-iso-soft-shadow-color, rgba(0, 0, 0, 0.24));
+  transition: transform var(--chrome-ink-duration) var(--chrome-ink-ease);
+}
+
+.prose-img-iso__frame .halftone,
+.prose-img-iso__frame img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.post-card[class*='ground-'] .prose-img-iso__frame {
+  background: var(--surface);
+  border-color: var(--on-ground-edge);
+  box-shadow:
+    var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
+      var(--on-ground-edge),
+    0 var(--config-iso-soft-shadow-y, 28px) var(--config-iso-soft-shadow-blur, 52px)
+      var(--config-iso-soft-shadow-spread, -16px)
+      color-mix(in oklch, var(--on-ground-edge) 24%, transparent);
+}
+
+.collection-hero .prose-img-iso {
+  max-width: min(var(--poster-width), 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prose-img-iso__frame {
+    transform: none;
+  }
 }
 
 .post-card .prose hr {
@@ -1121,6 +1176,9 @@ h2.poster__title.post-title,
   overflow-x: auto;
   margin: 0 0 1.25em;
   -webkit-overflow-scrolling: touch;
+  border: var(--chrome-stroke-width) solid var(--hair);
+  box-shadow: var(--chrome-ink-shadow);
+  box-sizing: border-box;
 }
 
 .prose .table-wrap table {
@@ -1135,17 +1193,22 @@ h2.poster__title.post-title,
 }
 
 .prose th {
-  border: 2px solid var(--hair);
+  border: var(--chrome-stroke-width) solid var(--hair);
   font-weight: 600;
 }
 
 .prose td {
-  border: 2px solid var(--hair);
+  border: var(--chrome-stroke-width) solid var(--hair);
 }
 
 .post-card[class*='ground-'] .prose .table-wrap,
 .post-card[class*='ground-'] .prose table {
   background: var(--surface);
+}
+
+.post-card[class*='ground-'] .prose .table-wrap {
+  border-color: var(--on-ground-edge);
+  box-shadow: var(--poster-ink-shadow);
 }
 
 .post-card[class*='ground-'] .prose th,
@@ -1335,6 +1398,11 @@ h2.poster__title.post-title,
   z-index: 1;
   transform: translateY(-4px);
   box-shadow: var(--card-shadow-solid);
+}
+
+.collection-card[class*='ground-'].reveal.is-visible:hover,
+.collection-card[class*='ground-'].reveal.is-visible:focus-visible {
+  box-shadow: var(--poster-ink-shadow);
 }
 @media (hover: none) {
   .collection-card.reveal.is-visible:hover,

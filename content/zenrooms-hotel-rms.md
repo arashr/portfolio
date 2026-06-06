@@ -4,11 +4,9 @@ description: 2021 . A native app for a budget hotel booking service
 
 # Hotel Revenue Management System
 
-![ZenRooms RMS](src/zenrooms-rms-hero.png)
+## Overview
 
-| New Tool | MVP Delivery | Initial Hotels |
-|---:|---:|---:|
-| 0→1 | 3 Months | 100+ |
+![ZenRooms RMS](src/zenrooms-rms-hero.png)
 
 At ZENRooms, we developed an algorithm to maximize hotel occupancy and revenue by taking multiple variables into consideration.
 
@@ -26,6 +24,10 @@ My responsibilities included:
 - Managing the product from start to end
 
 [See Prototype](https://www.figma.com/proto/oxDI7LyKHPeGeDao3NMu7J/eManager-Express)
+
+| New Tool | MVP Delivery | Initial Hotels |
+|---:|---:|---:|
+| 0→1 | 3 Months | 100+ |
 
 ## The Challenge
 
@@ -50,7 +52,7 @@ In the product, these became:
 - **Price:** Everyday tasks
 - **Settings:** Property setup
 
-![Categorization of the information](src/zen-rms-menu.png)
+![Categorization of the information](src/zen-rms-menu.png "isometric")
 
 ## Understanding the System
 
@@ -73,13 +75,13 @@ After analysis and discussion, we moved many of these inputs into the background
 In the end, we reduced the control from many complicated inputs to two sliders.
 
 Pricing aggressiveness control before flow optimization  
-![Before](src/zen-rms-agg-before.png)
+![Before](src/zen-rms-agg-before.png "iso")
 
 Pricing aggressiveness control after flow optimization  
-![After](src/zen-rms-agg-after.png)
+![After](src/zen-rms-agg-after.png "iso")
 
 Exploring how this could become an intuitive experience
-![Exploration](src/zen-rms-agg-exploration.png)
+![Exploration](src/zen-rms-agg-exploration.png "iso")
 
 ## Design System and Delivery
 
@@ -89,23 +91,23 @@ Understanding the limitations of our resources and technology, we decided to use
 
 It gave us flexibility, availability, and form controls that worked well for a product with many settings and inputs.
 
-## Design and Testing
+## User Interface Design
 
 After establishing the basics, we moved into prototyping and user testing.
 
 [See Prototype](https://www.figma.com/proto/oxDI7LyKHPeGeDao3NMu7J/eManager-Express)
 
 Pricing panel
-![Pricing Panel](src/zen-pricing.png)
+![Pricing Panel](src/zen-pricing.png "isometric")
 
 Aggressiveness settings
-![Aggressiveness settings](src/zen-aggressiveness.png)
+![Aggressiveness settings](src/zen-aggressiveness.png "isometric")
 
 Minimum pricing settings
-![Minimum pricing settings](src/zen-min-pricing.png)
+![Minimum pricing settings](src/zen-min-pricing.png "isometric")
 
 Pricing for special dates
-![Pricing for special dates](src/zen-events.png)
+![Pricing for special dates](src/zen-events.png "isometric")
 
 ## Outcome
 

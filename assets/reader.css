@@ -100,13 +100,19 @@ button.mini-poster {
 }
 
 button.mini-poster[class*='ground-'] {
-  border-color: var(--chrome-stroke);
+  border-color: var(--on-ground-edge);
 }
 
 button.mini-poster:hover,
 button.mini-poster:focus-visible {
   border-color: var(--chrome-stroke);
   box-shadow: var(--chrome-ink-shadow);
+}
+
+button.mini-poster[class*='ground-']:hover,
+button.mini-poster[class*='ground-']:focus-visible {
+  border-color: var(--on-ground-edge);
+  box-shadow: var(--poster-ink-shadow);
 }
 
 button.mini-poster:active {
@@ -450,6 +456,48 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
   position: relative;
 }
 
+/* Reader grid — main column + sticky TOC rail aligned to first poster */
+.reader-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(17.5rem, 22vw);
+  align-items: start;
+}
+
+.reader-toc-rail {
+  display: none;
+  position: sticky;
+  top: var(--scroll-offset);
+  align-self: start;
+  padding: 0 var(--pad) 2rem 1rem;
+  max-height: calc(100vh - var(--scroll-offset) - 1rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+}
+
+@media (min-width: 900px) {
+  .page-reader.is-active.has-toc .reader-toc-rail {
+    display: block;
+  }
+
+  .page-reader.is-active.has-toc .nav-toc-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .reader-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reader-toc-rail__inner {
+  padding: 1rem 1.1rem;
+  border: var(--chrome-stroke-width) solid var(--chrome-stroke);
+  background: var(--surface);
+  box-shadow: var(--chrome-ink-shadow-rest);
+}
+
 .reader-controls {
   display: flex;
   align-items: center;
@@ -609,6 +657,11 @@ html[data-theme='dark'] .nav-search-input::placeholder {
   color: var(--chrome-ink-mute);
 }
 
+html[data-theme='dark'] .reader-toc-rail__inner {
+  background: var(--surface);
+  border-color: var(--chrome-stroke);
+}
+
 html[data-theme='dark'] .toc-panel {
   background: var(--surface);
   border-color: var(--chrome-stroke);
@@ -651,6 +704,11 @@ html[data-theme='dark'] .collection-hero .prose-brief a:hover {
   background: var(--chrome-ink);
 }
 
+html[data-theme='dark'] .collection-hero .prose-brief .table-wrap {
+  border-color: var(--chrome-stroke);
+  box-shadow: var(--chrome-ink-shadow);
+}
+
 html[data-theme='dark'] .collection-hero :focus-visible {
   outline-color: var(--chrome-red-bright);
 }
@@ -686,6 +744,11 @@ html[data-theme='dark'] .post-card[class*='ground-'] .prose table,
 html[data-theme='dark'] .post-card[class*='ground-'] .prose th,
 html[data-theme='dark'] .post-card[class*='ground-'] .prose td {
   background: var(--surface);
+}
+
+html[data-theme='dark'] .post-card[class*='ground-'] .prose .table-wrap {
+  border-color: var(--on-ground-edge);
+  box-shadow: var(--poster-ink-shadow);
 }
 
 html[data-theme='dark'] .post-card[class*='ground-'] .prose th,

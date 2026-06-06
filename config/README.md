@@ -97,6 +97,7 @@ Poster graphics are grouped by feature. **`lib/resolve-graphics-config.js`** fla
 theme.graphics
 ├── glyph              … shared pattern ink (CSS tokens)
 ├── imageHalftone      … prose photo halftone (independent)
+├── imageIsometric     … isometric prose image frame (opt-in in markdown)
 ├── heroGlyph          … mega background glyph (one per poster roll)
 │   ├── roll
 │   ├── text
@@ -137,6 +138,25 @@ Independent of glyph patterns. Object under `theme.graphics.imageHalftone`. Defa
 | `pattern` | `"stagger"` | `stagger` \| `grid` \| `line` |
 
 Legacy flat keys (`imageHalftoneDotPx`, etc.) still merge if present.
+
+#### `imageIsometric` — isometric prose images
+
+Opt in per image via markdown title: `![](path "isometric")`. Defaults in `lib/image-iso-config.js`.
+
+| Key | Default | Role |
+|-----|---------|------|
+| `perspective` | `1400` | 3D perspective distance (px). Set `false`, `"none"`, or `0` to disable |
+| `perspectiveOrigin` | `"50% 42%"` | Vanishing-point anchor |
+| `rotateX` | `7` | Tilt on X axis (deg) |
+| `rotateY` | `-16` | Tilt on Y axis (deg) |
+| `rotateZ` | `-1.5` | Skew on Z axis (deg) |
+| `solidShadowX` | `10` | Hard shadow offset X (px) |
+| `solidShadowY` | `14` | Hard shadow offset Y (px) |
+| `softShadowY` | `28` | Soft shadow offset Y (px) |
+| `softShadowBlur` | `52` | Soft shadow blur (px) |
+| `softShadowSpread` | `-16` | Soft shadow spread (px) |
+| `softShadowOpacity` | `0.24` | Soft shadow strength (`0`–`1`) |
+| `stroke` | `"#000000"` | Border + solid shadow color (always black by default) |
 
 #### `heroGlyph` — mega background glyph
 

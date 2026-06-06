@@ -86,7 +86,15 @@
         </div>
       </div>
     </header>
-    <main id="main-reader" class="content-feed collection-feed"></main>
+    <div class="reader-layout">
+      <main id="main-reader" class="content-feed collection-feed"></main>
+      <aside class="reader-toc-rail" id="reader-toc-rail" aria-hidden="true" aria-label="Table of contents">
+        <div class="reader-toc-rail__inner">
+          <p class="toc-panel__label">Contents</p>
+          <div id="toc-rail-root"></div>
+        </div>
+      </aside>
+    </div>
     <button type="button" id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
   </section>
 

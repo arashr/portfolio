@@ -4,11 +4,18 @@ description: 2021 . A native app for a budget hotel booking service
 
 # ZENRooms App
 
+## Overview
+
+![ZENRooms App](src/zen-app-hero.png)
+
+ZENRooms was a full-service budget and mid-range hospitality group in Southeast Asia. It served thousands of guests across the region before shutting down operations.
+
 | Native App Design | Solo Design Sprint | Mobile Platforms |
 |---:|---:|---:|
 | 0→1 | 1 Month | iOS, Android |
 
-ZENRooms was a full-service budget and mid-range hospitality group in Southeast Asia. It served thousands of guests across the region before shutting down operations.
+
+## Case Study 
 
 ZENRooms already had a web product that was doing well. The “app” at that point was just a web-view wrapper rendering the mobile website inside a shell.
 
@@ -100,6 +107,6 @@ The related web redesign, done earlier and tested at scale, showed what fixing t
 
 The native app was designed to go further by using what the web never could.
 
-## See Prototype
+[See Prototype]()
 
 When you stop working around the platform and actually use it, everything gets better, for users and for the business.

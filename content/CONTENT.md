@@ -46,6 +46,22 @@ The intro paragraph is optional if you set `description` in frontmatter. Heading
 
 Inside the case study, split posters with `##` headings — same rules as MD Gallery (`docs/POSTER_LOGIC.md` in the gallery repo).
 
+## Image layout flags
+
+Use the optional **title** on an image (the quoted string in markdown) to opt into layout treatments:
+
+```md
+![Menu screenshot](src/menu.png "isometric")
+```
+
+| Title flag | Effect |
+|------------|--------|
+| `isometric` or `iso` | 3D isometric skew with solid black shadow and 1px border |
+
+Tweak the skew and shadow in `config/gallery.config.json` under `theme.graphics.imageIsometric`.
+
+You can combine a flag with a real tooltip title using commas: `"isometric, Settings dropdown"`.
+
 ## Site name on the homepage
 
 Edit `content/site.json` for the large hero title and tagline (not the per-case grid).
