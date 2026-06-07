@@ -969,6 +969,17 @@ h2.poster__title.post-title,
   font-family: Notable, cursive;
   font-weight: 400;
 }
+
+.post-card.title-face-calsans .poster__title,
+.post-card.title-face-calsans .post-title a,
+.post-card.title-face-calsans .prose :is(h2, h3, h4),
+.collection-card.title-face-calsans .poster__title,
+.mini-poster.title-face-calsans .poster__title,
+.mini-poster.title-face-calsans .post-title,
+.legend-sample.title-face-calsans {
+  font-family: 'Cal Sans', sans-serif;
+  font-weight: 400;
+}
 .post-title a {
   display: block;
   width: 100%;
@@ -1430,7 +1441,7 @@ h2.poster__title.post-title,
   transition:
     opacity 0.2s,
     box-shadow var(--chrome-ink-duration) var(--chrome-ink-ease);
-  z-index: 50;
+  z-index: 9995;
 }
 
 .back-to-top.visible:hover,

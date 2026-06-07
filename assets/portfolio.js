@@ -18,6 +18,7 @@ import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { enhancePosterImageHalftone } from '../lib/image-halftone.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
+import { mountEdgeHalftone } from '../lib/edge-halftone.js';
 import { ICONS } from './icons.js';
 
 (function () {
@@ -65,6 +66,8 @@ import { ICONS } from './icons.js';
   let homeIndexSignature = '';
   let contentWatchTimer = 0;
   let siteKicker = 'Case study';
+  /** @type {{ destroy: () => void, refresh: () => void }} */
+  let edgeHalftone = { destroy() {}, refresh() {} };
 
   const CONTENT_POLL_MS = 1500;
   const isLocalDev =
@@ -215,6 +218,12 @@ import { ICONS } from './icons.js';
       btn.setAttribute('aria-label', dark ? 'Light mode' : 'Dark mode');
     });
     localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+    edgeHalftone.refresh();
+  }
+
+  function setupEdgeHalftone() {
+    edgeHalftone.destroy();
+    edgeHalftone = mountEdgeHalftone(getGalleryConfig());
   }
 
   function landingMiniPosterEls() {
@@ -242,6 +251,7 @@ import { ICONS } from './icons.js';
     reader.classList.add('is-active');
     document.body.classList.remove('page-landing');
     document.body.classList.add('page-collection');
+    edgeHalftone.refresh();
   }
 
   function showLanding() {
@@ -252,6 +262,7 @@ import { ICONS } from './icons.js';
     document.body.classList.remove('page-collection');
     closeTocPanel();
     updateTocLayout();
+    edgeHalftone.refresh();
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   }
 
@@ -411,6 +422,7 @@ import { ICONS } from './icons.js';
     await reloadGalleryConfig();
     injectIcons();
     applyZoom();
+    setupEdgeHalftone();
     applyTheme(localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
     try {
       await loadHome();
@@ -550,6 +562,7 @@ import { ICONS } from './icons.js';
 
   async function reloadConfigAndRefresh() {
     await reloadGalleryConfig();
+    setupEdgeHalftone();
     enhancePosterImageHalftone(mainReader, getGalleryConfig());
     schedulePosterTitleFit();
     if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();

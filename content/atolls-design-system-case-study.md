@@ -48,7 +48,7 @@ The wishlist was ambitious:
 
 The deadline? Less than two months. Don’t ask.
 
-## Kickoff: Ruthless Prioritization
+## Prioritization
 
 We started with a workshop. All product designers in the room, figuring out: what do we actually need in two months, and what can wait?
 
@@ -60,7 +60,7 @@ We dumped everything on the table: colors, typography, grids, dimensions, icons.
 
 Priorities: locked.
 
-## Building the Proof of Concept
+## Proof of Concept
 
 Right there in the workshop, I spun up a scrappy version of the new design system. Nothing fancy, just basic elements styled with the new brand, every property tied to a variable. Designers could immediately start messing around and testing visuals.
 
@@ -70,7 +70,7 @@ Meanwhile, the brand team made their own tweaks to ensure the new look would act
 
 Initial component drafts were built within a day or so to get feedback as soon as possible.
 
-## Iteration in Motion
+## Iteration
 
 Next came refinement. Research best practices. Adjust. Test. Get feedback. Adjust again.
 

@@ -1,3 +1,30 @@
+.edge-halftone {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9990;
+  pointer-events: none;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.edge-halftone__canvas {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+}
+
+.edge-halftone__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--edge-halftone-cap, 3px);
+  pointer-events: none;
+}
+
 /* Portfolio landing — case study grid (no file drop) */
 
 .brand-home {

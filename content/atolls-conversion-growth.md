@@ -17,7 +17,7 @@ Our pages lived within the trusted domains of major publications, adopting each 
 |---:|---:|---:|
 | 8% | +364K | 50+ |
 
-## The Business Model in a Nutshell
+## The Business Model
 
 - **GSG:** Provided the platform and technology
 - **Publishers:** Supplied the audience and trust
@@ -40,7 +40,7 @@ A razor-thin window for conversion.
 |---|---|---|---|
 | ![Google Search](src/atolls-flow-1.png "Google Search") | ![Landing Page](src/atolls-flow-2.png "Retailer Landing Page") | ![Post Click-out](src/atolls-flow-3.png) | ![Retailer](src/atolls-flow-4.png) |
 
-## The Challenge: Modernize Without Sacrificing Revenue
+## The Challenge
 
 When the design team was tasked with a full visual overhaul, I led the project.
 

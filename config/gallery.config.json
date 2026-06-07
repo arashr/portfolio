@@ -41,6 +41,19 @@
       "shutterDuration": "0.9s",
       "shutterEase": "cubic-bezier(0.77, 0, 0.18, 1)"
     },
+    "edgeHalftone": {
+      "enabled": true,
+      "heightPx": 80,
+      "dotPx": 6,
+      "angleDeg": 22,
+      "pattern": "stagger",
+      "contrast": 1,
+      "fadePower": 2,
+      "pushPx": 12,
+      "mergeDotScale": 0,
+      "showOnHome": false,
+      "color": "paper"
+    },
     "graphics": {
       "glyph": {
         "color": "#C8102E",
@@ -317,7 +330,8 @@
       { "id": "limelight", "google": "BBH+Bogle", "lineHeight": "0.8", "letterSpacing": "0.01em" },
       { "id": "jersey25", "google": "Jersey+25", "lineHeight": "0.7", "letterSpacing": "-0.01em" },
       { "id": "blackops", "google": "Black+Ops+One", "lineHeight": "0.86", "letterSpacing": "0.02em" },
-      { "id": "notable", "google": "Notable", "lineHeight": "0.9", "letterSpacing": "0.01em" }
+      { "id": "notable", "google": "Notable", "lineHeight": "0.9", "letterSpacing": "0.01em" },
+      { "id": "calsans", "google": "Cal+Sans", "lineHeight": "0.94", "letterSpacing": "-0.01em" }
     ]
   },
   "titleScale": {

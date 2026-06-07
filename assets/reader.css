@@ -216,6 +216,8 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
 }
 
 .landing-foot {
+  position: relative;
+  z-index: 9991;
   width: min(100%, 56rem);
   margin: 0 auto;
   padding: 1rem 32px 2rem;
