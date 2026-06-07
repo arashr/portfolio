@@ -16,6 +16,14 @@
   --poster-width: var(--config-poster-width, 42rem);
   --pad: var(--config-pad, clamp(16px, 4vw, 56px));
   --scroll-offset: var(--config-scroll-offset, 6.5rem);
+  --layout-max: var(--config-layout-max, 1440px);
+  --layout-cols: 12;
+  --layout-gap: var(--config-layout-gap, 16px);
+  --layout-content-max: calc(var(--layout-max) - 2 * var(--pad));
+  --layout-shell-right: calc((100vw - min(100vw, var(--layout-max))) / 2 + var(--pad));
+  --toc-rail-min: var(--config-toc-rail-min, 75rem);
+  --poster-grid-span: 6;
+  --poster-grid-cols: 9;
   --card-shadow-solid: -4px 4px 0 var(--hair);
   --card-shadow-rest: -4px 4px 0 transparent;
   /* Solid-ink chrome (header controls, TOC) — 1px stroke, hard shadow grows on hover */
@@ -112,10 +120,9 @@ body {
 .mono-label,
 .kicker {
   font-family: inherit;
-  font-size: var(--config-label-size, 0.75rem);
+  font-size: var(--config-label-size, 1rem);
   font-weight: var(--config-label-weight, 500);
   letter-spacing: var(--config-label-letter-spacing, 0.06em);
-  text-transform: uppercase;
 }
 
 .crumb {
@@ -258,7 +265,8 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  max-width: 1400px;
+  width: min(100%, var(--layout-max));
+  max-width: var(--layout-max);
   margin: 0 auto;
 }
 .brand {
@@ -350,6 +358,11 @@ body {
   max-width: none;
   margin: 0;
   padding: 0 0 4rem;
+}
+
+/* Case-study reader: main column stacks hero + posters in grid cols 1–9 */
+.page-reader .collection-feed {
+  min-width: 0;
 }
 
 .search-box {
@@ -487,6 +500,7 @@ a.collection-card[class*='ground-'] .card-lede {
 /* Posts — collection hero sits on page paper (not a ground poster) */
 .collection-hero {
   --hero-display: var(--config-hero-display, var(--red));
+  --hero-title: var(--config-ink-soft, var(--ink-soft));
   --hero-body: var(--config-hero-body, var(--ink-soft));
   --hero-muted: var(--config-hero-muted, var(--ink-mute));
   --hero-edge: var(--hair);
@@ -498,12 +512,8 @@ a.collection-card[class*='ground-'] .card-lede {
   color: var(--hero-body);
 }
 
-.collection-hero .kicker,
-.collection-hero .poster__title {
-  color: var(--hero-display);
-}
-
 .collection-hero .kicker {
+  color: var(--hero-display);
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -515,12 +525,12 @@ a.collection-card[class*='ground-'] .card-lede {
 
 .collection-hero .doc-meta {
   color: var(--hero-muted);
-  max-width: min(var(--measure), 100%);
+  max-width: none;
 }
 
 .collection-hero .case-hero__sub {
   margin: 0.75rem 0 0;
-  max-width: min(var(--measure), 100%);
+  max-width: none;
 }
 
 /* Wide intro media (images, tables, code) — same cap as poster cards */
@@ -532,12 +542,16 @@ a.collection-card[class*='ground-'] .card-lede {
   font-size: clamp(2.5rem, 8vw, 5rem);
 }
 
+.collection-hero h1.poster__title {
+  color: var(--hero-title);
+}
+
 .index-hero-title {
   text-shadow: -4px 4px 0 var(--hair);
 }
 
 h1.poster__title {
-  margin-top: 16px;
+  margin-top: 0;
   margin-bottom: 32px;
   box-sizing: content-box;
   padding-bottom: 0px;
@@ -559,16 +573,17 @@ h1.poster__title {
   background: var(--paper);
 }
 
-/* Collection feed: staggered posters that hug content (wide screens) */
+/* Collection feed: 12-column poster grid (wide screens; see reader.css) */
 .collection-feed .poster-gallery {
-  align-items: flex-start;
-  padding-left: var(--pad);
-  padding-right: var(--pad);
+  align-items: start;
+  padding-left: 0;
+  padding-right: 0;
+  gap: clamp(1.25rem, 3vw, 2rem);
 }
 
 .collection-feed .poster-gallery .post-card-wrap {
-  width: min(var(--poster-width), 100%);
-  max-width: min(var(--poster-width), 100%);
+  width: 100%;
+  max-width: none;
   margin-left: 0;
   margin-right: 0;
 }
@@ -576,14 +591,6 @@ h1.poster__title {
 .collection-feed .poster-gallery .post-card-wrap .post-card {
   width: 100%;
   max-width: 100%;
-}
-
-@media (min-width: 900px) {
-  .collection-feed .poster-gallery .post-card-wrap {
-    margin-left: var(--poster-shift, 0);
-    max-width: min(var(--poster-width), calc(100% - var(--poster-shift, 0rem)));
-    width: min(var(--poster-width), calc(100% - var(--poster-shift, 0rem)));
-  }
 }
 
 /* Default: height hugs content. B-size min height only on .post-card--roomy (short posters). */
@@ -1421,6 +1428,10 @@ h2.poster__title.post-title,
     transform: translateY(0);
     box-shadow: var(--card-shadow-rest);
   }
+}
+
+.page-reader .back-to-top {
+  right: var(--layout-shell-right);
 }
 
 .back-to-top {

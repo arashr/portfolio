@@ -21,13 +21,13 @@
       "muted": "inkMute"
     },
     "typography": {
-      "bodySize": "17px",
+      "bodySize": "16px",
       "bodyLineHeight": "1.5",
       "proseLineHeight": "1.6",
       "titleLineHeight": "1.12",
       "titleHeadingLineHeight": "0.95",
       "titleFaceLetterSpacing": "0.02em",
-      "labelSize": "0.75rem",
+      "labelSize": "0.85rem",
       "labelWeight": "500",
       "labelLetterSpacing": "0.06em",
       "proseSize": "18px",

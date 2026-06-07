@@ -39,6 +39,9 @@ import { ICONS } from './icons.js';
   const mainReader = document.getElementById('main-reader');
   const readerHome = document.getElementById('reader-home');
   const readerSiteBrand = document.getElementById('reader-site-brand');
+  const readerSiteTagline = document.getElementById('reader-site-tagline');
+  const readerZoomLabel = document.getElementById('reader-zoom-label');
+  const readerLayout = document.querySelector('.reader-layout');
   const zoomOut = document.getElementById('zoom-out');
   const zoomIn = document.getElementById('zoom-in');
   const themeToggles = document.querySelectorAll('.theme-toggle');
@@ -53,7 +56,16 @@ import { ICONS } from './icons.js';
   const ZOOM_MAX = 1.5;
   const ZOOM_STEP = 0.1;
   const SCROLL_GAP_PX = 8;
-  const TOC_RAIL_MQ = window.matchMedia('(min-width: 900px)');
+  const TOC_RAIL_MIN_PX = 1200;
+
+  function tocRailFits() {
+    if (!readerLayout) return false;
+    const style = getComputedStyle(readerLayout);
+    const padInline =
+      (Number.parseFloat(style.paddingLeft) || 0) +
+      (Number.parseFloat(style.paddingRight) || 0);
+    return readerLayout.clientWidth - padInline >= TOC_RAIL_MIN_PX;
+  }
 
   let readerZoom = clampZoom(parseFloat(localStorage.getItem(ZOOM_KEY) || '1', 10));
   let posterEls = [];
@@ -65,7 +77,6 @@ import { ICONS } from './icons.js';
   let openCaseText = '';
   let homeIndexSignature = '';
   let contentWatchTimer = 0;
-  let siteKicker = 'Case study';
   /** @type {{ destroy: () => void, refresh: () => void }} */
   let edgeHalftone = { destroy() {}, refresh() {} };
 
@@ -90,26 +101,31 @@ import { ICONS } from './icons.js';
 
   function updateTocRailOffset() {
     if (!tocRail || reader.hidden) return;
-    const firstPoster = mainReader.querySelector('.post-card-wrap');
-    if (!firstPoster) {
-      tocRail.style.marginTop = '0px';
+    const hero = mainReader.querySelector('.collection-hero');
+    const gallery = mainReader.querySelector('.poster-gallery');
+    if (!hero) {
+      tocRail.style.setProperty('--toc-rail-offset', '0px');
       return;
     }
-    const offset =
-      firstPoster.getBoundingClientRect().top - mainReader.getBoundingClientRect().top;
-    tocRail.style.marginTop = `${Math.max(0, Math.round(offset))}px`;
+    const galleryPadTop = gallery
+      ? Number.parseFloat(getComputedStyle(gallery).paddingTop) || 0
+      : 0;
+    const offset = hero.offsetHeight + galleryPadTop;
+    tocRail.style.setProperty('--toc-rail-offset', `${Math.max(0, Math.round(offset))}px`);
   }
 
   function updateTocLayout() {
     if (reader.hidden) {
       reader.classList.remove('has-toc');
+      reader.classList.remove('has-toc-rail');
       tocRail?.setAttribute('aria-hidden', 'true');
       return;
     }
 
     const hasToc = Boolean(tocRoot.querySelector('.toc-list'));
     reader.classList.toggle('has-toc', hasToc);
-    const useRail = hasToc && TOC_RAIL_MQ.matches;
+    const useRail = hasToc && tocRailFits();
+    reader.classList.toggle('has-toc-rail', useRail);
     tocRail?.setAttribute('aria-hidden', useRail ? 'false' : 'true');
     if (useRail) {
       updateTocRailOffset();
@@ -204,6 +220,9 @@ import { ICONS } from './icons.js';
     localStorage.setItem(ZOOM_KEY, String(readerZoom));
     zoomOut.disabled = readerZoom <= ZOOM_MIN;
     zoomIn.disabled = readerZoom >= ZOOM_MAX;
+    if (readerZoomLabel) {
+      readerZoomLabel.textContent = `Zoom ${Math.round(readerZoom * 100)}%`;
+    }
     updateScrollOffset();
     schedulePosterTitleFit();
     updateTocLayout();
@@ -297,8 +316,9 @@ import { ICONS } from './icons.js';
       if (readerSiteBrand) readerSiteBrand.textContent = site.title;
       document.title = site.title;
     }
-    if (site.tagline && landingHeroTagline) {
-      landingHeroTagline.textContent = site.tagline;
+    if (site.tagline) {
+      if (landingHeroTagline) landingHeroTagline.textContent = site.tagline;
+      if (readerSiteTagline) readerSiteTagline.textContent = site.tagline;
     }
   }
 
@@ -341,7 +361,6 @@ import { ICONS } from './icons.js';
     const doc = parseDocument(text, filename);
     const { subtext: description } = peekCaseStudyListing(text, filename);
     mainReader.innerHTML = renderDocument(doc, filename, {
-      kicker: siteKicker,
       contentPath: relativePath,
       description
     });
@@ -435,8 +454,6 @@ import { ICONS } from './icons.js';
     }
   }
 
-  TOC_RAIL_MQ.addEventListener('change', () => updateTocLayout());
-
   boot();
   history.replaceState({ view: 'home' }, '', '#');
 
@@ -444,6 +461,11 @@ import { ICONS } from './icons.js';
   if (readerHeader && typeof ResizeObserver !== 'undefined') {
     const headerResize = new ResizeObserver(() => updateScrollOffset());
     headerResize.observe(readerHeader);
+  }
+
+  if (readerLayout && typeof ResizeObserver !== 'undefined') {
+    const readerLayoutResize = new ResizeObserver(() => updateTocLayout());
+    readerLayoutResize.observe(readerLayout);
   }
 
   if (mainReader && typeof ResizeObserver !== 'undefined') {
