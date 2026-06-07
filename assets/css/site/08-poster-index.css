@@ -1,0 +1,116 @@
+/* Index cards, collection grid, latest strip */
+
+/* Poster / index */
+.poster {
+  padding: var(--pad);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.poster.index-hero {
+  background-color: transparent;
+}
+.index-hero-title {
+  font-size: clamp(56px, 14vw, 160px);
+}
+.case-hero__sub {
+  max-width: var(--measure);
+  margin: 0.75rem auto 0;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.prose-brief {
+  font-size: 1.1rem;
+  line-height: var(--config-prose-line-height, 1.6);
+}
+.prose-brief p {
+  margin: 0 0 0.5em;
+}
+.prose-brief p:last-child {
+  margin-bottom: 0;
+}
+.prose-brief strong {
+  font-weight: 600;
+}
+
+.card-lede {
+  max-width: var(--measure);
+  margin: 0.75rem auto 0;
+  font-size: 1.1rem;
+}
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.5rem;
+  padding: 0 var(--pad) 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+.collection-card {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--pad);
+  min-height: 220px;
+  height: 100%;
+  box-shadow: var(--card-shadow-rest);
+  container-type: inline-size;
+  container-name: collection-card;
+}
+.collection-card .poster__title {
+  max-width: 100%;
+  font-size: clamp(1.125rem, 11cqi, 3.5rem);
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-wrap: balance;
+}
+.card-cta {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* Index collection cards — override default ink/red after base card rules */
+a.collection-card[class*='ground-'] {
+  color: var(--on-ground-body);
+}
+
+a.collection-card[class*='ground-'] .poster__title,
+a.collection-card[class*='ground-'] .card-cta {
+  color: var(--on-ground-display);
+}
+
+a.collection-card[class*='ground-'] .kicker,
+a.collection-card[class*='ground-'] .card-lede {
+  color: var(--on-ground-muted);
+}
+.index-search {
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  padding: 0 var(--pad);
+}
+.latest-strip {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 0 var(--pad);
+}
+.latest-list {
+  list-style: none;
+  padding: 0;
+}
+.latest-list a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.latest-list a:hover {
+  color: var(--red);
+}
+.latest-date {
+  margin-right: 0.5rem;
+  color: var(--red);
+}

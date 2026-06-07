@@ -1,0 +1,12 @@
+/* Reader header responsive */
+
+@media (max-width: 699px) {
+  .reader-header__tools {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .nav--highlight {
+    flex: 1;
+    min-width: 0;
+  }
+}
