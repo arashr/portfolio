@@ -1,0 +1,9 @@
+/* Search filter visibility */
+
+.post-card.is-filtered-out {
+  display: none;
+}
+
+.post-card-wrap:has(.post-card.is-filtered-out) {
+  display: none;
+}

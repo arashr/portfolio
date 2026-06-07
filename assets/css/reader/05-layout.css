@@ -1,0 +1,147 @@
+/* Reader grid, hero spacing, poster gallery, TOC rail */
+
+/* Reader grid — 12 columns; content cols 1–9 + TOC cols 10–12 when rail fits, else full width */
+.reader-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--layout-gap);
+  align-items: start;
+  width: min(100%, var(--layout-max));
+  max-width: var(--layout-max);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+  box-sizing: border-box;
+  container-type: inline-size;
+  container-name: reader-shell;
+}
+
+.page-reader .collection-feed {
+  grid-column: 1;
+  min-width: 0;
+}
+
+.page-reader .collection-hero {
+  padding-inline: 0;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  padding-block: 0;
+}
+
+.page-reader .collection-hero .doc-meta,
+.page-reader .collection-hero .case-hero__sub {
+  max-width: min(var(--measure), 100%);
+}
+
+.page-reader .poster-gallery.posts-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: clamp(1.25rem, 3vw, 2rem);
+  width: 100%;
+  min-width: 0;
+  padding: 0 0 clamp(2.5rem, 5vw, 4rem);
+  margin: 0;
+  background: var(--paper);
+}
+
+.page-reader .poster-gallery .post-card-wrap {
+  width: 100%;
+  max-width: none;
+}
+
+.page-reader .poster-gallery .post-card-wrap .post-card {
+  max-width: 100%;
+}
+
+.reader-toc-rail {
+  display: none;
+  position: sticky;
+  top: var(--scroll-offset);
+  align-self: start;
+  width: 100%;
+  min-width: 0;
+  margin-top: var(--toc-rail-offset, 0);
+  padding: 0 0 2rem;
+  box-sizing: border-box;
+}
+
+.reader-toc-rail__inner {
+  padding: 1rem 1.1rem;
+  max-height: calc(100vh - var(--scroll-offset) - 1rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: var(--chrome-stroke-width) solid var(--chrome-stroke);
+  background: var(--surface);
+  box-shadow: var(--chrome-ink-shadow-rest);
+}
+
+/* Wide: 9-col poster grid when TOC rail is shown; full 12 cols when rail is hidden */
+@media (min-width: 900px) {
+  .reader-layout {
+    grid-template-columns: repeat(var(--layout-cols), minmax(0, 1fr));
+  }
+
+  .page-reader .collection-feed {
+    grid-column: 1 / 10;
+  }
+
+  .page-reader.is-active:not(.has-toc-rail) {
+    --poster-grid-cols: 12;
+    --poster-grid-span: 8;
+  }
+
+  .page-reader.is-active:not(.has-toc-rail) .collection-feed {
+    grid-column: 1 / -1;
+  }
+
+  .page-reader .collection-hero .doc-meta,
+  .page-reader .collection-hero .case-hero__sub {
+    max-width: calc(100% * var(--poster-grid-span) / var(--poster-grid-cols));
+  }
+
+  .page-reader .poster-gallery.posts-list {
+    display: grid;
+    grid-template-columns: repeat(var(--poster-grid-cols), minmax(0, 1fr));
+    column-gap: var(--layout-gap);
+    flex-direction: unset;
+  }
+
+  .page-reader .poster-gallery .post-card-wrap {
+    grid-column: var(--poster-col-start, 1) / span var(--poster-grid-span);
+  }
+}
+
+/* TOC rail: cols 10–12 once the capped shell is wide enough (~1200px content) */
+@container reader-shell (min-width: 75rem) {
+  .page-reader.is-active.has-toc-rail .reader-toc-rail {
+    display: block;
+    grid-column: 10 / -1;
+    grid-row: 1;
+  }
+}
+
+@media (min-width: 900px) {
+  .page-reader.is-active.has-toc-rail .nav-toc-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) {
+  .reader-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-reader .collection-hero {
+    padding: 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .reader-header__meta {
+    font-size: 0.75rem;
+  }
+
+  .reader-header__role,
+  .reader-header__zoom {
+    font-size: 0.75rem;
+  }
+}

@@ -1,0 +1,7 @@
+/* Reader zoom and page shell hooks */
+
+/* MD Gallery — app chrome (poster styles in site.css) */
+
+body.page-collection #main-reader {
+  zoom: var(--reader-zoom);
+}
