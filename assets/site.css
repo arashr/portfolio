@@ -1,18 +1,1543 @@
-/* Site design system — shared tokens, posters, prose */
-@import url('css/site/01-tokens.css');
-@import url('css/site/02-base.css');
-@import url('css/site/03-typography.css');
-@import url('css/site/04-grounds.css');
-@import url('css/site/05-effects.css');
-@import url('css/site/06-chrome.css');
-@import url('css/site/07-layout.css');
-@import url('css/site/08-poster-index.css');
-@import url('css/site/09-poster-hero.css');
-@import url('css/site/10-poster-feed.css');
-@import url('css/site/11-poster-card.css');
-@import url('css/site/12-poster-titles.css');
-@import url('css/site/13-prose.css');
-@import url('css/site/14-utilities.css');
-@import url('css/site/15-chrome-misc.css');
-@import url('css/site/16-misc-pages.css');
-@import url('css/site/17-print.css');
+/* Portfolio design tokens — figlets-blog */
+:root {
+  --paper: var(--config-paper, #eff1f3);
+  --ink: var(--config-ink, #0c0e10);
+  --ink-soft: var(--config-ink-soft, #1b1f24);
+  --ink-mute: var(--config-ink-mute, rgba(12, 14, 16, 0.66));
+  --surface: var(--paper);
+  --edge-mix: var(--config-edge-mix, 12%);
+  --edge-1: color-mix(in oklch, var(--surface) calc(100% - var(--edge-mix)), black);
+  --hair: color-mix(in oklch, var(--edge-1) calc(100% - var(--edge-mix)), black);
+  --red: var(--config-red, #c8102e);
+  --red-bright: var(--config-red-bright, #e8334e);
+  /* Prose line length (~50–75 chars/line); font-independent if you use rem/px in config */
+  --measure: var(--config-measure, 65ch);
+  /* Poster card width; decoupled from --measure so UI font changes do not shrink cards */
+  --poster-width: var(--config-poster-width, 42rem);
+  --pad: var(--config-pad, clamp(16px, 4vw, 56px));
+  --scroll-offset: var(--config-scroll-offset, 6.5rem);
+  --layout-max: var(--config-layout-max, 1440px);
+  --layout-cols: 12;
+  --layout-gap: var(--config-layout-gap, 16px);
+  --layout-content-max: calc(var(--layout-max) - 2 * var(--pad));
+  --layout-shell-right: calc((100vw - min(100vw, var(--layout-max))) / 2 + var(--pad));
+  --toc-rail-min: var(--config-toc-rail-min, 75rem);
+  --poster-grid-span: 6;
+  --poster-grid-cols: 9;
+  --card-shadow-solid: -4px 4px 0 var(--hair);
+  --card-shadow-rest: -4px 4px 0 transparent;
+  /* Solid-ink chrome (header controls, TOC) — 1px stroke, hard shadow grows on hover */
+  --chrome-stroke: var(--ink);
+  --chrome-stroke-width: 1px;
+  --chrome-ink-shadow-rest: 0 0 0 0 transparent;
+  --chrome-ink-shadow: 4px 4px 0 0 var(--chrome-stroke);
+  --chrome-ink-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --chrome-ink-duration: 0.15s;
+  --card-hover-ease: var(--config-card-hover-ease, cubic-bezier(0.22, 1, 0.36, 1));
+  --card-hover-duration: var(--config-card-hover-duration, 0.4s);
+  --reveal-duration: var(--config-reveal-duration, 0.8s);
+  --reveal-ease: var(--config-reveal-ease, ease);
+  --shutter-duration: var(--config-shutter-duration, 0.9s);
+  --shutter-ease: var(--config-shutter-ease, cubic-bezier(0.77, 0, 0.18, 1));
+  --glyph-pattern-color: var(--config-glyph-pattern-color, var(--red));
+  --glyph-pattern-opacity: var(--config-glyph-pattern-opacity, 0.07);
+  --code-text: var(--config-code-text, #eff1f3);
+  --code-step-mix: var(--config-code-block-step-mix, var(--edge-mix));
+  --code-block-bg: var(--config-code-block-bg, var(--ink));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--scroll-offset);
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  font-family: var(--font-ui-sans, 'Inter Tight', system-ui, sans-serif);
+  font-size: var(--config-body-size, 17px);
+  line-height: var(--config-body-line-height, 1.5);
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .shutter-bar,
+  .collection-card {
+    animation: none !important;
+    transition: none !important;
+  }
+  .collection-card.reveal.is-visible:hover,
+  .collection-card.reveal.is-visible:focus-visible {
+    transform: none;
+    box-shadow: var(--card-shadow-rest);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10000;
+  padding: 0.5rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+}
+.skip-link:focus {
+  left: 0;
+  outline: 3px solid var(--red-bright);
+  outline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--red-bright);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mono-label,
+.kicker {
+  font-family: inherit;
+  font-size: var(--config-label-size, 1rem);
+  font-weight: var(--config-label-weight, 500);
+  letter-spacing: var(--config-label-letter-spacing, 0.06em);
+}
+
+.crumb {
+  font-family: inherit;
+  font-size: var(--config-crumb-size, 0.85rem);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.poster__title {
+  font-family: Ultra, Georgia, serif;
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.005em;
+  color: var(--red);
+  margin: 0.2em 0;
+}
+
+/* Ground surface + foreground tokens come from config (lib/gallery-config.js → #gallery-config-grounds) */
+[class*='ground-'] {
+  --on-ground-edge-1: var(--on-ground-display);
+  --on-ground-edge: var(--on-ground-display);
+  --poster-ink-shadow: 4px 4px 0 0 var(--on-ground-edge);
+  --glyph-pattern-color: var(--on-ground-glyph-pattern-color, var(--on-ground-display));
+  --glyph-pattern-opacity: var(--on-ground-glyph-pattern-opacity, var(--config-glyph-pattern-opacity, 0.07));
+}
+
+/* Colored posters and post cards */
+.post-card[class*='ground-'],
+.poster[class*='ground-'],
+.collection-card[class*='ground-'],
+.mini-poster[class*='ground-'] {
+  color: var(--on-ground-body);
+}
+
+.post-card[class*='ground-'] .poster__title,
+.post-card[class*='ground-'] .post-title,
+.post-card[class*='ground-'] .post-title a,
+.poster[class*='ground-'] .poster__title,
+.poster[class*='ground-'] .kicker,
+.collection-card[class*='ground-'] .poster__title,
+.collection-card[class*='ground-'] .card-cta,
+.mini-poster[class*='ground-'] .poster__title,
+.mini-poster[class*='ground-'] .post-title {
+  color: var(--on-ground-display);
+}
+
+.collection-card[class*='ground-'] .kicker,
+.collection-card[class*='ground-'] .card-lede,
+.mini-poster[class*='ground-'] .card-lede,
+.mini-poster[class*='ground-'] .mini-poster__lede {
+  color: var(--on-ground-muted);
+}
+
+.post-card[class*='ground-'] .mono-label,
+.post-card[class*='ground-'] .meta-strip,
+.post-card[class*='ground-'] .meta-strip .post-date,
+.post-card[class*='ground-'] .halftone__caption,
+.poster[class*='ground-'] .case-hero__sub {
+  color: var(--on-ground-muted);
+}
+
+.post-card[class*='ground-'] .post-tag {
+  color: var(--on-ground-accent);
+}
+
+.post-card[class*='ground-'] .prose {
+  color: var(--on-ground-body);
+}
+
+.post-card[class*='ground-'] .prose a {
+  color: var(--on-ground-body);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  text-decoration-thickness: 1px;
+}
+
+.post-card[class*='ground-'] .prose a:hover {
+  color: var(--on-ground-link-hover-text, var(--surface));
+  background: var(--on-ground-link-hover-bg, var(--ink));
+  text-decoration: none;
+}
+
+.post-card[class*='ground-'] .prose h2,
+.post-card[class*='ground-'] .prose h3,
+.post-card[class*='ground-'] .prose blockquote {
+  color: var(--on-ground-display);
+}
+
+.post-card[class*='ground-'] :focus-visible,
+.poster[class*='ground-'] :focus-visible,
+.collection-card[class*='ground-']:focus-visible,
+.mini-poster[class*='ground-']:focus-visible {
+  outline-color: var(--on-ground-focus);
+}
+
+/* Shutter intro */
+.shutter-bar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  background: var(--ink);
+  z-index: 9998;
+  pointer-events: none;
+  transition: transform var(--shutter-duration) var(--shutter-ease);
+}
+#shutter-top { top: 0; transform: translateY(0); }
+#shutter-bottom { bottom: 0; transform: translateY(0); }
+.page-index.shutter-open #shutter-top,
+.page-collection.shutter-open #shutter-top {
+  transform: translateY(-100%);
+}
+.page-index.shutter-open #shutter-bottom,
+.page-collection.shutter-open #shutter-bottom {
+  transform: translateY(100%);
+}
+
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: var(--red);
+  z-index: 9000;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: var(--chrome-stroke-width) solid var(--chrome-stroke);
+  padding: 0.75rem var(--pad);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: min(100%, var(--layout-max));
+  max-width: var(--layout-max);
+  margin: 0 auto;
+}
+.brand {
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1rem;
+}
+.brand-mark {
+  color: var(--red);
+  margin-right: 0.35em;
+}
+.nav-link {
+  color: var(--ink-mute);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-left: 1rem;
+}
+.nav-link:hover {
+  color: var(--red);
+}
+
+.nav--highlight {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  max-width: min(360px, 50vw);
+  margin-left: auto;
+}
+
+.nav-search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-search-icon {
+  position: absolute;
+  left: 0.65rem;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: var(--ink-mute);
+  z-index: 1;
+}
+
+.nav-search-input {
+  width: 100%;
+  padding: 0.5rem 2.25rem 0.5rem 2.35rem;
+  border: var(--chrome-stroke-width) solid var(--chrome-stroke);
+  border-radius: 0;
+  background: var(--surface);
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.nav-search-input::placeholder {
+  color: var(--ink-mute);
+}
+
+.nav-search-input:focus-visible {
+  outline: 3px solid var(--red-bright);
+  outline-offset: 2px;
+}
+
+.crumb {
+  width: 100%;
+  max-width: 1400px;
+  margin: 16px auto 0;
+  padding: 0;
+  color: var(--ink-mute);
+}
+.crumb a {
+  color: var(--red);
+}
+.crumb-meta {
+  color: var(--ink-mute);
+}
+
+/* Layout */
+.content-feed {
+  min-width: 0;
+  width: 100%;
+}
+
+.collection-feed {
+  max-width: none;
+  margin: 0;
+  padding: 0 0 4rem;
+}
+
+/* Case-study reader: main column stacks hero + posters in grid cols 1–9 */
+.page-reader .collection-feed {
+  min-width: 0;
+}
+
+.search-box {
+  margin-bottom: 1.25rem;
+}
+.search-box label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--red);
+}
+.search-box input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--hair);
+  background: var(--paper);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+/* Poster / index */
+.poster {
+  padding: var(--pad);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.poster.index-hero {
+  background-color: transparent;
+}
+.index-hero-title {
+  font-size: clamp(56px, 14vw, 160px);
+}
+.case-hero__sub {
+  max-width: var(--measure);
+  margin: 0.75rem auto 0;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.prose-brief {
+  font-size: 1.1rem;
+  line-height: var(--config-prose-line-height, 1.6);
+}
+.prose-brief p {
+  margin: 0 0 0.5em;
+}
+.prose-brief p:last-child {
+  margin-bottom: 0;
+}
+.prose-brief strong {
+  font-weight: 600;
+}
+
+.card-lede {
+  max-width: var(--measure);
+  margin: 0.75rem auto 0;
+  font-size: 1.1rem;
+}
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.5rem;
+  padding: 0 var(--pad) 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+.collection-card {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--pad);
+  min-height: 220px;
+  height: 100%;
+  box-shadow: var(--card-shadow-rest);
+  container-type: inline-size;
+  container-name: collection-card;
+}
+.collection-card .poster__title {
+  max-width: 100%;
+  font-size: clamp(1.125rem, 11cqi, 3.5rem);
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-wrap: balance;
+}
+.card-cta {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+/* Index collection cards — override default ink/red after base card rules */
+a.collection-card[class*='ground-'] {
+  color: var(--on-ground-body);
+}
+
+a.collection-card[class*='ground-'] .poster__title,
+a.collection-card[class*='ground-'] .card-cta {
+  color: var(--on-ground-display);
+}
+
+a.collection-card[class*='ground-'] .kicker,
+a.collection-card[class*='ground-'] .card-lede {
+  color: var(--on-ground-muted);
+}
+.index-search {
+  max-width: 480px;
+  margin: 0 auto 2rem;
+  padding: 0 var(--pad);
+}
+.latest-strip {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 0 var(--pad);
+}
+.latest-list {
+  list-style: none;
+  padding: 0;
+}
+.latest-list a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.latest-list a:hover {
+  color: var(--red);
+}
+.latest-date {
+  margin-right: 0.5rem;
+  color: var(--red);
+}
+
+/* Posts — collection hero sits on page paper (not a ground poster) */
+.collection-hero {
+  --hero-display: var(--config-hero-display, var(--red));
+  --hero-title: var(--config-ink-soft, var(--ink-soft));
+  --hero-body: var(--config-hero-body, var(--ink-soft));
+  --hero-muted: var(--config-hero-muted, var(--ink-mute));
+  --hero-edge: var(--hair);
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0;
+  text-align: left;
+  box-sizing: border-box;
+  color: var(--hero-body);
+}
+
+.collection-hero .kicker {
+  color: var(--hero-display);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.collection-hero .doc-meta,
+.collection-hero .case-hero__sub {
+  color: var(--hero-body);
+}
+
+.collection-hero .doc-meta {
+  color: var(--hero-muted);
+  max-width: none;
+}
+
+.collection-hero .case-hero__sub {
+  margin: 0.75rem 0 0;
+  max-width: none;
+}
+
+/* Wide intro media (images, tables, code) — same cap as poster cards */
+.collection-hero .case-hero__sub:has(:is(img, picture, video, svg, table, pre)) {
+  max-width: min(var(--poster-width), 100%);
+}
+
+.collection-hero .poster__title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+}
+
+.collection-hero h1.poster__title {
+  color: var(--hero-title);
+}
+
+.index-hero-title {
+  text-shadow: -4px 4px 0 var(--hair);
+}
+
+h1.poster__title {
+  margin-top: 0;
+  margin-bottom: 32px;
+  box-sizing: content-box;
+  padding-bottom: 0px;
+  line-height: 100%;
+}
+
+/* Each post = its own poster on paper */
+.content-feed .posts-list,
+#blog-posts {
+  width: 100%;
+  min-width: 0;
+  height: fit-content;
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(2.5rem, 5vw, 4rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  background: var(--paper);
+}
+
+/* Collection feed: 12-column poster grid (wide screens; see reader.css) */
+.collection-feed .poster-gallery {
+  align-items: start;
+  padding-left: 0;
+  padding-right: 0;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.collection-feed .poster-gallery .post-card-wrap {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.collection-feed .poster-gallery .post-card-wrap .post-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Default: height hugs content. B-size min height only on .post-card--roomy (short posters). */
+.post-card {
+  container-type: inline-size;
+  container-name: poster-card;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: min(var(--poster-width), 100%);
+  margin: 0;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--pad);
+  border: none;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: auto;
+}
+
+/* ISO B portrait (250×353mm) — min height for short posters; grows if content is taller */
+.post-card.post-card--roomy {
+  min-height: var(--poster-min-height, auto);
+  display: flex;
+  flex-direction: column;
+}
+
+.post-card > .post-header,
+.post-card > .post-figure {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.post-card > .prose {
+  width: 100%;
+  min-width: 0;
+  max-width: min(var(--measure), 100%);
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.post-card__glyph-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.post-card__glyph-canvas {
+  position: absolute;
+  left: var(--glyph-x, 0);
+  top: var(--glyph-y, 0);
+  width: var(--glyph-w, 100%);
+  height: var(--glyph-h, 100%);
+  display: block;
+  opacity: var(--glyph-pattern-opacity, 0.07);
+}
+
+.post-card__glyph-layer--hero .post-card__glyph-canvas {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+}
+
+.post-card > *:not(.post-card__glyph-layer) {
+  position: relative;
+  z-index: 1;
+}
+
+.post-card--hero-glyph > :not(.post-card__glyph-layer) {
+  z-index: 2;
+  isolation: isolate;
+}
+
+.post-card > .post-header {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.post-card > .prose.post-body {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+}
+
+.post-card.post-card--roomy > .prose.post-body {
+  margin-top: auto;
+}
+
+.post-card .post-title,
+.post-card h2.poster__title.post-title {
+  text-align: left;
+}
+
+.post-card .post-title a {
+  text-align: left;
+}
+
+.post-card > .prose {
+  text-align: left;
+}
+.post-card.is-hidden {
+  display: none;
+}
+
+.post-card-wrap {
+  position: relative;
+  width: 100%;
+  max-width: min(var(--poster-width), 100%);
+}
+
+/* Ground tokens for the external toolbar; poster surface stays on .post-card */
+.post-card-wrap[class*='ground-'] {
+  background: transparent;
+}
+
+/* Invisible strip: poster → external toolbar (wrap box ends at card edge) */
+.post-card-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 3rem;
+  height: 100%;
+  pointer-events: none;
+}
+
+.post-card-wrap:hover::after,
+.post-card-wrap:focus-within::after {
+  pointer-events: auto;
+}
+
+.post-card__toolbar {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  right: auto;
+  margin-left: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.35rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--card-hover-duration) var(--card-hover-ease),
+    visibility 0s linear 0.32s;
+}
+
+.post-card-wrap:hover .post-card__toolbar,
+.post-card-wrap:focus-within .post-card__toolbar {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.post-card-wrap:has(.post-card.is-exporting) .post-card__toolbar {
+  display: none !important;
+}
+
+/* Narrow viewports: keep control on the poster (top-right inside) */
+@media (max-width: 899px) {
+  .post-card-wrap::after {
+    content: none;
+  }
+
+  .post-card__toolbar {
+    top: 0.75rem;
+    right: 0.75rem;
+    left: auto;
+    margin-left: 0;
+  }
+}
+
+/* Solid-ink poster tool buttons (PDF export, code copy) */
+.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost,
+.post-card[class*='ground-'] .code-block__copy.btn-ghost {
+  border: var(--chrome-stroke-width) solid var(--on-ground-edge);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--on-ground-body);
+  box-shadow: var(--chrome-ink-shadow-rest);
+  transition:
+    box-shadow var(--chrome-ink-duration) var(--chrome-ink-ease),
+    color var(--chrome-ink-duration) var(--chrome-ink-ease);
+}
+
+.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost:hover:not(:disabled),
+.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost:focus-visible:not(:disabled),
+.post-card[class*='ground-'] .code-block__copy.btn-ghost:hover:not(:disabled),
+.post-card[class*='ground-'] .code-block__copy.btn-ghost:focus-visible:not(:disabled) {
+  color: var(--on-ground-display);
+  border-color: var(--on-ground-edge);
+  box-shadow: var(--poster-ink-shadow);
+}
+
+.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost:active:not(:disabled),
+.post-card[class*='ground-'] .code-block__copy.btn-ghost:active:not(:disabled) {
+  box-shadow: var(--chrome-ink-shadow-rest);
+}
+
+.post-card[class*='ground-'] .code-block__copy.btn-ghost.is-copied {
+  color: var(--on-ground-accent, var(--red));
+  border-color: currentColor;
+}
+
+.post-card__export[aria-busy='true'] {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (hover: none) {
+  .post-card__toolbar {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card__toolbar,
+  .code-block__toolbar {
+    transition: none;
+    visibility: visible;
+  }
+
+  .post-card-wrap[class*='ground-'] .post-card__export.btn-ghost,
+  .post-card[class*='ground-'] .code-block__copy.btn-ghost {
+    transition: none !important;
+  }
+}
+
+h2.poster__title.post-title,
+.post-title {
+  width: 100%;
+  margin: 0;
+  line-height: var(--config-title-line-height, 1.12);
+  letter-spacing: -0.003em;
+}
+
+.post-card .poster__title,
+.post-card .post-title,
+.post-card .post-title a {
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+  white-space: normal;
+}
+
+/* Post title poster fonts — see scripts/lib/title-faces.mjs & docs/TITLE_FONTS.md */
+.post-card[class*='title-face-'] .poster__title,
+.post-card[class*='title-face-'] .post-title,
+.post-card[class*='title-face-'] .post-title a,
+.collection-card[class*='title-face-'] .poster__title,
+.mini-poster[class*='title-face-'] .poster__title,
+.mini-poster[class*='title-face-'] .post-title {
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.post-card[class*='title-face-'] .prose :is(h2, h3, h4) {
+  font-synthesis: none;
+  text-wrap: balance;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Title box — JS sets --poster-title-size; height grows with wrapped lines (no max-height clip) */
+.post-title-bounds {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.post-card[class*='title-face-'] .post-header {
+  width: 100%;
+}
+
+.post-card[class*='title-face-'] .poster__title,
+.post-card[class*='title-face-'] .post-title,
+.post-card[class*='title-face-'] .post-title a {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: var(--poster-title-size, 2.5rem);
+  padding: 0.06em 0 0.1em;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+.post-card.post-card--roomy > .post-header {
+  margin-bottom: 0;
+}
+
+/* In-post headings use the same display face as the poster title (smaller scale) */
+.post-card[class*='title-face-'] .prose :is(h2, h3, h4) {
+  margin: 1.5em 0 0.65em;
+}
+.post-card[class*='title-face-'] .prose h2 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+.post-card[class*='title-face-'] .prose h3 {
+  font-size: clamp(1.3rem, 3.3vw, 1.85rem);
+}
+.post-card[class*='title-face-'] .prose h4 {
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+}
+
+.post-card.title-face-ultra .poster__title,
+.post-card.title-face-ultra .post-title a,
+.post-card.title-face-ultra .prose :is(h2, h3, h4),
+.collection-card.title-face-ultra .poster__title,
+.mini-poster.title-face-ultra .poster__title,
+.mini-poster.title-face-ultra .post-title,
+.legend-sample.title-face-ultra {
+  font-family: Ultra, serif;
+  font-weight: 400;
+}
+
+.post-card.title-face-monoton .poster__title,
+.post-card.title-face-monoton .post-title a,
+.post-card.title-face-monoton .prose :is(h2, h3, h4),
+.collection-card.title-face-monoton .poster__title,
+.mini-poster.title-face-monoton .poster__title,
+.mini-poster.title-face-monoton .post-title,
+.legend-sample.title-face-monoton {
+  font-family: 'Rubik Dirt', cursive;
+  font-weight: 400;
+}
+
+.post-card.title-face-limelight .poster__title,
+.post-card.title-face-limelight .post-title a,
+.post-card.title-face-limelight .prose :is(h2, h3, h4),
+.collection-card.title-face-limelight .poster__title,
+.mini-poster.title-face-limelight .poster__title,
+.mini-poster.title-face-limelight .post-title,
+.legend-sample.title-face-limelight {
+  font-family: 'BBH Bogle', sans-serif;
+  font-weight: 400;
+}
+
+.post-card.title-face-jersey25 .poster__title,
+.post-card.title-face-jersey25 .post-title a,
+.post-card.title-face-jersey25 .prose :is(h2, h3, h4),
+.collection-card.title-face-jersey25 .poster__title,
+.mini-poster.title-face-jersey25 .poster__title,
+.mini-poster.title-face-jersey25 .post-title,
+.legend-sample.title-face-jersey25 {
+  font-family: 'Jersey 25', sans-serif;
+  font-weight: 400;
+}
+
+.post-card.title-face-blackops .poster__title,
+.post-card.title-face-blackops .post-title a,
+.post-card.title-face-blackops .prose :is(h2, h3, h4),
+.collection-card.title-face-blackops .poster__title,
+.mini-poster.title-face-blackops .poster__title,
+.mini-poster.title-face-blackops .post-title,
+.legend-sample.title-face-blackops {
+  font-family: 'Black Ops One', sans-serif;
+  font-weight: 400;
+}
+
+.post-card.title-face-notable .poster__title,
+.post-card.title-face-notable .post-title a,
+.post-card.title-face-notable .prose :is(h2, h3, h4),
+.collection-card.title-face-notable .poster__title,
+.mini-poster.title-face-notable .poster__title,
+.mini-poster.title-face-notable .post-title,
+.legend-sample.title-face-notable {
+  font-family: Notable, cursive;
+  font-weight: 400;
+}
+
+.post-card.title-face-calsans .poster__title,
+.post-card.title-face-calsans .post-title a,
+.post-card.title-face-calsans .prose :is(h2, h3, h4),
+.collection-card.title-face-calsans .poster__title,
+.mini-poster.title-face-calsans .poster__title,
+.mini-poster.title-face-calsans .post-title,
+.legend-sample.title-face-calsans {
+  font-family: 'Cal Sans', sans-serif;
+  font-weight: 400;
+}
+.post-title a {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  color: inherit;
+  text-decoration: none;
+  line-height: inherit;
+  overflow-wrap: break-word;
+}
+.post-title a:hover {
+  color: var(--red);
+}
+.post-header {
+  width: 100%;
+  margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+  overflow: hidden;
+  scroll-margin-top: var(--scroll-offset);
+}
+
+.prose :is(h3, h4, h5, h6)[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+
+.meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  margin-bottom: 0;
+  color: var(--ink-mute);
+}
+.meta-divider {
+  opacity: 0.5;
+}
+.post-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.post-tag {
+  cursor: pointer;
+  color: var(--red);
+}
+.post-tag:hover {
+  text-decoration: underline;
+}
+
+.post-figure {
+  margin: 1.25rem auto 1.5rem;
+}
+.post-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.figure__caption {
+  margin: 0.5rem 0 0;
+  color: var(--ink-mute);
+}
+
+.prose {
+  font-size: var(--config-prose-size, 18px);
+  line-height: var(--config-prose-line-height, 1.6);
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.prose :is(img, picture, video, svg) {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+.prose img,
+.prose picture img,
+.prose video {
+  object-fit: contain;
+}
+
+.post-card[class*='ground-'] .prose .halftone--active {
+  background: var(--surface);
+  isolation: isolate;
+}
+
+.halftone {
+  display: block;
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+}
+
+.halftone__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.halftone--active .halftone__source {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.prose .halftone:not(.halftone--active) .halftone__canvas {
+  display: none;
+}
+
+/* Isometric UI frame — opt in via image title: ![](path "isometric") */
+.prose-img-iso {
+  margin: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(2rem, 5vw, 3.25rem);
+  max-width: min(var(--poster-width), 100%);
+  perspective: var(--config-iso-perspective, 1400px);
+  perspective-origin: var(--config-iso-perspective-origin, 50% 42%);
+}
+
+.prose-img-iso__frame {
+  display: block;
+  width: 100%;
+  transform: rotateX(var(--config-iso-rotate-x, 7deg)) rotateY(var(--config-iso-rotate-y, -16deg))
+    rotateZ(var(--config-iso-rotate-z, -1.5deg));
+  transform-origin: center center;
+  border: var(--chrome-stroke-width) solid var(--config-iso-stroke, #000);
+  background: var(--paper);
+  box-shadow:
+    var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
+      var(--config-iso-stroke, #000),
+    0 var(--config-iso-soft-shadow-y, 28px) var(--config-iso-soft-shadow-blur, 52px)
+      var(--config-iso-soft-shadow-spread, -16px) var(--config-iso-soft-shadow-color, rgba(0, 0, 0, 0.24));
+  transition: transform var(--chrome-ink-duration) var(--chrome-ink-ease);
+}
+
+.prose-img-iso__frame .halftone,
+.prose-img-iso__frame img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.post-card[class*='ground-'] .prose-img-iso__frame {
+  background: var(--surface);
+  border-color: var(--on-ground-edge);
+  box-shadow:
+    var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
+      var(--on-ground-edge),
+    0 var(--config-iso-soft-shadow-y, 28px) var(--config-iso-soft-shadow-blur, 52px)
+      var(--config-iso-soft-shadow-spread, -16px)
+      color-mix(in oklch, var(--on-ground-edge) 24%, transparent);
+}
+
+.collection-hero .prose-img-iso {
+  max-width: min(var(--poster-width), 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prose-img-iso__frame {
+    transform: none;
+  }
+}
+
+.post-card .prose hr {
+  display: none;
+}
+.prose h2,
+.prose h3 {
+  font-family: Ultra, serif;
+  color: var(--red);
+  line-height: 1.1;
+}
+.prose h2 {
+  font-size: 1.5rem;
+}
+.prose p {
+  margin: 0 0 1em;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 1em;
+  padding-left: 1.25em;
+}
+
+.prose table {
+  width: 100%;
+  margin: 0 0 1.25em;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  line-height: 1.45;
+}
+
+.prose .table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0 0 1.25em;
+  -webkit-overflow-scrolling: touch;
+  border: var(--chrome-stroke-width) solid var(--hair);
+  box-shadow: var(--chrome-ink-shadow);
+  box-sizing: border-box;
+}
+
+.prose .table-wrap table {
+  margin: 0;
+}
+
+.prose th,
+.prose td {
+  padding: 0.45em 0.65em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  border: var(--chrome-stroke-width) solid var(--hair);
+  font-weight: 600;
+}
+
+.prose td {
+  border: var(--chrome-stroke-width) solid var(--hair);
+}
+
+.post-card[class*='ground-'] .prose .table-wrap,
+.post-card[class*='ground-'] .prose table {
+  background: var(--surface);
+}
+
+.post-card[class*='ground-'] .prose .table-wrap {
+  border-color: var(--on-ground-edge);
+  box-shadow: var(--poster-ink-shadow);
+}
+
+.post-card[class*='ground-'] .prose th,
+.post-card[class*='ground-'] .prose td {
+  border-color: var(--on-ground-edge);
+  background: var(--surface);
+}
+.prose blockquote {
+  margin: 1.5em 0;
+  padding: 0.5em 0 0.5em 1.25em;
+  border-left: 1px solid var(--hair);
+  font-size: 1.15em;
+  color: var(--ink);
+}
+
+.post-card[class*='ground-'] .prose blockquote {
+  border-left-color: var(--on-ground-edge);
+}
+.prose code {
+  font-family: var(--font-ui-sans, ui-monospace, monospace);
+  font-size: 0.9em;
+  background: var(--code-chip-bg, var(--code-block-bg));
+  color: inherit;
+  padding: 0.1em 0.35em;
+}
+
+/* Page / non-ground prose: never use block darken as inline chip fallback */
+.prose :not(pre) > code {
+  background: var(--code-chip-bg, var(--paper));
+}
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  background: transparent;
+  color: var(--code-text);
+  font-family: var(--font-ui-sans, ui-monospace, monospace);
+  font-size: 0.85rem;
+  line-height: var(--config-mono-line-height, 1.45);
+  border: 2px solid var(--hair);
+}
+
+.code-block-wrap {
+  position: relative;
+  max-width: 100%;
+}
+
+.code-block-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 3rem;
+  height: 100%;
+  pointer-events: none;
+}
+
+.code-block-wrap:hover::after,
+.code-block-wrap:focus-within::after {
+  pointer-events: auto;
+}
+
+.code-block {
+  max-width: 100%;
+}
+
+.code-block__toolbar {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  right: auto;
+  margin-left: 0.5rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.35rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--card-hover-duration) var(--card-hover-ease),
+    visibility 0s linear 0.32s;
+}
+
+.code-block-wrap:hover .code-block__toolbar,
+.code-block-wrap:focus-within .code-block__toolbar {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+@media (max-width: 899px) {
+  .code-block-wrap::after {
+    content: none;
+  }
+
+  .code-block__toolbar {
+    top: 0.5rem;
+    right: 0.5rem;
+    left: auto;
+    margin-left: 0;
+  }
+}
+
+@media (hover: none) {
+  .code-block__toolbar {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+.prose :not(pre) > code {
+  overflow-wrap: anywhere;
+}
+.prose pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.post-card[class*='ground-'] .prose :not(pre) > code {
+  color: var(--on-ground-body);
+  background: var(--on-ground-code-chip-bg, var(--surface));
+}
+
+/* Display-type lines (poster titles, in-post h2–h4): backticks stay in the title face, no chip */
+.post-card .poster__title :is(code, strong, em),
+.post-card .post-title :is(code, strong, em),
+.post-card[class*='ground-'] .prose :is(h2, h3, h4) code,
+.collection-card .poster__title :is(code, strong, em),
+.collection-hero .poster__title :is(code, strong, em) {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  color: inherit;
+}
+
+.post-card[class*='ground-'] .prose pre {
+  background: var(--surface);
+  color: var(--on-ground-body);
+  border-color: var(--on-ground-edge);
+}
+.prose a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+  text-decoration-thickness: 1px;
+}
+
+.prose a:hover {
+  color: var(--paper);
+  background: var(--ink);
+  text-decoration: none;
+}
+.search-highlight {
+  background: color-mix(in oklch, var(--ground-butter) 70%, transparent);
+  padding: 0 0.1em;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Index cards: `.reveal` sits later in the sheet and was overriding hover transitions */
+.collection-card.reveal {
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--card-hover-duration) var(--card-hover-ease),
+    box-shadow var(--card-hover-duration) var(--card-hover-ease);
+}
+.collection-card.reveal.is-visible:hover,
+.collection-card.reveal.is-visible:focus-visible {
+  z-index: 1;
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-solid);
+}
+
+.collection-card[class*='ground-'].reveal.is-visible:hover,
+.collection-card[class*='ground-'].reveal.is-visible:focus-visible {
+  box-shadow: var(--poster-ink-shadow);
+}
+@media (hover: none) {
+  .collection-card.reveal.is-visible:hover,
+  .collection-card.reveal.is-visible:focus-visible {
+    transform: translateY(0);
+    box-shadow: var(--card-shadow-rest);
+  }
+}
+
+.page-reader .back-to-top {
+  right: var(--layout-shell-right);
+}
+
+.back-to-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border: var(--chrome-stroke-width) solid var(--chrome-stroke);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.25rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: var(--chrome-ink-shadow-rest);
+  transition:
+    opacity 0.2s,
+    box-shadow var(--chrome-ink-duration) var(--chrome-ink-ease);
+  z-index: 9995;
+}
+
+.back-to-top.visible:hover,
+.back-to-top.visible:focus-visible {
+  box-shadow: var(--chrome-ink-shadow);
+}
+
+.back-to-top.visible:active {
+  box-shadow: var(--chrome-ink-shadow-rest);
+}
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.site-footer {
+  text-align: center;
+  padding: var(--pad);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Tags page */
+.tag-index-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--pad);
+}
+.tag-index-list {
+  list-style: none;
+  padding: 0;
+}
+.tag-index-list > li {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--hair);
+  padding-bottom: 1rem;
+}
+.tag-index-name {
+  font-family: Ultra, serif;
+  color: var(--red);
+  font-size: 1.5rem;
+}
+.tag-index-count {
+  margin-left: 0.5rem;
+  color: var(--ink-mute);
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+  }
+  .nav--highlight {
+    max-width: none;
+    width: 100%;
+    order: 3;
+  }
+  .crumb {
+    overflow-wrap: anywhere;
+  }
+  .index-hero-title {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media print {
+  .site-header,
+  .back-to-top,
+  .shutter-bar,
+  #scroll-progress {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .post-card {
+    break-inside: avoid;
+  }
+  .poster__title {
+    color: #000;
+  }
+}
