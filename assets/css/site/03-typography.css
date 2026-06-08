@@ -3,14 +3,14 @@
 .mono-label,
 .kicker {
   font-family: inherit;
-  font-size: var(--config-label-size, 1rem);
-  font-weight: var(--config-label-weight, 500);
-  letter-spacing: var(--config-label-letter-spacing, 0.06em);
+  font-size: var(--label-size, 1rem);
+  font-weight: var(--label-weight, 500);
+  letter-spacing: var(--label-letter-spacing, 0.06em);
 }
 
 .crumb {
   font-family: inherit;
-  font-size: var(--config-crumb-size, 0.85rem);
+  font-size: var(--crumb-size, 0.85rem);
   letter-spacing: normal;
   text-transform: none;
 }

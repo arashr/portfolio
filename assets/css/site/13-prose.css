@@ -1,8 +1,8 @@
 /* Prose, halftone, tables, code blocks */
 
 .prose {
-  font-size: var(--config-prose-size, 18px);
-  line-height: var(--config-prose-line-height, 1.6);
+  font-size: var(--prose-size, 18px);
+  line-height: var(--prose-line-height, 1.6);
   overflow-wrap: break-word;
   max-width: 100%;
 }
@@ -220,7 +220,7 @@
   color: var(--code-text);
   font-family: var(--font-ui-sans, ui-monospace, monospace);
   font-size: 0.85rem;
-  line-height: var(--config-mono-line-height, 1.45);
+  line-height: var(--mono-line-height, 1.45);
   border: 2px solid var(--hair);
 }
 

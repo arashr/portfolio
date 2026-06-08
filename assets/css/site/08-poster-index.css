@@ -21,7 +21,7 @@
 
 .prose-brief {
   font-size: 1.1rem;
-  line-height: var(--config-prose-line-height, 1.6);
+  line-height: var(--prose-line-height, 1.6);
 }
 .prose-brief p {
   margin: 0 0 0.5em;

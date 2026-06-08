@@ -222,8 +222,8 @@ button.mini-poster.landing-pick-card .mini-poster__body {
 button.mini-poster .card-lede,
 button.mini-poster .mini-poster__lede {
   margin: 0;
-  font-size: var(--config-prose-size, 18px);
-  line-height: var(--config-prose-line-height, 1.6);
+  font-size: var(--prose-size, 18px);
+  line-height: var(--prose-line-height, 1.6);
   letter-spacing: normal;
   text-transform: none;
 }

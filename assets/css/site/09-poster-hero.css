@@ -2,10 +2,6 @@
 
 /* Posts — collection hero sits on page paper (not a ground poster) */
 .collection-hero {
-  --hero-display: var(--config-hero-display, var(--red));
-  --hero-title: var(--config-ink-soft, var(--ink-soft));
-  --hero-body: var(--config-hero-body, var(--ink-soft));
-  --hero-muted: var(--config-hero-muted, var(--ink-mute));
   --hero-edge: var(--hair);
   width: 100%;
   max-width: 100%;

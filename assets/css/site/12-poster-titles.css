@@ -4,7 +4,7 @@ h2.poster__title.post-title,
 .post-title {
   width: 100%;
   margin: 0;
-  line-height: var(--config-title-line-height, 1.12);
+  line-height: var(--title-line-height, 1.12);
   letter-spacing: -0.003em;
 }
 

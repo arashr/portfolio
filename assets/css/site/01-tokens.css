@@ -1,49 +1,70 @@
-/* Design tokens — config-backed custom properties */
+/* Design tokens — static defaults; gallery.config.json overrides on :root at runtime */
 
-/* Portfolio design tokens — figlets-blog */
 :root {
-  --paper: var(--config-paper, #eff1f3);
-  --ink: var(--config-ink, #0c0e10);
-  --ink-soft: var(--config-ink-soft, #1b1f24);
-  --ink-mute: var(--config-ink-mute, rgba(12, 14, 16, 0.66));
+  --paper: #eff1f3;
+  --ink: #0c0e10;
+  --ink-soft: #1b1f24;
+  --ink-mute: rgba(12, 14, 16, 0.66);
   --surface: var(--paper);
-  --edge-mix: var(--config-edge-mix, 12%);
+  --edge-mix: 12%;
   --edge-1: color-mix(in oklch, var(--surface) calc(100% - var(--edge-mix)), black);
   --hair: color-mix(in oklch, var(--edge-1) calc(100% - var(--edge-mix)), black);
-  --red: var(--config-red, #c8102e);
-  --red-bright: var(--config-red-bright, #e8334e);
-  /* Prose line length (~50–75 chars/line); font-independent if you use rem/px in config */
-  --measure: var(--config-measure, 65ch);
-  /* Poster card width; decoupled from --measure so UI font changes do not shrink cards */
-  --poster-width: var(--config-poster-width, 42rem);
-  --pad: var(--config-pad, clamp(16px, 4vw, 56px));
-  --scroll-offset: var(--config-scroll-offset, 6.5rem);
-  --layout-max: var(--config-layout-max, 1440px);
+  --red: #c8102e;
+  --red-bright: #e8334e;
+  --measure: 65ch;
+  --poster-width: 42rem;
+  --pad: clamp(16px, 4vw, 56px);
+  --scroll-offset: 6.5rem;
+  --layout-max: 1440px;
   --layout-cols: 12;
-  --layout-gap: var(--config-layout-gap, 16px);
+  --layout-gap: 16px;
   --layout-content-max: calc(var(--layout-max) - 2 * var(--pad));
   --layout-shell-right: calc((100vw - min(100vw, var(--layout-max))) / 2 + var(--pad));
-  --toc-rail-min: var(--config-toc-rail-min, 75rem);
+  --toc-rail-min: 75rem;
   --poster-grid-span: 6;
   --poster-grid-cols: 9;
+  --body-size: 17px;
+  --body-line-height: 1.5;
+  --prose-size: 18px;
+  --prose-line-height: 1.6;
+  --title-line-height: 1.12;
+  --title-heading-line-height: 0.95;
+  --title-face-letter-spacing: 0.02em;
+  --label-size: 0.75rem;
+  --label-weight: 500;
+  --label-letter-spacing: 0.06em;
+  --crumb-size: 0.85rem;
+  --mono-line-height: 1.45;
+  --ui-sans-line-height: 1.5;
+  --ui-serif-line-height: 1.5;
+  --hero-display: var(--red);
+  --hero-title: var(--ink-soft);
+  --hero-body: var(--ink-soft);
+  --hero-muted: var(--ink-mute);
+  --dark-paper: #12151a;
+  --dark-ink: #eef0f4;
+  --dark-ink-soft: #c8cdd6;
+  --dark-ink-mute: #c0c8d4;
+  --dark-red: #ffa0ab;
+  --dark-red-bright: #ffb3bc;
+  --code-inline-mix: 35%;
   --card-shadow-solid: -4px 4px 0 var(--hair);
   --card-shadow-rest: -4px 4px 0 transparent;
-  /* Solid-ink chrome (header controls, TOC) — 1px stroke, hard shadow grows on hover */
   --chrome-stroke: var(--ink);
   --chrome-stroke-width: 1px;
   --chrome-ink-shadow-rest: 0 0 0 0 transparent;
   --chrome-ink-shadow: 4px 4px 0 0 var(--chrome-stroke);
   --chrome-ink-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --chrome-ink-duration: 0.15s;
-  --card-hover-ease: var(--config-card-hover-ease, cubic-bezier(0.22, 1, 0.36, 1));
-  --card-hover-duration: var(--config-card-hover-duration, 0.4s);
-  --reveal-duration: var(--config-reveal-duration, 0.8s);
-  --reveal-ease: var(--config-reveal-ease, ease);
-  --shutter-duration: var(--config-shutter-duration, 0.9s);
-  --shutter-ease: var(--config-shutter-ease, cubic-bezier(0.77, 0, 0.18, 1));
-  --glyph-pattern-color: var(--config-glyph-pattern-color, var(--red));
-  --glyph-pattern-opacity: var(--config-glyph-pattern-opacity, 0.07);
-  --code-text: var(--config-code-text, #eff1f3);
-  --code-step-mix: var(--config-code-block-step-mix, var(--edge-mix));
-  --code-block-bg: var(--config-code-block-bg, var(--ink));
+  --card-hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --card-hover-duration: 0.4s;
+  --reveal-duration: 0.8s;
+  --reveal-ease: ease;
+  --shutter-duration: 0.9s;
+  --shutter-ease: cubic-bezier(0.77, 0, 0.18, 1);
+  --glyph-pattern-color: var(--red);
+  --glyph-pattern-opacity: 0.07;
+  --code-text: #eff1f3;
+  --code-step-mix: var(--edge-mix);
+  --code-block-bg: var(--ink);
 }
