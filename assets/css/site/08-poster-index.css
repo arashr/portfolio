@@ -103,13 +103,6 @@ a.collection-card[class*='ground-'] .card-lede {
   list-style: none;
   padding: 0;
 }
-.latest-list a {
-  color: var(--ink-soft);
-  text-decoration: none;
-}
-.latest-list a:hover {
-  color: var(--red);
-}
 .latest-date {
   margin-right: 0.5rem;
   color: var(--red);

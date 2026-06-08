@@ -357,16 +357,6 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
   text-align: right;
 }
 
-.landing-foot a {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-
-.landing-foot__meta a:hover {
-  color: var(--ink);
-}
-
 .landing-foot__sep {
   margin: 0 0.5rem;
 }

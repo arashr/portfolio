@@ -42,8 +42,32 @@ html[data-theme='dark'] .landing-foot {
   color: var(--chrome-ink-mute);
 }
 
-html[data-theme='dark'] .landing-foot__meta a:hover {
-  color: var(--chrome-ink);
+html[data-theme='dark'] .chrome-link,
+html[data-theme='dark'] .reader-header__meta-aside a,
+html[data-theme='dark'] .landing-foot a,
+html[data-theme='dark'] .collection-hero .prose-brief a,
+html[data-theme='dark'] .collection-hero .case-hero__sub a,
+html[data-theme='dark'] .crumb a,
+html[data-theme='dark'] .latest-list a {
+  color: var(--chrome-ink-soft);
+}
+
+html[data-theme='dark'] .chrome-link:hover,
+html[data-theme='dark'] .chrome-link:focus-visible,
+html[data-theme='dark'] .reader-header__meta-aside a:hover,
+html[data-theme='dark'] .reader-header__meta-aside a:focus-visible,
+html[data-theme='dark'] .landing-foot a:hover,
+html[data-theme='dark'] .landing-foot a:focus-visible,
+html[data-theme='dark'] .collection-hero .prose-brief a:hover,
+html[data-theme='dark'] .collection-hero .prose-brief a:focus-visible,
+html[data-theme='dark'] .collection-hero .case-hero__sub a:hover,
+html[data-theme='dark'] .collection-hero .case-hero__sub a:focus-visible,
+html[data-theme='dark'] .crumb a:hover,
+html[data-theme='dark'] .crumb a:focus-visible,
+html[data-theme='dark'] .latest-list a:hover,
+html[data-theme='dark'] .latest-list a:focus-visible {
+  color: var(--paper);
+  background: var(--chrome-ink);
 }
 
 html[data-theme='dark'] .site-header .nav-search-icon {
@@ -135,15 +159,6 @@ html[data-theme='dark'] .collection-hero {
   --hero-body: var(--chrome-ink-soft);
   --hero-muted: var(--chrome-ink-mute);
   --hero-edge: var(--hair);
-}
-
-html[data-theme='dark'] .collection-hero .prose-brief a {
-  color: var(--chrome-ink-soft);
-}
-
-html[data-theme='dark'] .collection-hero .prose-brief a:hover {
-  color: var(--paper);
-  background: var(--chrome-ink);
 }
 
 html[data-theme='dark'] .collection-hero .prose-brief .table-wrap {

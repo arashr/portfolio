@@ -1,0 +1,36 @@
+/* Inline links outside posters — header, footer, hero intro, crumbs */
+
+.chrome-link,
+.reader-header__meta-aside a,
+.landing-foot a,
+.collection-hero .prose-brief a,
+.collection-hero .case-hero__sub a,
+.crumb a,
+.latest-list a {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.chrome-link:hover,
+.chrome-link:focus-visible,
+.reader-header__meta-aside a:hover,
+.reader-header__meta-aside a:focus-visible,
+.landing-foot a:hover,
+.landing-foot a:focus-visible,
+.collection-hero .prose-brief a:hover,
+.collection-hero .prose-brief a:focus-visible,
+.collection-hero .case-hero__sub a:hover,
+.collection-hero .case-hero__sub a:focus-visible,
+.crumb a:hover,
+.crumb a:focus-visible,
+.latest-list a:hover,
+.latest-list a:focus-visible {
+  color: var(--paper);
+  background: var(--ink);
+  text-decoration: none;
+}

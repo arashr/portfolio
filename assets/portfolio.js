@@ -34,12 +34,10 @@ import { ICONS } from './icons.js';
   const siteBrand = document.getElementById('site-brand');
   const landingSiteTagline = document.getElementById('landing-site-tagline');
   const landingGalleryGrid = document.getElementById('landing-gallery-grid');
-  const landingGalleryCount = document.getElementById('landing-gallery-count');
   const mainReader = document.getElementById('main-reader');
   const readerHome = document.getElementById('reader-home');
   const readerSiteBrand = document.getElementById('reader-site-brand');
   const readerSiteTagline = document.getElementById('reader-site-tagline');
-  const readerZoomLabel = document.getElementById('reader-zoom-label');
   const readerLayout = document.querySelector('.reader-layout');
   const zoomOut = document.getElementById('zoom-out');
   const zoomIn = document.getElementById('zoom-in');
@@ -219,9 +217,6 @@ import { ICONS } from './icons.js';
     localStorage.setItem(ZOOM_KEY, String(readerZoom));
     zoomOut.disabled = readerZoom <= ZOOM_MIN;
     zoomIn.disabled = readerZoom >= ZOOM_MAX;
-    if (readerZoomLabel) {
-      readerZoomLabel.textContent = `Zoom ${Math.round(readerZoom * 100)}%`;
-    }
     updateScrollOffset();
     schedulePosterTitleFit();
     updateTocLayout();
@@ -286,8 +281,6 @@ import { ICONS } from './icons.js';
 
   function renderHomeGallery(items) {
     caseStudyItems = items;
-    const count = items.length;
-    landingGalleryCount.textContent = `${count} case stud${count === 1 ? 'y' : 'ies'}`;
     landingGalleryGrid.innerHTML = renderLandingGallery(
       items.map(({ path, title, index, subtext, stats, credit }) => ({
         path,
@@ -325,7 +318,6 @@ import { ICONS } from './icons.js';
 
   function renderEmptyHome() {
     caseStudyItems = [];
-    landingGalleryCount.textContent = 'No case studies yet';
     landingGalleryGrid.innerHTML =
       '<p class="landing-error mono-label">Add a <code>.md</code> file under <code>content/</code> (not dot-prefixed).</p>';
   }
@@ -453,7 +445,6 @@ import { ICONS } from './icons.js';
       startContentWatch();
     } catch (err) {
       console.error(err);
-      landingGalleryCount.textContent = 'Could not load case studies';
       landingGalleryGrid.innerHTML =
         '<p class="landing-error mono-label">Add <code>.md</code> case studies under <code>content/</code> and use <code>npm start</code>.</p>';
     }

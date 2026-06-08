@@ -90,9 +90,6 @@
   padding: 0;
   color: var(--ink-mute);
 }
-.crumb a {
-  color: var(--red);
-}
 .crumb-meta {
   color: var(--ink-mute);
 }
