@@ -2,7 +2,7 @@
   "name": "md-portfolio",
   "version": "1.0.0",
   "private": true,
-  "license": "MIT",
+  "license": "UNLICENSED",
   "type": "module",
   "description": "Static portfolio — case studies as Markdown poster galleries",
   "scripts": {

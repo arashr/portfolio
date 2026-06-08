@@ -54,7 +54,7 @@
   row-gap: clamp(1rem, 2vw, 1.125rem);
   width: 100%;
   min-width: 0;
-  padding: 2rem 0 clamp(2rem, 5vw, 3rem);
+  padding: 2rem 0 1rem 0;
   margin: 0;
   background: var(--paper);
 }
@@ -223,14 +223,14 @@ button.mini-poster .card-lede,
 button.mini-poster .mini-poster__lede {
   margin: 0;
   font-size: var(--prose-size, 18px);
-  line-height: var(--prose-line-height, 1.6);
+  line-height: var(--prose-line-height, 1.2);
   letter-spacing: normal;
   text-transform: none;
 }
 
 button.mini-poster.landing-pick-card .mini-poster__lede {
   font-size: clamp(0.8rem, 2.8cqi, 1rem);
-  line-height: 1.35;
+  line-height: var(--prose-body-line-height, 1.6);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
