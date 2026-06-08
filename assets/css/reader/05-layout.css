@@ -49,7 +49,7 @@
 }
 
 .page-reader .poster-gallery .post-card-wrap .post-card {
-  max-width: 100%;
+  max-width: min(var(--poster-width), 100%);
 }
 
 .reader-toc-rail {
@@ -95,7 +95,10 @@
 
   .page-reader .collection-hero .doc-meta,
   .page-reader .collection-hero .case-hero__sub {
-    max-width: calc(100% * var(--poster-grid-span) / var(--poster-grid-cols));
+    max-width: min(
+      var(--poster-width),
+      calc(100% * var(--poster-grid-span) / var(--poster-grid-cols))
+    );
   }
 
   .page-reader .poster-gallery.posts-list {
@@ -141,7 +144,7 @@
   }
 
   .reader-header__role,
-  .reader-header__zoom {
+  .reader-header__meta-aside {
     font-size: 0.75rem;
   }
 }

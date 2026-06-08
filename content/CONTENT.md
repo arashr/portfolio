@@ -23,17 +23,26 @@ The gallery reads each file once for listing metadata (the full poster gallery s
 |--------|---------------------------|
 | **Title** | YAML `title:` · first `#` heading · filename |
 | **Description** (subtitle under the title on the card) | YAML `description:` · `subtext:` · `tagline:` · first plain paragraph between `#` and the first `##` |
+| **Stats** (metric chips in a row) | First markdown table in the intro (before the first `##`): header row = labels, next row = values |
+| **Credit** (footer line, e.g. role · year) | YAML `credit:` · or `role:` + `year:` |
 
 Recommended pattern:
 
 ```md
 ---
-description: Design system · 2025
+title: Conversion Growth
+description: One short sentence for the homepage card.
+role: Lead Product Designer
+year: 2023
 ---
 
-# Project name
+# Project name (case study hero — can differ from card title)
 
-One short sentence for the homepage card. Readers see the full intro in the case study hero.
+| CTR Increase | Sessions tested | Brands |
+|---:|---:|---:|
+| 8% | +364K | 50+ |
+
+Readers see the full intro in the case study hero.
 
 ## First section
 
@@ -41,6 +50,8 @@ One short sentence for the homepage card. Readers see the full intro in the case
 ```
 
 The intro paragraph is optional if you set `description` in frontmatter. Headings (`###`), images, and lists before the first `##` are skipped when picking an automatic description.
+
+You can still prefix a description with a year (`2024 . …`); it is stripped from the card text and used as `year` when `year:` is not set in frontmatter.
 
 ## Poster sections
 

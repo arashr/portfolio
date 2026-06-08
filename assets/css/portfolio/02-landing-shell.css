@@ -12,18 +12,9 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  padding: 2rem 0 clamp(2rem, 5vw, 3rem);
+  padding: 0;
   width: 100%;
   box-sizing: border-box;
-}
-
-.page-landing .landing-main.landing-main--gallery {
-  padding-top: clamp(1rem, 3vw, 2rem);
-}
-
-.landing-shell {
-  width: min(100%, 56rem);
-  margin: 0 auto;
 }
 
 .landing-featured,
@@ -44,37 +35,76 @@
   display: none;
 }
 
-.landing-gallery__count {
-  margin: 0;
+.landing-pick-wrap {
+  width: 100%;
+  max-width: none;
+  height: 100%;
 }
 
-.landing-mini-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-  gap: 16px;
+.page-landing .landing-feed {
+  grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
+  margin-inline: auto;
+  padding: 0;
+}
+
+.page-landing .landing-gallery--home.posts-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: clamp(1rem, 2vw, 1.125rem);
+  width: 100%;
+  min-width: 0;
+  padding: 2rem 0 clamp(2rem, 5vw, 3rem);
+  margin: 0;
+  background: var(--paper);
+}
+
+.page-landing .landing-gallery--home .post-card-wrap {
+  width: 100%;
+  max-width: none;
+}
+
+.page-landing .landing-gallery--home .post-card-wrap .post-card {
+  max-width: 100%;
+}
+
+/* Homepage gallery — 12-col shell, uniform spans (no poster stagger) */
+@media (min-width: 900px) {
+  .page-landing .landing-gallery--home.posts-list {
+    display: grid;
+    grid-template-columns: repeat(var(--layout-cols), minmax(0, 1fr));
+    column-gap: var(--layout-gap);
+    row-gap: clamp(1rem, 2vw, 1.125rem);
+    flex-direction: unset;
+    align-items: stretch;
+  }
+
+  .page-landing .landing-gallery--home .post-card-wrap {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1080px) {
+  .page-landing .landing-gallery--home .post-card-wrap {
+    grid-column: span 4;
+  }
 }
 
 @media (max-width: 699px) {
   .landing-featured {
     grid-template-columns: 1fr;
   }
-
-  .landing-mini-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
-/* Horizontal mini posters (featured + folder grid) */
+/* Mini posters — same surface language as reader post-cards */
 button.mini-poster {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: stretch;
   width: 100%;
-  min-height: clamp(7.5rem, 22vw, 10.5rem);
-  padding: clamp(0.85rem, 2.5vw, 1.15rem) 32px;
   margin: 0;
-  border: var(--chrome-stroke-width) solid var(--chrome-stroke);
+  border: none;
   border-radius: 0;
   text-align: left;
   font: inherit;
@@ -82,27 +112,77 @@ button.mini-poster {
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+  box-sizing: border-box;
+}
+
+/* Compact grid tiles (non-home picks) */
+button.mini-poster:not(.landing-pick-card) {
+  justify-content: space-between;
+  min-height: clamp(7.5rem, 22vw, 10.5rem);
+  padding: clamp(0.85rem, 2.5vw, 1.15rem) 32px;
+  border: var(--chrome-stroke-width) solid var(--chrome-stroke);
   box-shadow: var(--chrome-ink-shadow-rest);
   transition: box-shadow var(--chrome-ink-duration) var(--chrome-ink-ease);
 }
 
-button.mini-poster[class*='ground-'] {
+button.mini-poster:not(.landing-pick-card)[class*='ground-'] {
   border-color: var(--on-ground-edge);
 }
 
-button.mini-poster:hover,
-button.mini-poster:focus-visible {
+button.mini-poster:not(.landing-pick-card):hover,
+button.mini-poster:not(.landing-pick-card):focus-visible {
   border-color: var(--chrome-stroke);
   box-shadow: var(--chrome-ink-shadow);
 }
 
-button.mini-poster[class*='ground-']:hover,
-button.mini-poster[class*='ground-']:focus-visible {
-  border-color: var(--on-ground-edge);
-  box-shadow: var(--poster-ink-shadow);
+button.mini-poster:not(.landing-pick-card)[class*='ground-']:hover,
+button.mini-poster:not(.landing-pick-card)[class*='ground-']:focus-visible {
+  border-color: var(--ink);
+  box-shadow: var(--chrome-ink-shadow);
 }
 
-button.mini-poster:active {
+button.mini-poster:not(.landing-pick-card):active {
+  box-shadow: var(--chrome-ink-shadow-rest);
+}
+
+button.mini-poster:not(.landing-pick-card) .poster__title,
+button.mini-poster:not(.landing-pick-card) .mini-poster__title {
+  font-size: var(--poster-title-size, clamp(1.35rem, 4.5cqi, 2.75rem));
+  line-height: 0.95;
+}
+
+/* Homepage case-study picks — compact mini posters in a grid */
+button.mini-poster.landing-pick-card {
+  container-type: inline-size;
+  container-name: poster-card;
+  position: relative;
+  height: 100%;
+  min-height: clamp(8.5rem, 42cqi, 11.5rem);
+  padding: clamp(0.75rem, 3.5cqi, 1rem) clamp(0.8rem, 4cqi, 1.1rem);
+  border: var(--chrome-stroke-width) solid transparent;
+  box-shadow: var(--chrome-ink-shadow-rest);
+  transition:
+    box-shadow var(--chrome-ink-duration) var(--chrome-ink-ease),
+    border-color var(--chrome-ink-duration) var(--chrome-ink-ease);
+}
+
+button.mini-poster.landing-pick-card[class*='ground-'] {
+  border-color: var(--on-ground-edge);
+}
+
+button.mini-poster.landing-pick-card:hover,
+button.mini-poster.landing-pick-card:focus-visible {
+  border-color: var(--chrome-stroke);
+  box-shadow: var(--chrome-ink-shadow);
+}
+
+button.mini-poster.landing-pick-card[class*='ground-']:hover,
+button.mini-poster.landing-pick-card[class*='ground-']:focus-visible {
+  border-color: var(--ink);
+  box-shadow: var(--chrome-ink-shadow);
+}
+
+button.mini-poster.landing-pick-card:active {
   box-shadow: var(--chrome-ink-shadow-rest);
 }
 
@@ -112,30 +192,87 @@ button.mini-poster .mini-poster__title {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  font-size: var(--poster-title-size, clamp(1.35rem, 4.5cqi, 2.75rem));
-  line-height: 0.95;
   padding: 0.06em 0 0.1em;
   text-wrap: balance;
+}
+
+button.mini-poster .mini-poster__head {
+  flex: 0 0 auto;
+  min-width: 0;
+  overflow: visible;
+}
+
+button.mini-poster.landing-pick-card .post-header {
+  margin-bottom: clamp(0.45rem, 2cqi, 0.65rem);
 }
 
 button.mini-poster .mini-poster__body {
   margin: 0;
   padding: 0;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: min(var(--measure), 100%);
+}
+
+button.mini-poster.landing-pick-card .mini-poster__body {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
 }
 
 button.mini-poster .card-lede,
 button.mini-poster .mini-poster__lede {
   margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  font-size: var(--config-prose-size, 18px);
+  line-height: var(--config-prose-line-height, 1.6);
+  letter-spacing: normal;
   text-transform: none;
 }
 
-button.mini-poster .mini-poster__head {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: visible;
+button.mini-poster.landing-pick-card .mini-poster__lede {
+  font-size: clamp(0.8rem, 2.8cqi, 1rem);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+button.mini-poster.landing-pick-card .mini-poster__stats {
+  margin-top: clamp(0.5rem, 2cqi, 0.75rem);
+}
+
+button.mini-poster.landing-pick-card .mini-poster__stats table {
+  font-size: 0.8em;
+}
+
+button.mini-poster.landing-pick-card .mini-poster__stats th,
+button.mini-poster.landing-pick-card .mini-poster__stats td {
+  padding: 0.3em 0.4em;
+}
+
+button.mini-poster.landing-pick-card .mini-poster__stats th {
+  font-weight: 600;
+  font-size: 0.65em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+button.mini-poster.landing-pick-card .mini-poster__stats td {
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--red);
+}
+
+button.mini-poster[class*='ground-'].landing-pick-card .mini-poster__stats td {
+  color: var(--on-ground-display);
+}
+
+button.mini-poster.landing-pick-card .mini-poster__credit {
+  margin: clamp(0.45rem, 1.5cqi, 0.6rem) 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
 }
 
 button.mini-poster .post-title-bounds {
@@ -193,9 +330,10 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
 .landing-foot {
   position: relative;
   z-index: 9991;
-  width: min(100%, 56rem);
+  width: min(100%, var(--layout-max));
   margin: 0 auto;
-  padding: 1rem 32px 2rem;
+  padding: 1rem var(--pad) 2rem;
+  box-sizing: border-box;
   color: var(--ink-mute);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
@@ -219,7 +357,7 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
   text-align: right;
 }
 
-.landing-foot__meta a {
+.landing-foot a {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 0.15em;

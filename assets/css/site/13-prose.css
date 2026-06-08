@@ -170,17 +170,22 @@
 }
 
 .post-card[class*='ground-'] .prose .table-wrap,
-.post-card[class*='ground-'] .prose table {
+.post-card[class*='ground-'] .prose table,
+.mini-poster[class*='ground-'] .prose .table-wrap,
+.mini-poster[class*='ground-'] .prose table {
   background: var(--surface);
 }
 
-.post-card[class*='ground-'] .prose .table-wrap {
+.post-card[class*='ground-'] .prose .table-wrap,
+.mini-poster[class*='ground-'] .prose .table-wrap {
   border-color: var(--on-ground-edge);
   box-shadow: var(--poster-ink-shadow);
 }
 
 .post-card[class*='ground-'] .prose th,
-.post-card[class*='ground-'] .prose td {
+.post-card[class*='ground-'] .prose td,
+.mini-poster[class*='ground-'] .prose th,
+.mini-poster[class*='ground-'] .prose td {
   border-color: var(--on-ground-edge);
   background: var(--surface);
 }

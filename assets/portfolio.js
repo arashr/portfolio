@@ -32,8 +32,7 @@ import { ICONS } from './icons.js';
   const reader = document.getElementById('reader');
   const landingMain = document.getElementById('main');
   const siteBrand = document.getElementById('site-brand');
-  const landingHeroTitle = document.getElementById('landing-hero-title');
-  const landingHeroTagline = document.getElementById('landing-hero-tagline');
+  const landingSiteTagline = document.getElementById('landing-site-tagline');
   const landingGalleryGrid = document.getElementById('landing-gallery-grid');
   const landingGalleryCount = document.getElementById('landing-gallery-count');
   const mainReader = document.getElementById('main-reader');
@@ -71,7 +70,7 @@ import { ICONS } from './icons.js';
   let posterEls = [];
   let titleScaleFrame = 0;
   let titleFitObserver = null;
-  /** @type {{ path: string, title: string, index: number, subtext?: string }[] | null} */
+  /** @type {{ path: string, title: string, index: number, subtext?: string, stats?: { value: string, label: string }[], credit?: string }[] | null} */
   let caseStudyItems = null;
   let currentRelativePath = '';
   let openCaseText = '';
@@ -80,7 +79,7 @@ import { ICONS } from './icons.js';
   /** @type {{ destroy: () => void, refresh: () => void }} */
   let edgeHalftone = { destroy() {}, refresh() {} };
 
-  const CONTENT_POLL_MS = 1500;
+  const CONTENT_POLL_MS = 3000;
   const isLocalDev =
     location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 
@@ -290,18 +289,21 @@ import { ICONS } from './icons.js';
     const count = items.length;
     landingGalleryCount.textContent = `${count} case stud${count === 1 ? 'y' : 'ies'}`;
     landingGalleryGrid.innerHTML = renderLandingGallery(
-      items.map(({ path, title, index, subtext }) => ({
+      items.map(({ path, title, index, subtext, stats, credit }) => ({
         path,
         title,
         index,
-        subtext: subtext || path.split('/').pop() || path
+        subtext: subtext || path.split('/').pop() || path,
+        stats: stats || [],
+        credit: credit || ''
       }))
     );
     scheduleLandingMiniGlyphs();
   }
 
   function indexSignature(index) {
-    return `${index.generatedAt || ''}|${index.cases.join('\n')}`;
+    if (index.revision) return index.revision;
+    return index.cases.join('\n');
   }
 
   function goHome() {
@@ -311,13 +313,12 @@ import { ICONS } from './icons.js';
 
   function applySiteConfig(site) {
     if (site.title) {
-      if (landingHeroTitle) landingHeroTitle.textContent = site.title;
       if (siteBrand) siteBrand.textContent = site.title;
       if (readerSiteBrand) readerSiteBrand.textContent = site.title;
       document.title = site.title;
     }
     if (site.tagline) {
-      if (landingHeroTagline) landingHeroTagline.textContent = site.tagline;
+      if (landingSiteTagline) landingSiteTagline.textContent = site.tagline;
       if (readerSiteTagline) readerSiteTagline.textContent = site.tagline;
     }
   }
@@ -433,8 +434,12 @@ import { ICONS } from './icons.js';
     if (!isLocalDev) return;
     if (contentWatchTimer) return;
     contentWatchTimer = window.setInterval(() => {
+      if (document.hidden) return;
       void refreshContentIfChanged().catch(() => {});
     }, CONTENT_POLL_MS);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) void refreshContentIfChanged().catch(() => {});
+    });
   }
 
   async function boot() {

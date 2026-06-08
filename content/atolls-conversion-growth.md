@@ -1,5 +1,8 @@
 ---
-description: 2024 . Modern, on-brand design that lifted clicks by 8% without sacrificing conversion
+title: Atolls Conversion Growth
+description: Modern, on-brand design that lifted clicks by 8% without sacrificing conversion
+role: Lead Product Designer
+year: 2023
 ---
 # Atolls Conversion Growth
 

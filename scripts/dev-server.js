@@ -1,10 +1,15 @@
 #!/usr/bin/env node
 import { createServer, request } from 'node:http';
 import { spawn } from 'node:child_process';
+import { watch } from 'node:fs';
+import { join } from 'node:path';
 import { buildContentIndexPayload } from '../lib/content-index-node.js';
-import { CONTENT_INDEX_PATH } from '../lib/content-catalog.js';
+import { CONTENT_DIR, CONTENT_INDEX_PATH } from '../lib/content-catalog.js';
 
 const repoRoot = process.cwd();
+/** @type {ReturnType<typeof buildContentIndexPayload> | null} */
+let contentIndexCache = null;
+let contentWatchTimer = 0;
 const host = '127.0.0.1';
 const upstreamPort = Number(process.env.SERVE_PORT) || 3001;
 const port = Number(process.env.PORT) || 3000;
@@ -42,10 +47,33 @@ function proxy(req, res) {
   req.pipe(upstream);
 }
 
+function invalidateContentIndex() {
+  contentIndexCache = null;
+}
+
+function getContentIndexPayload() {
+  if (!contentIndexCache) {
+    contentIndexCache = buildContentIndexPayload();
+  }
+  return contentIndexCache;
+}
+
+function startContentWatch() {
+  const contentDir = join(repoRoot, CONTENT_DIR);
+  try {
+    watch(contentDir, { recursive: true }, () => {
+      clearTimeout(contentWatchTimer);
+      contentWatchTimer = setTimeout(invalidateContentIndex, 200);
+    });
+  } catch {
+    // Non-recursive platforms still get stable revision-based change detection.
+  }
+}
+
 const server = createServer((req, res) => {
   const pathname = req.url?.split('?')[0] || '';
   if (req.method === 'GET' && pathname === indexPath) {
-    const payload = buildContentIndexPayload();
+    const payload = getContentIndexPayload();
     res.writeHead(200, {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store'
@@ -57,9 +85,10 @@ const server = createServer((req, res) => {
 });
 
 server.listen(port, () => {
+  startContentWatch();
   console.log(`\n  MD Portfolio (dev)`);
   console.log(`  → http://localhost:${port}`);
-  console.log(`  Content index rebuilds on each request — save a .md file and the app refreshes.\n`);
+  console.log(`  Content reloads when you save files under content/ — not on every poll.\n`);
 });
 
 function shutdown() {

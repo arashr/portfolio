@@ -39,6 +39,8 @@
 .post-card[class*='ground-'] .mono-label,
 .post-card[class*='ground-'] .meta-strip,
 .post-card[class*='ground-'] .meta-strip .post-date,
+.mini-poster[class*='ground-'] .meta-strip,
+.mini-poster[class*='ground-'] .meta-strip .post-date,
 .post-card[class*='ground-'] .halftone__caption,
 .poster[class*='ground-'] .case-hero__sub {
   color: var(--on-ground-muted);

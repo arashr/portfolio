@@ -15,22 +15,25 @@
   background: var(--paper);
 }
 
-/* Collection feed: 12-column poster grid (wide screens; see reader.css) */
-.collection-feed .poster-gallery {
+/* Collection / landing feed: 12-column poster grid (wide screens; see reader.css) */
+.collection-feed .poster-gallery,
+.landing-feed .poster-gallery {
   align-items: start;
   padding-left: 0;
   padding-right: 0;
   gap: clamp(1.25rem, 3vw, 2rem);
 }
 
-.collection-feed .poster-gallery .post-card-wrap {
+.collection-feed .poster-gallery .post-card-wrap,
+.landing-feed .poster-gallery .post-card-wrap {
   width: 100%;
   max-width: none;
   margin-left: 0;
   margin-right: 0;
 }
 
-.collection-feed .poster-gallery .post-card-wrap .post-card {
+.collection-feed .poster-gallery .post-card-wrap .post-card,
+.landing-feed .poster-gallery .post-card-wrap .post-card {
   width: 100%;
   max-width: 100%;
 }

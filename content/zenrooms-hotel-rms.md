@@ -1,10 +1,11 @@
 ---
+title: Hotel Revenue Management System
 description: 2021 . A native app for a budget hotel booking service
+year: 2021
+role: Lead Product Designer
 ---
 
 # Hotel Revenue Management System
-
-## Overview
 
 ![ZenRooms RMS](src/zenrooms-rms-hero.png)
 
@@ -24,6 +25,8 @@ My responsibilities included:
 - Managing the product from start to end
 
 [See Prototype](https://www.figma.com/proto/oxDI7LyKHPeGeDao3NMu7J/eManager-Express)
+
+<br>
 
 | New Tool | MVP Delivery | Initial Hotels |
 |---:|---:|---:|

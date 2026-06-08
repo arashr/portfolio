@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeContentIndex, shouldIncludeCaseStudyFile } from '../lib/content-catalog.js';
-import { scanContentCaseStudies } from '../lib/content-index-node.js';
+import { buildContentIndexPayload, contentRevision, scanContentCaseStudies } from '../lib/content-index-node.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -23,6 +23,19 @@ test('normalizeContentIndex normalizes paths', () => {
 
 test('normalizeContentIndex requires cases', () => {
   assert.throws(() => normalizeContentIndex({ cases: [] }), /no case studies/);
+});
+
+test('contentRevision is stable until files change', () => {
+  const cases = ['content/a.md', 'content/b.md'];
+  const first = contentRevision(cases, repoRoot, []);
+  const second = contentRevision(cases, repoRoot, []);
+  assert.equal(first, second);
+});
+
+test('buildContentIndexPayload includes revision', () => {
+  const payload = buildContentIndexPayload('content', repoRoot);
+  assert.ok(typeof payload.revision === 'string' && payload.revision.length > 0);
+  assert.ok(Array.isArray(payload.cases) && payload.cases.length > 0);
 });
 
 test('scanContentCaseStudies finds bundled case studies', () => {

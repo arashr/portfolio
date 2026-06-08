@@ -1,10 +1,11 @@
 ---
-description: 2019 . A full-service budget & mid-range hospitality group in Southeast Asia.
+title: ZENRooms Conversion Boost
+description: A full-service budget & mid-range hospitality group in Southeast Asia.
+year: 2019
+role: Product Designer
 ---
 
 # ZENRooms Conversion Boost
-
-## Overview
 
 ![ZENRooms Conversion Boost](src/zen-conversion-hero.png)
 

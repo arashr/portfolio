@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
   <meta name="description" content="Case studies as an editorial poster gallery — built from Markdown.">
+  <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link id="fonts-link" rel="stylesheet" href="">
@@ -21,35 +22,36 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <section class="page-landing" id="landing" aria-label="Case studies">
-    <header class="site-header">
-      <div class="header-inner">
-        <span class="brand"><span class="brand-mark">◆</span> <span id="site-brand">Portfolio</span></span>
-        <div class="app-chrome-actions" role="group" aria-label="View options">
-          <button type="button" class="btn-icon btn-ghost theme-toggle" id="theme-toggle" aria-label="Dark mode" aria-pressed="false">
-            <span class="theme-toggle__icons" aria-hidden="true"></span>
-          </button>
+    <header class="site-header site-header--reader">
+      <div class="header-inner reader-header">
+        <div class="reader-header__primary">
+          <span class="brand brand--reader site-header__brand" id="site-brand">Portfolio</span>
+          <div class="reader-header__tools">
+            <div class="reader-controls" role="group" aria-label="View options">
+              <button type="button" class="btn-icon btn-ghost theme-toggle" id="theme-toggle" aria-label="Dark mode" aria-pressed="false">
+                <span class="theme-toggle__icons" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="reader-header__meta mono-label">
+          <p class="reader-header__role" id="landing-site-tagline">Case studies</p>
+          <p class="reader-header__meta-aside" id="landing-gallery-count"></p>
         </div>
       </div>
     </header>
     <main class="landing-main landing-main--portfolio" id="main">
-      <div class="landing-shell">
-        <header class="landing-hero">
-          <h1 class="landing-hero__title" id="landing-hero-title">Portfolio</h1>
-          <p class="landing-hero__tagline" id="landing-hero-tagline">Case studies</p>
-        </header>
-        <div class="landing-gallery landing-gallery--home" id="landing-gallery">
-          <div class="landing-gallery__head">
-            <p class="landing-gallery__count mono-label" id="landing-gallery-count"></p>
-          </div>
-          <div id="landing-gallery-grid" class="landing-gallery__grid landing-mini-grid" role="list"></div>
+      <div class="reader-layout">
+        <div class="content-feed landing-feed">
+          <div id="landing-gallery-grid" class="poster-gallery posts-list landing-gallery landing-gallery--home" role="list"></div>
         </div>
       </div>
     </main>
     <footer class="landing-foot mono-label">
       <div class="landing-foot__row">
-        <p class="landing-foot__lead">Sections split on <code>##</code> headings · images in <code>content/src/</code></p>
+        <p class="landing-foot__lead">Built on my own project <a href="https://github.com/arashr/md-gallery" target="_blank">MD Gallery</a></p>
         <p class="landing-foot__meta">
-          <span class="landing-foot__credit">Built with MD Portfolio</span>
+          <span class="landing-foot__credit"><a href="https://www.linkedin.com/in/arashranjbaran/" target="_blank">LinkedIn Profile</a></span>
         </p>
       </div>
     </footer>
@@ -60,7 +62,7 @@
       <div class="header-inner reader-header">
         <div class="reader-header__primary">
           <button type="button" class="brand brand--reader brand-home" id="reader-home" aria-label="All case studies">
-            <span id="reader-site-brand">Portfolio</span>
+            <span class="site-header__brand" id="reader-site-brand">Portfolio</span>
           </button>
           <div class="reader-header__tools">
             <div class="reader-controls" role="group" aria-label="View options">
@@ -88,7 +90,7 @@
         </div>
         <div class="reader-header__meta mono-label">
           <p class="reader-header__role" id="reader-site-tagline">Case studies</p>
-          <p class="reader-header__zoom" id="reader-zoom-label" aria-live="polite">Zoom 100%</p>
+          <p class="reader-header__meta-aside" id="reader-zoom-label" aria-live="polite">Zoom 100%</p>
         </div>
       </div>
     </header>

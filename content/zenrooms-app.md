@@ -1,10 +1,11 @@
 ---
-description: 2021 . A native app for a budget hotel booking service
+description: A native app for a budget hotel booking service
+role: Product Designer
+year: 2021
+
 ---
 
 # ZENRooms App
-
-## Overview
 
 ![ZENRooms App](src/zen-app-hero.png)
 

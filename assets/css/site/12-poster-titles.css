@@ -48,7 +48,9 @@ h2.poster__title.post-title,
 
 .post-card[class*='title-face-'] .poster__title,
 .post-card[class*='title-face-'] .post-title,
-.post-card[class*='title-face-'] .post-title a {
+.post-card[class*='title-face-'] .post-title a,
+.mini-poster[class*='title-face-'] .poster__title,
+.mini-poster[class*='title-face-'] .post-title {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -60,6 +62,10 @@ h2.poster__title.post-title,
   word-break: keep-all;
   hyphens: none;
   text-wrap: balance;
+}
+
+.mini-poster[class*='title-face-'] .post-header {
+  width: 100%;
 }
 
 .post-card.post-card--roomy > .post-header {

@@ -1,5 +1,8 @@
 ---
-description: 2025 . Rebuilding an outdated design system in under two months to support a new brand identity, making it scalable, accessible, and in sync with code. The new system enables rapid updates, multi-brand adoption, and faster delivery with AI and MCP integration.
+title: Atolls Design System
+description: Rebuilding an outdated design system in under two months to support a new brand identity, making it scalable, accessible, and in sync with code.
+year: 2025
+role: Lead Product Designer
 ---
 
 # Atolls Design System
