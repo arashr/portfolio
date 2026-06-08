@@ -1,70 +1,129 @@
-/* Design tokens — static defaults; gallery.config.json overrides on :root at runtime */
+/* Design tokens — primaries hold values; semantics alias them for components.
+   gallery.config.json overrides primaries on :root at runtime. */
 
 :root {
-  --paper: #eff1f3;
-  --ink: #0c0e10;
-  --ink-soft: #1b1f24;
-  --ink-mute: rgba(12, 14, 16, 0.66);
+  /* ── Color · primary (light) ─────────────────────────────────── */
+  --color-paper: #eff1f3;
+  --color-ink: #0c0e10;
+  --color-ink-soft: #1b1f24;
+  --color-ink-muted: rgba(12, 14, 16, 0.66);
+  --color-accent: #c8102e;
+  --color-accent-bright: #e8334e;
+  --color-edge-mix: 12%;
+  --color-code-text: #eff1f3;
+
+  /* ── Color · primary (dark) ──────────────────────────────────── */
+  --color-dark-paper: #12151a;
+  --color-dark-ink: #eef0f4;
+  --color-dark-ink-soft: #c8cdd6;
+  --color-dark-ink-muted: #c0c8d4;
+  --color-dark-accent: #ffa0ab;
+  --color-dark-accent-bright: #ffb3bc;
+
+  /* ── Color · semantic (light) ────────────────────────────────── */
+  --paper: var(--color-paper);
+  --ink: var(--color-ink);
+  --ink-soft: var(--color-ink-soft);
+  --ink-mute: var(--color-ink-muted);
+  --red: var(--color-accent);
+  --red-bright: var(--color-accent-bright);
   --surface: var(--paper);
-  --edge-mix: 12%;
+  --edge-mix: var(--color-edge-mix);
   --edge-1: color-mix(in oklch, var(--surface) calc(100% - var(--edge-mix)), black);
   --hair: color-mix(in oklch, var(--edge-1) calc(100% - var(--edge-mix)), black);
-  --red: #c8102e;
-  --red-bright: #e8334e;
+  --code-text: var(--color-code-text);
+  --code-block-bg: var(--ink);
+
+  /* ── Color · semantic (dark) ─────────────────────────────────── */
+  --dark-paper: var(--color-dark-paper);
+  --dark-ink: var(--color-dark-ink);
+  --dark-ink-soft: var(--color-dark-ink-soft);
+  --dark-ink-mute: var(--color-dark-ink-muted);
+  --dark-red: var(--color-dark-accent);
+  --dark-red-bright: var(--color-dark-accent-bright);
+
+  /* ── Spacing · primary ─────────────────────────────────────────── */
+  --space-4: 16px;
+  --space-page-inline: clamp(16px, 4vw, 56px);
+  --space-scroll-offset: 6.5rem;
+
+  /* ── Spacing · semantic ────────────────────────────────────────── */
+  --pad: var(--space-page-inline);
+  --scroll-offset: var(--space-scroll-offset);
+  --layout-gap: var(--space-4);
+
+  /* ── Typography · primary ──────────────────────────────────────── */
+  --font-size-body: 17px;
+  --font-size-prose: 18px;
+  --font-size-label: 0.75rem;
+  --font-size-crumb: 0.85rem;
+  --line-height-body: 1.5;
+  --line-height-prose: 1.6;
+  --line-height-title: 1.12;
+  --line-height-title-heading: 0.95;
+  --line-height-mono: 1.45;
+  --line-height-ui-sans: 1.5;
+  --line-height-ui-serif: 1.5;
+  --font-weight-label: 500;
+  --letter-spacing-label: 0.06em;
+  --letter-spacing-title-face: 0.02em;
+
+  /* ── Typography · semantic ─────────────────────────────────────── */
+  --body-size: var(--font-size-body);
+  --body-line-height: var(--line-height-body);
+  --prose-size: var(--font-size-prose);
+  --prose-line-height: var(--line-height-prose);
+  --title-line-height: var(--line-height-title);
+  --title-heading-line-height: var(--line-height-title-heading);
+  --title-face-letter-spacing: var(--letter-spacing-title-face);
+  --label-size: var(--font-size-label);
+  --label-weight: var(--font-weight-label);
+  --label-letter-spacing: var(--letter-spacing-label);
+  --crumb-size: var(--font-size-crumb);
+  --mono-line-height: var(--line-height-mono);
+  --ui-sans-line-height: var(--line-height-ui-sans);
+  --ui-serif-line-height: var(--line-height-ui-serif);
+
+  /* ── Layout ────────────────────────────────────────────────────── */
   --measure: 65ch;
   --poster-width: 42rem;
-  --pad: clamp(16px, 4vw, 56px);
-  --scroll-offset: 6.5rem;
   --layout-max: 1440px;
   --layout-cols: 12;
-  --layout-gap: 16px;
   --layout-content-max: calc(var(--layout-max) - 2 * var(--pad));
   --layout-shell-right: calc((100vw - min(100vw, var(--layout-max))) / 2 + var(--pad));
   --toc-rail-min: 75rem;
   --poster-grid-span: 6;
   --poster-grid-cols: 9;
-  --body-size: 17px;
-  --body-line-height: 1.5;
-  --prose-size: 18px;
-  --prose-line-height: 1.6;
-  --title-line-height: 1.12;
-  --title-heading-line-height: 0.95;
-  --title-face-letter-spacing: 0.02em;
-  --label-size: 0.75rem;
-  --label-weight: 500;
-  --label-letter-spacing: 0.06em;
-  --crumb-size: 0.85rem;
-  --mono-line-height: 1.45;
-  --ui-sans-line-height: 1.5;
-  --ui-serif-line-height: 1.5;
+
+  /* ── Hero (poster cover) ───────────────────────────────────────── */
   --hero-display: var(--red);
   --hero-title: var(--ink-soft);
   --hero-body: var(--ink-soft);
   --hero-muted: var(--ink-mute);
-  --dark-paper: #12151a;
-  --dark-ink: #eef0f4;
-  --dark-ink-soft: #c8cdd6;
-  --dark-ink-mute: #c0c8d4;
-  --dark-red: #ffa0ab;
-  --dark-red-bright: #ffb3bc;
+
+  /* ── Code ──────────────────────────────────────────────────────── */
   --code-inline-mix: 35%;
-  --card-shadow-solid: -4px 4px 0 var(--hair);
-  --card-shadow-rest: -4px 4px 0 transparent;
+  --code-step-mix: var(--edge-mix);
+
+  /* ── Graphics ──────────────────────────────────────────────────── */
+  --glyph-pattern-color: var(--red);
+  --glyph-pattern-opacity: 0.07;
+
+  /* ── Chrome & elevation ────────────────────────────────────────── */
   --chrome-stroke: var(--ink);
   --chrome-stroke-width: 1px;
   --chrome-ink-shadow-rest: 0 0 0 0 transparent;
   --chrome-ink-shadow: 4px 4px 0 0 var(--chrome-stroke);
   --chrome-ink-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --chrome-ink-duration: 0.15s;
+  --card-shadow-solid: -4px 4px 0 var(--hair);
+  --card-shadow-rest: -4px 4px 0 transparent;
+
+  /* ── Motion ────────────────────────────────────────────────────── */
   --card-hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-hover-duration: 0.4s;
   --reveal-duration: 0.8s;
   --reveal-ease: ease;
   --shutter-duration: 0.9s;
   --shutter-ease: cubic-bezier(0.77, 0, 0.18, 1);
-  --glyph-pattern-color: var(--red);
-  --glyph-pattern-opacity: 0.07;
-  --code-text: #eff1f3;
-  --code-step-mix: var(--edge-mix);
-  --code-block-bg: var(--ink);
 }

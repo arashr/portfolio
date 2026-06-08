@@ -2,15 +2,15 @@
 
 /* Dark mode: dark chrome around posters; poster grounds keep light-theme text pairs */
 html[data-theme='dark'] {
-  --paper: var(--dark-paper, #12151a);
+  --paper: var(--color-dark-paper, #12151a);
   --card-shadow-solid: -4px 4px 0 var(--hair);
-  --chrome-stroke: var(--dark-ink, #eef0f4);
-  --chrome-ink: var(--dark-ink, #eef0f4);
-  --chrome-ink-soft: var(--dark-ink-soft, #c8cdd6);
-  --chrome-ink-mute: var(--dark-ink-mute, #c0c8d4);
+  --chrome-stroke: var(--color-dark-ink, #eef0f4);
+  --chrome-ink: var(--color-dark-ink, #eef0f4);
+  --chrome-ink-soft: var(--color-dark-ink-soft, #c8cdd6);
+  --chrome-ink-mute: var(--color-dark-ink-muted, #c0c8d4);
   /* UI chrome only — poster grounds keep config foreground tokens */
-  --chrome-red: var(--dark-red, #ffa0ab);
-  --chrome-red-bright: var(--dark-red-bright, #ffb3bc);
+  --chrome-red: var(--color-dark-accent, #ffa0ab);
+  --chrome-red-bright: var(--color-dark-accent-bright, #ffb3bc);
 }
 
 html[data-theme='dark'] body {
