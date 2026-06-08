@@ -22,8 +22,8 @@
     },
     "typography": {
       "bodySize": "16px",
-      "bodyLineHeight": "1.5",
-      "proseLineHeight": "1.6",
+      "bodyLineHeight": "1.3",
+      "proseLineHeight": "1.55",
       "titleLineHeight": "1.12",
       "titleHeadingLineHeight": "0.95",
       "titleFaceLetterSpacing": "0.02em",

@@ -1,6 +1,7 @@
 import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
 import { renderDocument, renderToc, setRenderContentPath } from '../lib/render-document.js';
 import { renderLandingGallery } from '../lib/render-landing-gallery.js';
+import { renderHomeAside } from '../lib/render-home-aside.js';
 import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
 import { fitMiniPosterTitles, fitPosterTitles } from '../lib/fit-poster-title.js';
 import {
@@ -11,6 +12,7 @@ import {
 import { fetchBundledMarkdown } from '../lib/bundled-md.js';
 import {
   fetchContentIndex,
+  fetchHomeAside,
   fetchSiteConfig,
   resolveCaseStudyItems
 } from '../lib/portfolio-content.js';
@@ -34,6 +36,7 @@ import { ICONS } from './icons.js';
   const siteBrand = document.getElementById('site-brand');
   const landingSiteTagline = document.getElementById('landing-site-tagline');
   const landingGalleryGrid = document.getElementById('landing-gallery-grid');
+  const landingAside = document.getElementById('landing-aside');
   const mainReader = document.getElementById('main-reader');
   const readerHome = document.getElementById('reader-home');
   const readerSiteBrand = document.getElementById('reader-site-brand');
@@ -322,12 +325,21 @@ import { ICONS } from './icons.js';
       '<p class="landing-error mono-label">Add a <code>.md</code> file under <code>content/</code> (not dot-prefixed).</p>';
   }
 
+  function renderLandingAside(aside) {
+    if (!landingAside) return;
+    const html = renderHomeAside(aside);
+    landingAside.innerHTML = html;
+    landingAside.hidden = !html;
+  }
+
   async function loadHome({ cacheBust = false } = {}) {
-    const [index, site] = await Promise.all([
+    const [index, site, aside] = await Promise.all([
       fetchContentIndex(undefined, undefined, { cacheBust }),
-      fetchSiteConfig(undefined, undefined, { cacheBust })
+      fetchSiteConfig(undefined, undefined, { cacheBust }),
+      fetchHomeAside(undefined, undefined, { cacheBust })
     ]);
     applySiteConfig(site);
+    renderLandingAside(aside);
     homeIndexSignature = indexSignature(index);
     if (!index.cases.length) {
       renderEmptyHome();

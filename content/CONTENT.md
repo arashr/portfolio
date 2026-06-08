@@ -75,4 +75,8 @@ You can combine a flag with a real tooltip title using commas: `"isometric, Sett
 
 ## Site name on the homepage
 
-Edit `content/site.json` for the large hero title and tagline (not the per-case grid).
+Edit `content/site.json` for the header title and tagline (not the per-case grid).
+
+## Homepage aside panel
+
+Edit `content/home-aside.md`. Each `##` heading is a block title; the paragraph(s) below it are the description. The panel sits in the right column on wide screens and stacks under the case-study grid on narrow viewports. This file is not a case study and is excluded from the gallery index.
