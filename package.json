@@ -6,6 +6,7 @@
   "type": "module",
   "description": "Static portfolio — case studies as Markdown poster galleries",
   "scripts": {
+    "build": "npm run build:content",
     "build:content": "node scripts/build-content-index.js",
     "pretest": "npm run build:content",
     "start": "node scripts/dev-server.js",
