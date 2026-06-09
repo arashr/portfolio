@@ -2,18 +2,18 @@
 
 Edit `##` sections below. Each heading is a block title; the paragraph under it is the description.
 
-## Systems Thinking
+## I Design Systems, Not Just Screens
 
-I see the whole board. When I design a component, I'm thinking about how it scales across 4 products, how it handles edge cases, and how it maps to the code architecture.
+I think beyond the single layout. Every component has to scale across products, brands, states, devices, and edge cases. Good design should make the product easier to use, but also easier to build, maintain, and improve.
 
-## Strategic Impact
+## I Design for Measurable Impact
 
-I tie every design decision to a business metric. Beautiful pixels that don't move numbers are just art. I design for outcomes, conversion lifts, efficiency gains, revenue.
+I don’t treat design as decoration. I connect design decisions to product goals like conversion, activation, clarity, and delivery speed. If a design looks good but does not improve the product, it is not finished.
 
-## Cross-Discipline Leadership
+## I Work Close to Engineering
 
-I speak engineering, product, and business fluently. I bridge the gap between what stakeholders want, what users need, and what's technically feasible.
+I’m not a developer anymore, but my development background still shapes how I design. I understand front-end and mobile constraints, so I can make better trade-offs and write clearer specs. This usually means fewer surprises during implementation.
 
-## AI Native
+## I Use AI Where It Actually Helps
 
-I use AI-assisted workflows for prototyping, research synthesis, design QA, and documentation to move faster without losing clarity.
+I use AI to speed up the parts of design that are repetitive or heavy: prototyping, research synthesis, documentation, design QA, and design system audits. I don’t use it to replace judgment. I use it to get to better decisions faster.
