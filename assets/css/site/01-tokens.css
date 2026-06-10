@@ -143,10 +143,10 @@
   --color-ground-pink-accent: #5c1028;
   --color-ground-white-display: #2c2781;
   --color-ground-white-accent: #b00037;
-  --color-ground-lime-accent: #2a4508;
+  --color-ground-lime-accent: #88e6e6;
   --color-ground-lilac-display: #110b84;
   --color-ground-lilac-accent: #3d2a9e;
-  --color-ground-butter-accent: #5f5a00;
+  --color-ground-butter-accent: #ff6201;
   --color-ground-mint-display: #0f00b7;
   --color-ground-mint-accent: #004535;
   --color-ground-mint-glyph: #b5b2d9;
@@ -182,8 +182,6 @@
   /* ── Motion ────────────────────────────────────────────────────── */
   --card-hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-hover-duration: 0.4s;
-  --reveal-duration: 0.8s;
-  --reveal-ease: ease;
   --shutter-duration: 0.9s;
   --shutter-ease: cubic-bezier(0.77, 0, 0.18, 1);
 }

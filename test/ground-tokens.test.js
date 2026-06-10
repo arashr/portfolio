@@ -30,17 +30,21 @@ test('groundForegroundRefs covers all default grounds', () => {
   }
 });
 
-test('buildGroundStylesheet only injects glyph overrides', () => {
+test('buildGroundStylesheet injects reader-only mint glyph tokens for empty mint', () => {
   const cfg = setGalleryConfig({
     grounds: {
       pink: {},
-      mint: {
-        glyph: { color: 'ground-mint-glyph', opacity: 0.09 }
-      }
+      butter: {},
+      mint: {}
     }
   });
 
   const css = buildGroundStylesheet(cfg);
-  assert.equal(css.includes('ground-pink'), false);
-  assert.match(css, /\.ground-mint\{--on-ground-glyph-pattern-color:#b5b2d9/);
+  assert.match(css, /#main-reader \.post-card\.ground-mint\{--on-ground-glyph-pattern-color:#c8102e/i);
+  for (const name of ['pink', 'butter']) {
+    assert.equal(
+      css.split('\n').some((line) => line.startsWith(`.ground-${name}{--on-ground-glyph-pattern`)),
+      false
+    );
+  }
 });

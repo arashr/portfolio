@@ -74,8 +74,6 @@ Semantic names: `paper`, `ink`, `inkSoft`, `inkMute`, `red`, `redBright`.
 |-----|------|
 | `cardHoverEase` | Card hover easing |
 | `cardHoverDuration` | Card hover duration |
-| `revealDuration` | Scroll-reveal fade/slide duration |
-| `revealEase` | Scroll-reveal easing |
 | `shutterDuration` | Shutter intro duration |
 | `shutterEase` | Shutter intro easing |
 
