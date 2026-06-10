@@ -1,6 +1,6 @@
 # Gallery design system (`gallery.config.json`)
 
-Single source of truth for theme, poster grounds, typography, spacing, and title fitting. Loaded at startup by `lib/gallery-config.js` and applied as CSS custom properties + a small injected stylesheet for per-ground tokens.
+Single source of truth for poster grounds, layout, motion, graphics, fonts, and title fitting. **Theme colors and typography** live in `assets/css/site/01-tokens.css` (light + dark primaries). Loaded at startup by `lib/gallery-config.js` and applied as CSS custom properties + a small injected stylesheet for per-ground tokens.
 
 ## Applying edits
 
@@ -17,7 +17,8 @@ Single source of truth for theme, poster grounds, typography, spacing, and title
 | `theme.graphics.typePattern.roll.noneProbability` → `0` | Every poster gets a pattern (none were skipped before) |
 | `theme.graphics.typePattern.shape.patternTypes` → `["line"]` only | Only straight-line letter paths |
 | `theme.graphics.typePattern.geometry.repeatsMin` / `Max` → `4` / `4` | Fewer, larger gaps between letters |
-| `grounds.*.surface` | Poster card background color |
+| `assets/css/site/01-tokens.css` `--color-ground-*` | Poster surface + foreground palette (edit primaries here) |
+| `grounds.*.glyph` / `heroGlyph` | Per-ground glyph overrides only |
 
 If nothing changes: hard-refresh the page (Cmd+Shift+R), re-drop your `.md` file, and confirm the JSON is valid (a parse error keeps the previous config).
 
@@ -27,18 +28,23 @@ If nothing changes: hard-refresh the page (Cmd+Shift+R), re-drop your `.md` file
 
 ---
 
-## `theme` — page chrome & shared tokens
+## Theme colors & typography (`assets/css/site/01-tokens.css`)
 
-### `theme.colors`
+Edit CSS custom properties — not `gallery.config.json`.
 
-| Key | Role |
-|-----|------|
-| `paper` | Page background |
-| `ink` | Primary text |
-| `inkSoft` | Body / secondary text |
-| `inkMute` | Meta, hints (rgba ok) |
-| `red` | Accent |
-| `redBright` | Accent hover / focus |
+| Token | Role |
+|-------|------|
+| `--color-paper`, `--color-ink`, `--color-ink-soft`, `--color-ink-muted` | Light page chrome |
+| `--color-accent`, `--color-accent-bright` | Light accent |
+| `--color-dark-paper`, `--color-dark-ink`, … | Dark mode primaries |
+| `--font-size-body`, `--line-height-body`, `--line-height-prose`, … | Typography primaries |
+| `--body-size`, `--ink`, `--paper`, … | Semantic aliases used in components |
+
+Dark mode semantics are applied in `assets/css/reader/07-theme-dark.css`.
+
+---
+
+## `theme` — layout, motion, graphics (config)
 
 ### `theme.layout`
 
@@ -61,22 +67,6 @@ Collection hero (top of document) — values can be **semantic** or hex:
 | `muted` | `"inkMute"` |
 
 Semantic names: `paper`, `ink`, `inkSoft`, `inkMute`, `red`, `redBright`.
-
-### `theme.typography`
-
-| Key | Maps to |
-|-----|---------|
-| `bodySize` | `body` font-size |
-| `bodyLineHeight` | `body` line-height |
-| `proseLineHeight` | `.prose` line-height (sans body) |
-| `titleLineHeight` | Default poster title line-height |
-| `titleHeadingLineHeight` | In-post h2–h4 on title-face cards (when face has no override) |
-| `titleFaceLetterSpacing` | Default letter-spacing for title faces |
-| `labelSize` | `.kicker`, `.mono-label` |
-| `labelWeight` | label weight |
-| `labelLetterSpacing` | label tracking |
-| `proseSize` | `.prose` inside posters |
-| `crumbSize` | breadcrumbs |
 
 ### `theme.motion`
 
@@ -118,10 +108,10 @@ theme.graphics
 
 | Key | Default | Role |
 |-----|---------|------|
-| `color` | `"display"` | Pattern letter color — semantic or hex → `--config-glyph-pattern-color` / per-ground `--on-ground-glyph-pattern-color` |
-| `opacity` | `0.07` | Default pattern strength; used when `typePattern.appearance` omits `opacityMin`/`opacityMax`. Also `--glyph-pattern-opacity` for legacy CSS-only faintness. |
+| `color` | `"display"` | Default pattern letter color when a ground omits `glyph.color` |
+| `opacity` | `0.07` | Default pattern strength when a ground omits `glyph.opacity`; also used when `typePattern.appearance` omits `opacityMin`/`opacityMax` |
 
-Legacy flat keys `glyphPatternColor` / `glyphPatternOpacity` still merge.
+Per-ground overrides live on each entry in `grounds` (see below). Legacy flat keys `glyphPatternColor` / `glyphPatternOpacity` still merge into the global default.
 
 #### `imageHalftone` — prose photos
 
@@ -165,21 +155,22 @@ Random alternative to mini `typePattern` on a poster. Defaults in `lib/poster-he
 | Group | Keys | Role |
 |-------|------|------|
 | **`roll`** | `probability` (`0.22`) | Chance per poster (`0`–`1`) |
-| **`text`** | `lengthMin` / `lengthMax`, `glyphColor` | Glyph string + fill before blend |
+| **`color`** | semantic or hex | Fill before blend. `"glyph"` (default) follows each ground’s `glyph.color`; `"display"`, `"accent"`, or hex for overrides |
+| **`opacityMin` / `opacityMax`** | `0`–`1` | Hero glyph strength after blend (fallback when a mode has no entry in `blendModes`) |
+| **`blendModes`** | `{ "<mode>": { "min", "max" }, ... }` | Mode pool + per-mode opacity ranges. Keys are the allowed modes |
+| **`text`** | `lengthMin` / `lengthMax` | Glyph string length only |
 | **`layout`** | `sizeRatio`, `offsetXRatioMin` / `offsetXRatioMax` | Width fraction; random horizontal shift (clipping OK) |
-| **`appearance`** | `opacity` | Glyph strength after blend (`0`–`1`) |
-| **`blend`** | `modes`, `mode` | Hero-only composite pool (`modes` → `blendModes`); independent of `typePattern.blend` |
 | **`accessibility`** | `excludeTitleFaces`, `respectReducedTransparency`, `respectHighContrast` | Face blocklist; OS preference gates |
 
-Symbol source uses **`typePattern.symbol`** (not hero). Blend uses **`heroGlyph.blend`** (not pattern).
+Symbol source uses **`typePattern.symbol`** (not hero). Blend uses **`heroGlyph.blendModes`** (not pattern).
 
 **Quick checks**
 
 | Change | What you should see |
 |--------|---------------------|
 | `heroGlyph.roll.probability` → `1` | Every eligible poster uses a mega-glyph |
-| `heroGlyph.blend.modes` → `["exclusion", "overlay"]` | Hero composite pool only |
-| `typePattern.blend.modes` → `["multiply", "screen"]` | Mini-pattern composite pool only |
+| `heroGlyph.blendModes` → `{ "exclusion": {...}, "overlay": {...} }` | Hero composite pool only |
+| `typePattern.blendModes` → `{ "multiply": {...}, "screen": {...} }` | Mini-pattern composite pool only |
 | `heroGlyph.roll.probability` → `0` | Only mini patterns / none |
 
 #### `typePattern` — mini canvas patterns
@@ -190,7 +181,7 @@ One `renderTypePattern` per poster empty region (`lib/type-pattern-poster.js`, `
 |-------|------|------|
 | **`roll`** | `noneProbability` (`0.18`) | Skip pattern entirely on this poster |
 | **`symbol`** | `pool`, `probability` | Character source (`pool` → `symbolPool`). Digits ignored. |
-| **`blend`** | `modes`, `mode` | Pattern-only composite pool (`modes` → `blendModes`); independent of `heroGlyph.blend` |
+| **`blendModes`** | `{ "<mode>": { "min", "max" }, ... }` | Pattern composite pool + per-mode opacity. Keys are the allowed modes |
 | **`shape`** | `patternTypes`, `fillSpace`, `opticalTight`, `followPath`, `flipReadable`, `flipAlternateVertical`, `flipAlternateHorizontal` | Pattern geometry + letter behavior |
 | **`geometry`** | `*Min` / `*Max` ranges | `repeats`, `padding`, `tightTracking`, `lineAngle`, `startAngleDeg`, `arcSweepDeg`, `spiralTurns`, `waveAmplitude`, `waveCycles`, `gridColumns`, `gridStaggerProbability`, `fillAngle`, `fillRowGap`, optional `fontSizeMin` / `fontSizeMax` |
 | **`placement`** | `regionPreference`, `emptySpaceMinPx`, `emptySpaceMinRatio`, `regionInsetPx`, `alignToCardEdge`, `fallbackBandWidth`, `sideBandWidthRatio`, `fallbackSide`, `edgeOverflowPx` | Where on the card |
@@ -200,7 +191,7 @@ One `renderTypePattern` per poster empty region (`lib/type-pattern-poster.js`, `
 
 Patterns re-measure after poster title fitting so bands track the final title height.
 
-**Legacy flat keys** (e.g. `symbolPool`, `blendModes`, `patternTypes` at the top level of `typePattern`) still merge; grouped keys win on conflict.
+**Legacy flat keys** (e.g. `symbolPool`, `blend.modes` + `blend.opacity`, `patternTypes` at the top level of `typePattern`) still merge; grouped keys win on conflict.
 
 ### `theme.code`
 
@@ -224,52 +215,41 @@ Injected CSS (`#gallery-config-code`) sets `--on-ground-code-chip-bg` per ground
 
 ---
 
-## `darkTheme` — UI chrome only
+## `grounds` — poster palette & glyph overrides
 
-Posters keep their configured ground colors in dark mode; only the shell (header, drop zone, TOC) uses these.
+**Surface + foreground colors** live in `assets/css/site/01-tokens.css` (`--color-ground-*` primaries, `--ground-*` semantics) and `assets/css/site/04-grounds.css` (`.ground-*` → `--on-ground-*`). `gallery.config.json` lists which grounds exist and optional glyph overrides.
 
-| Path | Role |
-|------|------|
-| `paper` | Dark page background |
-| `colors.ink` / `inkSoft` / `inkMute` | Chrome text |
-| `colors.red` / `redBright` | Chrome accents |
-| `dropZone.butterMix` | Butter tint on drop-zone hover (e.g. `"22%"`) |
-
----
-
-## `grounds` — poster surfaces & text pairs
-
-Each ground is an object (or a **string** hex for surface only — then default foreground presets apply).
-
-**Accessibility:** choose **`surface` first** (the brand color). Tune **`foreground.*`** until APCA passes — do not lighten the surface just to salvage a default text color. See [`docs/DESIGN.md`](../docs/DESIGN.md#background-first-foreground-adapts).
+**Accessibility:** tune **`--color-ground-*`** primaries until APCA passes — do not lighten surfaces just to salvage text. See [`docs/DESIGN.md`](../docs/DESIGN.md#background-first-foreground-adapts).
 
 ```json
 "mint": {
-  "surface": "#a7dbce",
-  "foreground": {
-    "display": "red",
-    "body": "inkSoft",
-    "muted": "#363b40",
-    "accent": "red",
-    "focus": "redBright"
+  "glyph": {
+    "color": "ground-mint-glyph",
+    "opacity": 0.09
+  },
+  "heroGlyph": {
+    "opacityMin": 0.12,
+    "opacityMax": 0.22,
+    "blendModes": {
+      "exclusion": { "min": 0.2, "max": 0.35 }
+    }
   }
 }
 ```
 
 | Field | Role |
 |-------|------|
-| `surface` | Poster background (`--ground-*`) |
-| `foreground.display` | Titles, headings on ground |
-| `foreground.body` | Body / prose |
-| `foreground.muted` | Meta, captions |
-| `foreground.accent` | Tags, accents |
-| `foreground.focus` | Focus ring on ground |
-| `foreground.linkHoverText` | Prose link hover text (default `#ffffff`) |
-| `foreground.linkHoverBg` | Prose link hover background (default `ink`) |
+| `glyph.color` | Pattern letter color — `"display"`, `"red"`, `ground-mint-glyph`, or hex; falls back to `theme.graphics.glyph.color` |
+| `glyph.opacity` | CSS pattern strength (`0`–`1`); falls back to global glyph opacity |
+| `glyph.opacityMin` / `glyph.opacityMax` | Canvas blend opacity fallback for type patterns on this ground |
+| `glyph.blendModes` | Restricts type-pattern rolls to these modes on this ground; per-mode `{ min, max }` overrides global opacity for that mode |
+| `heroGlyph.color` | Hero glyph color — semantic (`"glyph"`, `"display"`, `"accent"`) or hex; falls back to global `heroGlyph.color` |
+| `heroGlyph.opacityMin` / `opacityMax` | Hero glyph canvas opacity fallback on this ground |
+| `heroGlyph.blendModes` | Restricts hero-glyph rolls to these modes on this ground; per-mode opacity overrides global |
+| `foreground.*` | Optional overrides (token slugs like `ground-pink-display`); defaults from `lib/ground-tokens.js` |
+| `surface` | Optional override (token slug like `ground-pink`); defaults to ground key name |
 
-`foreground.*` values can be semantic (`"red"`, `"inkSoft"`) or any CSS color (`"#363b40"`).
-
-**Default presets** (when you only pass a hex string): light grounds → red display; `tangerine` / `forest` / `carmine` use their own pairs (see defaults in `lib/gallery-config.js`).
+Token slugs resolve via `resolveColor()` — same pattern as `ink`, `red`, `paper`.
 
 ---
 

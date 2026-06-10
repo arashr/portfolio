@@ -18,6 +18,7 @@
 .page-reader .collection-feed {
   grid-column: 1;
   min-width: 0;
+  padding-top: 32px;
 }
 
 .page-reader .collection-hero {
@@ -41,6 +42,10 @@
   padding: 0 0 clamp(2.5rem, 5vw, 4rem);
   margin: 0;
   background: var(--paper);
+}
+
+.page-reader .poster-gallery--leads {
+  padding-top: clamp(1.5rem, 3vw, 2rem);
 }
 
 .page-reader .poster-gallery .post-card-wrap {

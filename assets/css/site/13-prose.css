@@ -142,7 +142,7 @@
 .prose .table-wrap {
   max-width: 100%;
   overflow-x: auto;
-  margin: 0 0 1.25em;
+  margin: 1rem 0 0.3em;
   -webkit-overflow-scrolling: touch;
   border: var(--chrome-stroke-width) solid var(--hair);
   box-shadow: var(--chrome-ink-shadow);

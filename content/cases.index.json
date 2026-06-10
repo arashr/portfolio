@@ -1,11 +1,12 @@
 {
-  "generatedAt": "2026-06-08T16:50:29.350Z",
-  "revision": "content/atolls-conversion-growth.md:1780934655596.0107:4581|content/atolls-design-system-case-study.md:1780915713655.4915:4982|content/zenrooms-app.md:1780916658711.1934:4139|content/zenrooms-conversion-boost.md:1780916646203.6157:4659|content/zenrooms-hotel-rms.md:1780916626534.923:4115|content/site.json:1780847803240.2017:74|content/home-aside.md:1780937407241.9353:839",
+  "generatedAt": "2026-06-10T10:09:15.835Z",
+  "revision": "content/01-figlets-mcp.md:1781083589286.8145:8924|content/02-atolls-design-system-case-study.md:1781016285957.4646:4980|content/03-atolls-conversion-growth.md:1780934655596.0107:4581|content/04-zenrooms-conversion-boost.md:1780916646203.6157:4659|content/05-zenrooms-app.md:1780916658711.1934:4139|content/06-zenrooms-hotel-rms.md:1780916626534.923:4115|content/site.json:1780847803240.2017:74|content/home-aside.md:1780998600760.2112:1191",
   "cases": [
-    "content/atolls-conversion-growth.md",
-    "content/atolls-design-system-case-study.md",
-    "content/zenrooms-app.md",
-    "content/zenrooms-conversion-boost.md",
-    "content/zenrooms-hotel-rms.md"
+    "content/01-figlets-mcp.md",
+    "content/02-atolls-design-system-case-study.md",
+    "content/03-atolls-conversion-growth.md",
+    "content/04-zenrooms-conversion-boost.md",
+    "content/05-zenrooms-app.md",
+    "content/06-zenrooms-hotel-rms.md"
   ]
 }

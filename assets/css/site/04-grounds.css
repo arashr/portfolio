@@ -1,12 +1,120 @@
 /* Ground surfaces — poster/card foreground tokens */
 
-/* Ground surface + foreground tokens come from config (lib/gallery-config.js → #gallery-config-grounds) */
 [class*='ground-'] {
   --on-ground-edge-1: var(--on-ground-display);
   --on-ground-edge: var(--on-ground-display);
   --poster-ink-shadow: 4px 4px 0 0 var(--on-ground-edge);
   --glyph-pattern-color: var(--on-ground-glyph-pattern-color, var(--on-ground-display));
   --glyph-pattern-opacity: var(--on-ground-glyph-pattern-opacity, var(--glyph-pattern-opacity, 0.07));
+}
+
+/* Per-ground surfaces + foreground (primaries in 01-tokens.css) */
+.ground-pink {
+  background: var(--ground-pink);
+  --surface: var(--ground-pink);
+  --on-ground-display: var(--color-ground-pink-display);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-pink-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-white {
+  background: var(--ground-white);
+  --surface: var(--ground-white);
+  --on-ground-display: var(--color-ground-white-display);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-white-muted);
+  --on-ground-accent: var(--color-ground-white-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-lime {
+  background: var(--ground-lime);
+  --surface: var(--ground-lime);
+  --on-ground-display: var(--color-ground-fg-ink-deep);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-lime-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-tangerine {
+  background: var(--ground-tangerine);
+  --surface: var(--ground-tangerine);
+  --on-ground-display: var(--color-ground-fg-ink-deep);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-tangerine-muted);
+  --on-ground-accent: var(--color-ground-fg-ink-deep);
+  --on-ground-focus: var(--color-ground-fg-ink-deep);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-lilac {
+  background: var(--ground-lilac);
+  --surface: var(--ground-lilac);
+  --on-ground-display: var(--color-ground-lilac-display);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-lilac-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-butter {
+  background: var(--ground-butter);
+  --surface: var(--ground-butter);
+  --on-ground-display: var(--color-ground-fg-ink-deep);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-butter-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-mint {
+  background: var(--ground-mint);
+  --surface: var(--ground-mint);
+  --on-ground-display: var(--color-ground-mint-display);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-mint-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-carmine {
+  background: var(--ground-carmine);
+  --surface: var(--ground-carmine);
+  --on-ground-display: var(--color-ground-carmine-fg);
+  --on-ground-body: var(--color-ground-carmine-fg);
+  --on-ground-muted: var(--color-ground-fg-carmine-muted);
+  --on-ground-accent: var(--color-ground-carmine-fg);
+  --on-ground-focus: var(--color-ground-carmine-fg);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
+}
+
+.ground-forest {
+  background: var(--ground-forest);
+  --surface: var(--ground-forest);
+  --on-ground-display: var(--color-ground-forest-display);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-forest-accent);
+  --on-ground-focus: var(--color-ground-forest-accent);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--ink);
 }
 
 /* Colored posters and post cards */

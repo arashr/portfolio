@@ -6,6 +6,14 @@ year: 2026
 
 # Figlets MCP
 
+AI Interface for Figma Design Systems
+
+| AI hosts | Core workflows | Writes gated |
+|---:|---:|:---:|
+| 6+ | 7 | 100% |
+
+## Overview
+
 Design systems rarely break all at once. They drift.
 
 Token names become inconsistent. Contrast issues sit there quietly. Variables get duplicated. Teams keep shipping, but the system becomes harder to trust every sprint.
@@ -13,10 +21,6 @@ Token names become inconsistent. Contrast issues sit there quietly. Variables ge
 Figlets MCP is my attempt to solve that in a practical way.
 
 The AI is the interface. Figlets is the engine. Designers can ask for what they need in plain language. Figlets runs the structured work locally, explains what it found, and asks before anything changes in Figma.
-
-| AI hosts | Core workflows | Writes gated |
-|---:|---:|:---:|
-| 6+ | 7 | 100% |
 
 ## The Problem
 

@@ -1,16 +1,16 @@
 /* Design tokens — primaries hold values; semantics alias them for components.
-   gallery.config.json overrides primaries on :root at runtime. */
+   Light/dark theme colors and typography live here (not gallery.config.json). */
 
 :root {
   /* ── Color · primary (light) ─────────────────────────────────── */
-  --color-paper: #eff1f3;
+  --color-paper: #fff9f5;
   --color-ink: #0c0e10;
   --color-ink-soft: #1b1f24;
   --color-ink-muted: rgba(12, 14, 16, 0.66);
   --color-accent: #c8102e;
   --color-accent-bright: #e8334e;
   --color-edge-mix: 12%;
-  --color-code-text: #eff1f3;
+  --color-code-text: var(--color-paper);
 
   /* ── Color · primary (dark) ──────────────────────────────────── */
   --color-dark-paper: #12151a;
@@ -19,6 +19,7 @@
   --color-dark-ink-muted: #c0c8d4;
   --color-dark-accent: #ffa0ab;
   --color-dark-accent-bright: #ffb3bc;
+  --dark-drop-butter-mix: 22%;
 
   /* ── Color · semantic (light) ────────────────────────────────── */
   --paper: var(--color-paper);
@@ -43,22 +44,33 @@
   --dark-red-bright: var(--color-dark-accent-bright);
 
   /* ── Spacing · primary ─────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
   --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-11: 44px;
+  --space-12: 48px;
   --space-page-inline: clamp(16px, 4vw, 56px);
   --space-scroll-offset: 6.5rem;
 
   /* ── Spacing · semantic ────────────────────────────────────────── */
   --pad: var(--space-page-inline);
   --scroll-offset: var(--space-scroll-offset);
-  --layout-gap: var(--space-4);
+  --layout-gap: var(--space-6);
 
   /* ── Typography · primary ──────────────────────────────────────── */
-  --font-size-body: 17px;
+  --font-size-body: 16px;
   --font-size-prose: 18px;
-  --font-size-label: 0.75rem;
+  --font-size-label: 0.85rem;
   --font-size-crumb: 0.85rem;
   --line-height-body: 1.3;
-  --line-height-prose: 1.6;
+  --line-height-prose: 1.55;
   --line-height-title: 1.12;
   --line-height-title-heading: 0.95;
   --line-height-mono: 1.45;
@@ -102,8 +114,56 @@
   --hero-muted: var(--ink-mute);
 
   /* ── Code ──────────────────────────────────────────────────────── */
-  --code-inline-mix: 35%;
+  --code-inline-mix: 45%;
+  --code-chip-dark-lift: 20%;
+  --code-chip-light-shade: 10%;
   --code-step-mix: var(--edge-mix);
+
+  /* ── Ground · primary (surfaces) ─────────────────────────────── */
+  --color-ground-pink: #e6c0d6;
+  --color-ground-white: #e7e7eb;
+  --color-ground-lime: #cfec74;
+  --color-ground-tangerine: #ffc850;
+  --color-ground-lilac: #d5d0ef;
+  --color-ground-butter: #fae44f;
+  --color-ground-mint: #a7dbce;
+  --color-ground-carmine: #b52840;
+  --color-ground-forest: #b8d8c5;
+
+  /* ── Ground · primary (foreground · shared) ──────────────────── */
+  --color-ground-fg-muted: #1f2428;
+  --color-ground-fg-ink-deep: #0c0e10;
+  --color-ground-fg-tangerine-muted: #2f2114;
+  --color-ground-fg-white-muted: #4d4f57;
+  --color-ground-fg-carmine-muted: #f5f7f9;
+  --color-ground-link-hover-text: #ffffff;
+
+  /* ── Ground · primary (foreground · per ground) ──────────────── */
+  --color-ground-pink-display: #0d0a4f;
+  --color-ground-pink-accent: #5c1028;
+  --color-ground-white-display: #2c2781;
+  --color-ground-white-accent: #b00037;
+  --color-ground-lime-accent: #2a4508;
+  --color-ground-lilac-display: #110b84;
+  --color-ground-lilac-accent: #3d2a9e;
+  --color-ground-butter-accent: #5f5a00;
+  --color-ground-mint-display: #0f00b7;
+  --color-ground-mint-accent: #004535;
+  --color-ground-mint-glyph: #b5b2d9;
+  --color-ground-forest-display: #0a3d28;
+  --color-ground-forest-accent: #0a3d28;
+  --color-ground-carmine-fg: #ffffff;
+
+  /* ── Ground · semantic (surfaces) ────────────────────────────── */
+  --ground-pink: var(--color-ground-pink);
+  --ground-white: var(--color-ground-white);
+  --ground-lime: var(--color-ground-lime);
+  --ground-tangerine: var(--color-ground-tangerine);
+  --ground-lilac: var(--color-ground-lilac);
+  --ground-butter: var(--color-ground-butter);
+  --ground-mint: var(--color-ground-mint);
+  --ground-carmine: var(--color-ground-carmine);
+  --ground-forest: var(--color-ground-forest);
 
   /* ── Graphics ──────────────────────────────────────────────────── */
   --glyph-pattern-color: var(--red);

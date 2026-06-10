@@ -16,7 +16,7 @@ Rebuilding an outdated design system in under two months to support a new brand 
 |---:|---:|---:|
 | +50% | 4 | 75% |
 
-## Case Study
+## Overview
 
 We had a design system. So why did we need a new one?
 

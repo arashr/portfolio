@@ -15,7 +15,7 @@ Each entry file only `@import`s modules under this directory. Edit the module th
 | `01-tokens.css` | `:root` custom properties |
 | `02-base.css` | Reset, `body`, skip link, focus |
 | `03-typography.css` | Labels, crumbs, base poster title |
-| `04-grounds.css` | Ground color surfaces on cards/posters |
+| `04-grounds.css` | Ground surfaces + `--on-ground-*` foreground (maps `.ground-*` to tokens) |
 | `05-effects.css` | Shutter intro, scroll progress |
 | `06-chrome.css` | Header, nav, search |
 | `07-layout.css` | Content/collection feed shells |
@@ -57,5 +57,5 @@ Each entry file only `@import`s modules under this directory. Edit the module th
 
 - **Block__element** — BEM for component parts (`reader-header__meta`, `post-card__toolbar`)
 - **Page prefix** — `page-reader`, `page-landing` scope layout overrides
-- **Ground tokens** — `ground-*` classes from config; paired rules in `04-grounds.css`
+- **Ground tokens** — primaries in `01-tokens.css` (`--color-ground-*`); semantics in `04-grounds.css`; config lists grounds + glyph overrides only
 - **Chrome** — header controls using solid ink stroke/shadow (`--chrome-*` tokens)
