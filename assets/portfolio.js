@@ -19,6 +19,7 @@ import {
 import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { enhancePosterImageHalftone } from '../lib/image-halftone.js';
+import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
 import { mountEdgeHalftone } from '../lib/edge-halftone.js';
 import { ICONS } from './icons.js';
@@ -352,6 +353,7 @@ import { ICONS } from './icons.js';
   function enhanceReaderContent() {
     enhanceCodeBlocks(mainReader, { copyIcon: ICONS.copy });
     injectIcons();
+    applyImageTableLayouts(mainReader);
     enhancePosterImageHalftone(mainReader, getGalleryConfig());
     setupImageLightbox(mainReader, {
       icons: { zoomIn: ICONS.zoomIn, zoomOut: ICONS.zoomOut, xmark: ICONS.xmark }

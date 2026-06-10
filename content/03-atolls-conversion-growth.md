@@ -39,9 +39,9 @@ Our only shot at revenue was that single click on the offer.
 
 A razor-thin window for conversion.
 
-| Google Search&nbsp;&nbsp;&nbsp;&nbsp; | Landing Page / Conversion Point (Redesign Task) | Post Click-out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Retailer&nbsp;&nbsp; |
+| Google Search | Conversion Point | Post Click-out | Retailer |
 |---|---|---|---|
-| ![Google Search](src/atolls-flow-1.png "Google Search") | ![Landing Page](src/atolls-flow-2.png "Retailer Landing Page") | ![Post Click-out](src/atolls-flow-3.png) | ![Retailer](src/atolls-flow-4.png) |
+| ![Google Search](src/atolls-flow-1.png "Google Search") | ![Landing Page](src/atolls-flow-2.png "Retailer Landing Page - Conversion Point") | ![Post Click-out](src/atolls-flow-3.png) | ![Retailer](src/atolls-flow-4.png) |
 
 ## The Challenge
 
@@ -65,6 +65,8 @@ Our blue-sky approach generated fresh concepts, but business needs kept us groun
 - Description, mostly for SEO
 - Terms of use
 - Expiration date
+
+![Collaborative Exploration](./src/atolls-conv-exploration.png "iso Collaborative Exploration")
 
 Research told us users cared most about the offer’s value and the terms that could make or break the deal, such as “new users only.”
 
@@ -99,6 +101,8 @@ Tags like “App Only” or “Students” highlighted key terms upfront.
 
 After preference tests and interviews, we put our finalists in a large-scale A/B test.
 
+![Final Test Variants](./src/atolls-conv-variants.png "iso Final Test Variants")
+
 ## What We Learned
 
 Our structured experimentation showed:
@@ -107,6 +111,8 @@ Our structured experimentation showed:
 - **10% E2V uplift** as the secondary metric
 - The best-performing variant used an arrow cue in a grid layout
 
+![Grid Layout](./src/atolls-conv-grid.png "iso Grid Layout")
+
 Other findings:
 
 - Buttonless designs outperformed the control, except in Germany, where the CTA still won
@@ -114,11 +120,17 @@ Other findings:
 - The grid drove more filter clicks, suggesting users needed help narrowing choices
 - All new variants beat the old design on conversion
 
+| Before | After |
+|---:|---:|
+| ![Old Design](./src/atolls-conv-old.png "Old Design") | ![New Design](./src/atolls-conv-new.png "New Design") |
+
 ## Iteration and Personalization
 
 With the new flexible card structure, we could easily tweak layouts for each publisher or market.
 
 This helped us optimize for regional preferences and brand guidelines, making the platform more adaptable and data-driven.
+
+![Brand Customization](./src/atolls-conv-customization.png "iso Brand Customization")
 
 ## Looking Back
 

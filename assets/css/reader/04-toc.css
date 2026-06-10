@@ -112,3 +112,20 @@
 .nav-toc-wrap {
   position: relative;
 }
+
+@media (max-width: 599px) {
+  .reader-header__tools {
+    position: relative;
+  }
+
+  .nav-toc-wrap {
+    position: static;
+  }
+
+  .toc-panel {
+    right: auto;
+    left: 0;
+    width: auto;
+    max-width: none;
+  }
+}

@@ -55,7 +55,7 @@ In the product, these became:
 - **Price:** Everyday tasks
 - **Settings:** Property setup
 
-![Categorization of the information](src/zen-rms-menu.png "isometric")
+![Navigation shaped by information architecture](src/zen-rms-menu.png "iso Navigation shaped by information architecture")
 
 ## Understanding the System
 
@@ -76,15 +76,12 @@ The original formula used numbers and variables that the system needed to calcul
 After analysis and discussion, we moved many of these inputs into the background and automated as much of the process as possible.
 
 In the end, we reduced the control from many complicated inputs to two sliders.
+  
+![Before](src/zen-rms-agg-before.png "iso Pricing aggressiveness control before flow optimization")
 
-Pricing aggressiveness control before flow optimization  
-![Before](src/zen-rms-agg-before.png "iso")
+![After](src/zen-rms-agg-after.png "iso Pricing aggressiveness control after flow optimization")
 
-Pricing aggressiveness control after flow optimization  
-![After](src/zen-rms-agg-after.png "iso")
-
-Exploring how this could become an intuitive experience
-![Exploration](src/zen-rms-agg-exploration.png "iso")
+![Exploration](src/zen-rms-agg-exploration.png "iso Exploring how this could become an intuitive experience")
 
 ## Design System and Delivery
 
@@ -100,17 +97,13 @@ After establishing the basics, we moved into prototyping and user testing.
 
 [See Prototype](https://www.figma.com/proto/oxDI7LyKHPeGeDao3NMu7J/eManager-Express)
 
-Pricing panel
-![Pricing Panel](src/zen-pricing.png "isometric")
+![Pricing Panel](src/zen-pricing.png "iso Pricing panel")
 
-Aggressiveness settings
-![Aggressiveness settings](src/zen-aggressiveness.png "isometric")
+![Aggressiveness settings](src/zen-aggressiveness.png "isometric Aggressiveness settings")
 
-Minimum pricing settings
-![Minimum pricing settings](src/zen-min-pricing.png "isometric")
+![Minimum pricing settings](src/zen-min-pricing.png "isometric Minimum pricing settings")
 
-Pricing for special dates
-![Pricing for special dates](src/zen-events.png "isometric")
+![Pricing for special dates](src/zen-events.png "isometric Pricing for special dates")
 
 ## Outcome
 

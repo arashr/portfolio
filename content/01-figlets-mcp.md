@@ -6,7 +6,8 @@ year: 2026
 
 # Figlets MCP
 
-AI Interface for Figma Design Systems
+An AI interface for managing Figma design systems through plain language. It helps designers audit components, document decisions, and run repeatable QA without relying on slow, fragile, manual workflows.
+
 
 | AI hosts | Core workflows | Writes gated |
 |---:|---:|:---:|

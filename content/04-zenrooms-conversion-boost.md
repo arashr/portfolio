@@ -23,17 +23,11 @@ The ZENRooms website was my first major project at ZENRooms. I was responsible f
 
 The goal was to redesign the service, update the look, and improve the user experience without introducing new features.
 
-For this project, I had time to observe a lot of user behavior through:
-
-- Screen recordings
-- Heatmaps
-- Analytics
-- Existing A/B test data
-- Competitive analysis
-
 ## Research
 
 We used the tools and data we already had, including heatmaps, screen recordings, analytics, previous A/B testing results, and competitive analysis.
+
+![Card Details](src/zen-web-card.png "iso Card Details Input on Checkout")
 
 ### Key Findings
 
@@ -44,6 +38,10 @@ The existing design was not ready for touch devices and worked mostly for deskto
 This was a major issue because the ZENRooms app was using a web view and rendering the mobile version of the website.
 
 That meant the new layout needed to work both as a responsive website and as a stand-alone app-like experience.
+
+| Heatmaps | User Research | Screen Recordings | Data Analysis |
+|---:|---:|---:|---:|
+| ![Heatmap - Unclickable elements looking like buttons](src/zen-web-heat1.png "Heatmap - Unclickable elements looking like buttons")<br>![Heatmap - App bar blocking navigation bar](src/zen-web-heat2.png "Heatmap - App bar blocking navigation bar") | ![User Research and Analysis](src/zen-web-old-list.png "User research and analysis, showing scattered information and no information hierarchy") | ![Screen Recordings](src/zen-web-old-details.png "Screen Recordings") | ![Data Analysis](src/zen-web-failed.png "Data analysis showing faiure on checkout and deadends.") |
 
 ## User Flow
 
@@ -66,6 +64,8 @@ We solved this through:
 - Icons that helped users scan faster
 - Stronger action points throughout the flow
 
+![User Flow](src/zen-web-flow.png "iso User Flow Study")
+
 ## Wireframing
 
 Wireframing helped us define the structure before jumping into detailed UI work.
@@ -82,6 +82,10 @@ Wireframes also made stakeholder communication easier in the early stages.
 
 They helped everyone align on the direction without wasting time on polished designs too early.
 
+| Results List | Hotel Details | Room Grouping |
+|---:|---:|---:|
+| ![Results List](src/zen-web-wireframe1.png "Results List") | ![Hotel Details](src/zen-web-wireframe2.png "Hotel Details") | ![Room Grouping](src/zen-web-wireframe3.png "Room Grouping") |
+
 ## Design System
 
 The next step was to define and develop a small design system.
@@ -93,13 +97,24 @@ This helped keep the product:
 - Easier to develop
 - Faster to iterate on
 
+![Guidelines](src/zen-web-ds1.png "iso Guidelines helped with the communication and consistency")
+
 The design system also helped during handoff. It made it easier to communicate requirements, assets, and component behavior with the development team.
+
+![Components](src/zen-web-ds2.png "iso Components as one source of truth, throughout the project")
 
 ## User Interface Design
 
 After the design system was in place, the UI design process became much more straightforward.
 
 Even a small design system gave us enough structure to move faster and keep the experience consistent across platforms.
+
+[See Prototype](https://www.figma.com/proto/MuHXUj9hnZv79SRk3WCMO1/ZENRooms.com "See ZenRooms Prototype")
+
+| Results List | Hotel Details | Checkout |
+|---:|---:|---:|
+| ![Results List](src/zen-web-mobile-list.png "Results List on Mobile") | ![Hotel Details](src/zen-web-mobile-details.png "Hotel Details on Mobile") | ![Checkout](src/zen-web-mobile-checkout.png "Checkout on Mobile") |
+| ![Results List](src/zen-web-desktop-list.png "Results List on Desktop") | ![Hotel Details](src/zen-web-desktop-details.png "Hotel Details on Desktop") | ![Room Grouping](src/zen-web-desktop-checkout.png "Checkout on Desktop") |
 
 ## Testing
 

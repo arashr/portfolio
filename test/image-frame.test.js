@@ -24,10 +24,32 @@ test('renderMarkdownImage wraps isometric images in figure', () => {
   assert.match(html, /class="prose-img-iso"/);
   assert.match(html, /class="prose-img-iso__frame"/);
   assert.doesNotMatch(html, /title=/);
+  assert.doesNotMatch(html, /prose-img-iso__caption/);
+});
+
+test('renderMarkdownImage shows iso caption from title text', () => {
+  const html = renderMarkdownImage({
+    src: 'menu.png',
+    alt: 'Menu',
+    title: 'iso Settings dropdown'
+  });
+  assert.match(html, /class="prose-img-iso__caption mono-label">Settings dropdown<\/span>/);
+  assert.doesNotMatch(html, /title=/);
 });
 
 test('renderMarkdownImage leaves plain images unwrapped', () => {
   const html = renderMarkdownImage({ src: 'x.png', alt: 'X' });
   assert.match(html, /^<img /);
   assert.doesNotMatch(html, /prose-img-iso/);
+  assert.doesNotMatch(html, /prose-img-iso__caption/);
+});
+
+test('renderMarkdownImage does not show caption on non-iso images', () => {
+  const html = renderMarkdownImage({
+    src: 'x.png',
+    alt: 'X',
+    title: 'Visible only as tooltip'
+  });
+  assert.doesNotMatch(html, /prose-img-iso__caption/);
+  assert.match(html, /title="Visible only as tooltip"/);
 });

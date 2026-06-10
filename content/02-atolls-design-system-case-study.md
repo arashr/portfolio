@@ -32,6 +32,8 @@ Wrong.
 
 The buttons in our design system were locked to the brand’s primary color. They literally refused another color. And that was just one example.
 
+![The legacy design system](./src/atolls-ds-old.png "iso The legacy design system")
+
 The system was based on TokensStudio tokens, which didn’t play nicely with Figma variables. Adding tokens? Nightmare. Any change? Took weeks to reach the code. Applying a theme in Figma? Go make a coffee, or three.
 
 The new brand wasn’t just a visual refresh. It forced us to admit the system was done.
@@ -57,6 +59,8 @@ We started with a workshop. All product designers in the room, figuring out: wha
 
 Example: no date pickers. We don’t even use them in our products.
 
+![Prioritization](./src/atolls-ds-plan.png "iso Prioritization")
+
 Meanwhile, engineers and our design engineer explored the backend: how to link Figma variables to code, and how AI and MCP could give us some speed boosts.
 
 We dumped everything on the table: colors, typography, grids, dimensions, icons. We spotted repeating patterns and flagged which ones should move into the system.
@@ -66,6 +70,8 @@ Priorities: locked.
 ## Proof of Concept
 
 Right there in the workshop, I spun up a scrappy version of the new design system. Nothing fancy, just basic elements styled with the new brand, every property tied to a variable. Designers could immediately start messing around and testing visuals.
+
+![Proof of Concept](./src/atolls-ds-poc.png "iso Proof of Concept")
 
 It wasn’t the final system. It was a proof of concept. A way to keep product design moving while the real system took shape.
 
@@ -84,10 +90,14 @@ Variables made the magic happen. By layering semantic tokens, we kept things abs
 That meant fewer variables overall and the ability to swap entire brands by just switching the brand layer.
 
 ```text
-Value Pool → Brand Layer → Semantics → Patterns
+Primaries → Brand Layer → Semantics → Patterns
 ```
 
 Once the framework was solid, we designed the actual elements, assigned component-specific tokens, and handed them to developers with full documentation, all states defined, and expectations set.
+
+| Primaries | Semantics | Connections |
+|---:|---:|---:|
+| ![Primaries](./src/atolls-ds-spacing.png "Primaries") | ![Semantics](./src/atolls-ds-colors.png "Semantics") | ![Connections](./src/atolls-ds-links.png "Connections") |
 
 ## Delivery
 
@@ -96,6 +106,8 @@ Long story short: we delivered.
 Elements now have different appearances, emphasis, sizes, and can adopt new brands on the fly. Components accept children. The system keeps growing, with more complex patterns being added all the time.
 
 It all lives in one central, documented library, ready for anyone across products to grab and use.
+
+![Storybook](./src/atolls-ds-storybook.png "iso Storybook")
 
 We set up channels for feedback and updates. The workflow means updates can roll out in as little as a week.
 

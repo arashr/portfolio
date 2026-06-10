@@ -103,6 +103,9 @@
   --on-ground-focus: var(--color-ground-carmine-fg);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
   --on-ground-link-hover-bg: var(--ink);
+  /* Foreground is white; structural edges stay ink (tables, card borders, iso, shadows) */
+  --on-ground-edge: var(--ink);
+  --on-ground-edge-1: var(--ink);
 }
 
 .ground-forest {

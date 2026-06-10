@@ -65,6 +65,7 @@
 }
 
 .prose-img-iso__frame {
+  position: relative;
   display: block;
   width: 100%;
   transform: rotateX(var(--config-iso-rotate-x, 7deg)) rotateY(var(--config-iso-rotate-y, -16deg))
@@ -87,6 +88,29 @@
   max-width: 100%;
   height: auto;
   vertical-align: top;
+}
+
+.prose-img-iso__caption {
+  position: absolute;
+  top: calc(var(--chrome-stroke-width, 1px) * -0.5);
+  left: var(--config-iso-solid-shadow-x, 10px);
+  max-width: calc(100% - 2 * var(--config-iso-solid-shadow-x, 10px));
+  box-sizing: border-box;
+  display: inline-block;
+  z-index: 2;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+  background: var(--config-iso-stroke, #000);
+  leading-trim: both;
+  text-edge: cap;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.post-card[class*='ground-'] .prose-img-iso__caption {
+  background: var(--on-ground-edge);
+  color: #fff;
 }
 
 .post-card[class*='ground-'] .prose-img-iso__frame {
@@ -151,6 +175,24 @@
 
 .prose .table-wrap table {
   margin: 0;
+}
+
+/* Auto-tagged when every tbody cell is a single image (see lib/image-table-layout.js) */
+.prose table.table-cols-equal {
+  table-layout: fixed;
+}
+
+.prose table.table-cols-equal td {
+  text-align: center;
+  vertical-align: top;
+}
+
+.prose table.table-cols-equal td img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
 }
 
 .prose th,

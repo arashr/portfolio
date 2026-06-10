@@ -65,6 +65,12 @@ The two main principles were:
 
 That meant leaning into platform conventions, designing for touch from the start, and not just copying the web layout into smaller frames.
 
+| Search Results | Results on Map | Hotel Details |
+|---:|---:|---:|
+| ![Search Results](./src/zen-app-list.png "Search Results") | ![Results on Map](./src/zen-app-map.png "Results on Map") | ![Hotel Details](./src/zen-app-details.png "Hotel Details") |
+
+<br>
+
 Prototypes were tested on real devices through guerrilla testing to validate flows before anything went to handoff.
 
 ## Loyalty and Retention
@@ -93,6 +99,12 @@ In the app, having the user logged in changed everything:
 
 The result was a checkout that felt frictionless for returning guests.
 
+| Room Options | Checkout | Success Screen |
+|---:|---:|---:|
+| ![Room Options](./src/zen-app-rooms.png "Room Options") | ![Checkout](./src/zen-app-checkout.png "Checkout") | ![Success Screen](./src/zen-app-success.png "Success Screen") |
+
+<br>
+
 Less re-entering data. Fewer steps. A booking success state that actually felt like a moment worth having.
 
 ## Outcome
@@ -108,6 +120,6 @@ The related web redesign, done earlier and tested at scale, showed what fixing t
 
 The native app was designed to go further by using what the web never could.
 
-[See Prototype]()
+[See Prototype](https://www.figma.com/proto/FiUnKMcDthBbkRniiRosEL/ZEN-App "See ZenRooms App Prototype")
 
 When you stop working around the platform and actually use it, everything gets better, for users and for the business.
