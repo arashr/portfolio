@@ -40,7 +40,8 @@ test('buildContentIndexPayload includes revision', () => {
 
 test('scanContentCaseStudies finds bundled case studies', () => {
   const paths = scanContentCaseStudies('content', repoRoot);
-  assert.ok(paths.some((p) => p.endsWith('example-case-study.md')));
-  assert.ok(paths.some((p) => p.endsWith('atolls-design-system-case-study.md')));
+  assert.ok(paths.some((p) => p.endsWith('01-figlets-mcp.md')));
+  assert.ok(paths.some((p) => p.endsWith('02-atolls-design-system-case-study.md')));
   assert.ok(!paths.some((p) => /CONTENT\.md$/i.test(p)));
+  assert.ok(!paths.some((p) => p.endsWith('.example-case-study.md')));
 });

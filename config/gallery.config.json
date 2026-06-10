@@ -73,11 +73,10 @@
           "probability": 0.7
         },
         "blendModes": {
-          "plain": { "min": 0.05, "max": 0.12 },
           "exclusion": { "min": 0.4, "max": 0.6 },
           "screen": { "min": 0.4, "max": 0.6 },
           "multiply": { "min": 0.01, "max": 0.08 },
-          "overlay": { "min": 0.5, "max": 0.8 },
+          "overlay": { "min": 0.3, "max": 0.6 },
           "color-dodge": { "min": 0.5, "max": 0.99 }
         },
         "shape": {
@@ -175,20 +174,43 @@
         }
       }
     },
-    "tangerine": {},
+    "tangerine": {
+      "glyph": {
+        "opacity": 0.2,
+        "opacityMin": 0.1,
+        "opacityMax": 0.3,
+        "blendModes": {
+          "exclusion": { "min": 0.4, "max": 0.7 },
+          "multiply": { "min": 0.1, "max": 0.3 },
+          "overlay": { "min": 0.5, "max": 0.8 }
+        }
+      }
+    },
     "lilac": {
       "glyph": {
-        "opacity": 0.2
+        "opacity": 0.2,
+        "opacityMin": 0.1,
+        "opacityMax": 0.3,
+        "blendModes": {
+          "multiply": { "min": 0.1, "max": 0.3 },
+          "overlay": { "min": 0.5, "max": 0.8 }
+        }
       }
     },
     "butter": {},
-    "mint": {
+    "mint": {},
+    "carmine": {
       "glyph": {
-        "color": "ground-mint-glyph",
-        "opacity": 0.09
+        "opacity": 0.2,
+        "opacityMin": 0.1,
+        "opacityMax": 0.3,
+        "blendModes": {
+          "multiply": { "min": 0.1, "max": 0.3 },
+          "overlay": { "min": 0.5, "max": 0.8 },
+          "color-dodge": { "min": 0.5, "max": 0.9 }
+        }
       }
-    },
-    "carmine": {}
+    }
   },
   "fonts": {
     "uiSans": {

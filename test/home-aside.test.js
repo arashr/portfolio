@@ -17,9 +17,9 @@ test('parseHomeAside reads ## sections from bundled file', () => {
   const text = readFileSync(join(repoRoot, 'content/home-aside.md'), 'utf8');
   const { sections } = parseHomeAside(text);
   assert.equal(sections.length, 4);
-  assert.equal(sections[0].title, 'Systems Thinking');
-  assert.match(sections[0].description, /whole board/);
-  assert.equal(sections[3].title, 'AI Native');
+  assert.equal(sections[0].title, 'I Design Systems, Not Just Screens');
+  assert.match(sections[0].description, /single layout/);
+  assert.equal(sections[3].title, 'I Use AI Where It Actually Helps');
 });
 
 test('renderHomeAside outputs section blocks', () => {
