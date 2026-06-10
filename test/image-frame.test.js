@@ -53,3 +53,13 @@ test('renderMarkdownImage does not show caption on non-iso images', () => {
   assert.doesNotMatch(html, /prose-img-iso__caption/);
   assert.match(html, /title="Visible only as tooltip"/);
 });
+
+test('renderMarkdownImage emits width and height when provided', () => {
+  const html = renderMarkdownImage({
+    src: 'x.png',
+    alt: 'X',
+    width: 1200,
+    height: 800
+  });
+  assert.match(html, /width="1200" height="800"/);
+});

@@ -23,9 +23,11 @@ Figlets MCP is my attempt to solve that in a practical way.
 
 The AI is the interface. Figlets is the engine. Designers can ask for what they need in plain language. Figlets runs the structured work locally, explains what it found, and asks before anything changes in Figma.
 
+[Figlets MCP on Github](https://github.com/arashr/figlets-mcp)
+
 ## The Problem
 
-I first built Figlets as Claude-only skills. It worked, but the model was doing too much.
+I first built [Figlets as Claude-only skills](https://github.com/arashr/figlets). It worked, but the model was doing too much.
 
 That made the output fragile. The agent could calculate contrast correctly, but it could also get it wrong. It could pick the right token alias, or invent one. It could explain a fix clearly, or jump ahead and make assumptions.
 

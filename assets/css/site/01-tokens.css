@@ -58,6 +58,8 @@
   --space-12: 48px;
   --space-page-inline: clamp(16px, 4vw, 56px);
   --space-scroll-offset: 6.5rem;
+  --space-scroll-anchor-gap: 6px;
+  --space-scroll-anchor-adjust: 0px;
 
   /* ── Spacing · semantic ────────────────────────────────────────── */
   --pad: var(--space-page-inline);

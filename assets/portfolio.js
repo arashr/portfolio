@@ -1,5 +1,5 @@
 import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
-import { renderDocument, renderToc, setRenderContentPath } from '../lib/render-document.js';
+import { renderDocument, renderToc, setAssetDimensions, setRenderContentPath } from '../lib/render-document.js';
 import { renderLandingGallery } from '../lib/render-landing-gallery.js';
 import { renderHomeAside } from '../lib/render-home-aside.js';
 import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
@@ -56,8 +56,8 @@ import { ICONS } from './icons.js';
   const ZOOM_MIN = 0.85;
   const ZOOM_MAX = 1.5;
   const ZOOM_STEP = 0.1;
-  const SCROLL_GAP_PX = 8;
   const TOC_RAIL_MIN_PX = 1200;
+  let lastReaderHeaderHeight = 0;
 
   function tocRailFits() {
     if (!readerLayout) return false;
@@ -150,12 +150,46 @@ import { ICONS } from './icons.js';
     closeTocPanel();
   }
 
+  function readCssLengthPx(token, fallback = 0) {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+    if (!raw) return fallback;
+    const n = parseFloat(raw);
+    if (!Number.isFinite(n)) return fallback;
+    if (raw.endsWith('rem')) {
+      const root = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      return n * (Number.isFinite(root) ? root : 16);
+    }
+    return n;
+  }
+
+  function readerHeaderEl() {
+    return document.querySelector('#reader .site-header--reader');
+  }
+
+  function readAnchorOffsetPx() {
+    const header = readerHeaderEl();
+    const headerBottom = header ? Math.ceil(header.getBoundingClientRect().bottom) : 0;
+    const gap = readCssLengthPx('--space-scroll-anchor-gap', 6);
+    const adjust = readCssLengthPx('--space-scroll-anchor-adjust', 0);
+    return headerBottom + gap + adjust;
+  }
+
+  function syncScrollOffsetVar() {
+    const header = readerHeaderEl();
+    if (header) lastReaderHeaderHeight = header.getBoundingClientRect().height;
+    const offset = readAnchorOffsetPx();
+    document.documentElement.style.setProperty('--scroll-offset', `${offset}px`);
+    return offset;
+  }
+
   function updateScrollOffset() {
     if (reader.hidden) return;
-    const header = document.querySelector('.site-header--reader');
+    const header = readerHeaderEl();
     if (!header) return;
     const height = header.getBoundingClientRect().height;
-    document.documentElement.style.setProperty('--scroll-offset', `${Math.ceil(height) + SCROLL_GAP_PX}px`);
+    if (Math.abs(height - lastReaderHeaderHeight) < 1) return;
+    syncScrollOffsetVar();
+    if (location.hash) realignScrollToHash();
   }
 
   function resolveScrollTarget(el) {
@@ -165,15 +199,30 @@ import { ICONS } from './icons.js';
     return el;
   }
 
-  function scrollToEl(el, { behavior } = {}) {
+  function scrollToEl(el, { behavior = 'auto' } = {}) {
     const target = resolveScrollTarget(el);
-    updateScrollOffset();
-    target.scrollIntoView({
-      behavior: behavior ?? (prefersReducedMotion ? 'auto' : 'smooth'),
-      block: 'start'
-    });
+    const root = document.documentElement;
+
+    function fineTune() {
+      syncScrollOffsetVar();
+      const err = target.getBoundingClientRect().top - readAnchorOffsetPx();
+      if (Math.abs(err) > 1.5) window.scrollBy({ top: err, behavior: 'auto' });
+    }
+
+    root.style.overflowAnchor = 'none';
+    syncScrollOffsetVar();
+    target.scrollIntoView({ behavior, block: 'start' });
+    fineTune();
+    requestAnimationFrame(() => requestAnimationFrame(fineTune));
+    for (const ms of [300, 700, 1200]) {
+      window.setTimeout(() => {
+        fineTune();
+        if (ms === 1200) root.style.overflowAnchor = '';
+      }, ms);
+    }
+
     const hashId = el.id;
-    if (hashId) history.replaceState(null, '', `#${hashId}`);
+    if (hashId) history.replaceState(history.state, '', `#${hashId}`);
   }
 
   function realignScrollToHash() {
@@ -188,14 +237,14 @@ import { ICONS } from './icons.js';
     renderPosterGlyphPatterns(posterEls, getGalleryConfig());
   }
 
-  function schedulePosterTitleFit() {
+  function schedulePosterTitleFit({ realignHash = false } = {}) {
     cancelAnimationFrame(titleScaleFrame);
     titleScaleFrame = requestAnimationFrame(() => {
       void mainReader.offsetHeight;
       fitPosterTitles(posterEls, getGalleryConfig().titleScale);
       renderGlyphs();
       updateTocLayout();
-      if (location.hash) realignScrollToHash();
+      if (realignHash && location.hash) realignScrollToHash();
     });
   }
 
@@ -222,7 +271,7 @@ import { ICONS } from './icons.js';
     zoomOut.disabled = readerZoom <= ZOOM_MIN;
     zoomIn.disabled = readerZoom >= ZOOM_MAX;
     updateScrollOffset();
-    schedulePosterTitleFit();
+    schedulePosterTitleFit({ realignHash: true });
     updateTocLayout();
   }
 
@@ -340,6 +389,7 @@ import { ICONS } from './icons.js';
       fetchHomeAside(undefined, undefined, { cacheBust })
     ]);
     applySiteConfig(site);
+    setAssetDimensions(index.assetDimensions);
     renderLandingAside(aside);
     homeIndexSignature = indexSignature(index);
     if (!index.cases.length) {
@@ -378,6 +428,7 @@ import { ICONS } from './icons.js';
 
     enhanceReaderContent();
     setupTitleFitObserver();
+    lastReaderHeaderHeight = 0;
     updateScrollOffset();
     schedulePosterTitleFit();
     requestAnimationFrame(() => {
@@ -467,7 +518,7 @@ import { ICONS } from './icons.js';
   boot();
   history.replaceState({ view: 'home' }, '', '#');
 
-  const readerHeader = document.querySelector('.site-header--reader');
+  const readerHeader = document.querySelector('#reader .site-header--reader');
   if (readerHeader && typeof ResizeObserver !== 'undefined') {
     const headerResize = new ResizeObserver(() => updateScrollOffset());
     headerResize.observe(readerHeader);
@@ -618,11 +669,10 @@ import { ICONS } from './icons.js';
     resizeTimer = setTimeout(() => {
       updateScrollOffset();
       updateTocLayout();
-      schedulePosterTitleFit();
+      schedulePosterTitleFit({ realignHash: true });
       renderGlyphs();
       enhancePosterImageHalftone(mainReader, getGalleryConfig());
       if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
-      if (location.hash) realignScrollToHash();
     }, 120);
   });
 
