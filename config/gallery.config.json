@@ -201,9 +201,21 @@
         "opacityMin": 0.1,
         "opacityMax": 0.3,
         "blendModes": {
-          "exclusion": { "min": 0.4, "max": 0.7 },
+          "soft-light": { "min": 0.6, "max": 0.8 },
+          "exclusion": { "min": 0.2, "max": 0.4 },
+          "normal": { "min": 0.1, "max": 0.3 },
           "multiply": { "min": 0.1, "max": 0.3 },
-          "overlay": { "min": 0.5, "max": 0.8 }
+          "overlay": { "min": 0.3, "max": 0.6 }
+        }
+      },
+      "heroGlyph": {
+        "opacityMin": 0.2,
+        "opacityMax": 0.2,
+        "blendModes": {
+          "soft-light": { "min": 0.6, "max": 0.8 },
+          "normal": { "min": 0.1, "max": 0.3 },
+          "multiply": { "min": 0.1, "max": 0.2 },
+          "overlay": { "min": 0.3, "max": 0.6 }
         }
       }
     },
