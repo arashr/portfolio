@@ -2,6 +2,14 @@
 
 /* MD Gallery — app chrome (poster styles in site.css) */
 
+html:has(body.page-collection) {
+  scroll-behavior: auto;
+}
+
+body.page-collection {
+  overflow-anchor: none;
+}
+
 body.page-collection #main-reader {
   zoom: var(--reader-zoom);
 }

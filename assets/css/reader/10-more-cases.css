@@ -1,0 +1,45 @@
+/* Reader — other case studies grid below the last poster */
+
+.page-reader .poster-gallery .post-card-wrap.reader-more-cases-wrap {
+  margin-top: calc(2rem - clamp(1.25rem, 3vw, 2rem));
+}
+
+.page-reader .poster-gallery .post-card-wrap.reader-more-cases-wrap > .post-card {
+  max-width: none;
+}
+
+.reader-more-cases {
+  width: 100%;
+  max-width: min(var(--poster-width), 100%);
+  min-width: 0;
+}
+
+.reader-more-cases__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--layout-gap);
+  row-gap: clamp(1rem, 2vw, 1.125rem);
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* Reset poster-gallery grid-column span inherited by nested post-card-wrap */
+.page-reader .poster-gallery .reader-more-cases__grid > .post-card-wrap {
+  grid-column: auto;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.reader-more-cases__grid > .post-card-wrap .post-card,
+.reader-more-cases__grid > .post-card-wrap .mini-poster {
+  max-width: 100%;
+}
+
+@media (max-width: 599px) {
+  .reader-more-cases__grid {
+    grid-template-columns: 1fr;
+  }
+}

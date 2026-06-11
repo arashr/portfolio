@@ -156,6 +156,8 @@ button.mini-poster.landing-pick-card {
   container-name: poster-card;
   position: relative;
   height: 100%;
+  min-width: 0;
+  overflow: hidden;
   min-height: clamp(8.5rem, 42cqi, 11.5rem);
   padding: clamp(1rem, 4cqi, 2rem) clamp(1rem, 4cqi, 2rem);
   border: var(--chrome-stroke-width) solid transparent;
@@ -198,7 +200,7 @@ button.mini-poster .mini-poster__title {
 button.mini-poster .mini-poster__head {
   flex: 0 0 auto;
   min-width: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 
 button.mini-poster.landing-pick-card .post-header {
@@ -275,7 +277,8 @@ button.mini-poster.landing-pick-card .mini-poster__credit {
 }
 
 button.mini-poster .post-title-bounds {
-  overflow: visible;
+  overflow: hidden;
+  min-width: 0;
 }
 
 button.mini-poster > *:not(.post-card__glyph-layer) {

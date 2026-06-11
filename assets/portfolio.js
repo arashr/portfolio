@@ -1,6 +1,8 @@
 import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
 import { renderDocument, renderToc, setAssetDimensions, setRenderContentPath } from '../lib/render-document.js';
 import { renderLandingGallery } from '../lib/render-landing-gallery.js';
+import { renderReaderMoreCases } from '../lib/render-reader-more-cases.js';
+import { posterStaggerCol } from '../lib/stagger.js';
 import { renderHomeAside } from '../lib/render-home-aside.js';
 import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
 import { fitMiniPosterTitles, fitPosterTitles } from '../lib/fit-poster-title.js';
@@ -72,6 +74,8 @@ import { ICONS } from './icons.js';
   let posterEls = [];
   let titleScaleFrame = 0;
   let titleFitObserver = null;
+  let titleFitDebounce = 0;
+  let moreCasesResizeObserver = null;
   /** @type {{ path: string, title: string, index: number, subtext?: string, stats?: { value: string, label: string }[], credit?: string }[] | null} */
   let caseStudyItems = null;
   let currentRelativePath = '';
@@ -250,11 +254,15 @@ import { ICONS } from './icons.js';
 
   function setupTitleFitObserver() {
     titleFitObserver?.disconnect();
+    clearTimeout(titleFitDebounce);
     if (!posterEls.length || typeof ResizeObserver === 'undefined') return;
     let resizeTick = 0;
     titleFitObserver = new ResizeObserver(() => {
-      cancelAnimationFrame(resizeTick);
-      resizeTick = requestAnimationFrame(schedulePosterTitleFit);
+      clearTimeout(titleFitDebounce);
+      titleFitDebounce = window.setTimeout(() => {
+        cancelAnimationFrame(resizeTick);
+        resizeTick = requestAnimationFrame(schedulePosterTitleFit);
+      }, 150);
     });
     posterEls.forEach((card) => titleFitObserver.observe(card));
   }
@@ -309,6 +317,89 @@ import { ICONS } from './icons.js';
         });
       }
     });
+  }
+
+  function readerMoreMiniPosterEls() {
+    return Array.from(mainReader.querySelectorAll('.reader-more-cases .mini-poster[data-md-path]'));
+  }
+
+  function fitReaderMoreCases() {
+    const miniPosters = readerMoreMiniPosterEls();
+    if (!miniPosters.length) return;
+    fitMiniPosterTitles(miniPosters, getGalleryConfig().titleScale);
+    renderPosterGlyphPatterns(miniPosters, getGalleryConfig());
+  }
+
+  function quietReaderLayoutObservers() {
+    titleFitObserver?.disconnect();
+    titleFitObserver = null;
+    clearTimeout(titleFitDebounce);
+    moreCasesResizeObserver?.disconnect();
+    moreCasesResizeObserver = null;
+  }
+
+  function setupReaderMoreCasesObserver() {
+    moreCasesResizeObserver?.disconnect();
+    const grid = mainReader.querySelector('.reader-more-cases__grid');
+    if (!grid || typeof ResizeObserver === 'undefined') return;
+    let tick = 0;
+    let passes = 0;
+    moreCasesResizeObserver = new ResizeObserver(() => {
+      if (passes >= 3) return;
+      cancelAnimationFrame(tick);
+      tick = requestAnimationFrame(() => {
+        passes += 1;
+        fitReaderMoreCases();
+        if (passes >= 3) moreCasesResizeObserver?.disconnect();
+      });
+    });
+    moreCasesResizeObserver.observe(grid);
+  }
+
+  function scheduleReaderMoreCasesEnhance() {
+    if (!readerMoreMiniPosterEls().length) return;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        fitReaderMoreCases();
+        setupReaderMoreCasesObserver();
+      });
+    });
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(fitReaderMoreCases);
+    }
+  }
+
+  function lastPosterColStart(doc) {
+    let previousStaggerCol = null;
+    for (const poster of doc.posters) {
+      previousStaggerCol = posterStaggerCol(poster.slug, poster.index, previousStaggerCol);
+    }
+    return previousStaggerCol ?? 1;
+  }
+
+  function pickMoreCaseStudies(relativePath, limit = 2) {
+    if (!caseStudyItems?.length) return [];
+    const currentIdx = caseStudyItems.findIndex((item) => item.path === relativePath);
+    if (currentIdx < 0) {
+      return caseStudyItems.filter((item) => item.path !== relativePath).slice(0, limit);
+    }
+    const picks = [];
+    for (let step = 1; picks.length < limit && step < caseStudyItems.length; step++) {
+      const item = caseStudyItems[(currentIdx + step) % caseStudyItems.length];
+      if (item.path !== relativePath) picks.push(item);
+    }
+    return picks;
+  }
+
+  function appendReaderMoreCases(relativePath, doc) {
+    const picks = pickMoreCaseStudies(relativePath, 2);
+    if (!picks.length) return;
+    const postersEl = mainReader.querySelector('#posters');
+    if (!postersEl) return;
+    postersEl.insertAdjacentHTML(
+      'beforeend',
+      renderReaderMoreCases(picks, { colStart: lastPosterColStart(doc) })
+    );
   }
 
   function showReader() {
@@ -421,12 +512,17 @@ import { ICONS } from './icons.js';
       contentPath: relativePath,
       description
     });
+    appendReaderMoreCases(relativePath, doc);
     showReader();
     setTocHtml(renderToc(doc.toc));
 
-    posterEls = Array.from(mainReader.querySelectorAll('.post-card'));
+    posterEls = Array.from(
+      mainReader.querySelectorAll('#posters > .post-card-wrap:not(.reader-more-cases-wrap) .post-card')
+    );
 
     enhanceReaderContent();
+    scheduleReaderMoreCasesEnhance();
+    quietReaderLayoutObservers();
     setupTitleFitObserver();
     lastReaderHeaderHeight = 0;
     updateScrollOffset();
@@ -442,12 +538,14 @@ import { ICONS } from './icons.js';
         schedulePosterTitleFit();
         renderGlyphs();
         enhancePosterImageHalftone(mainReader, getGalleryConfig());
+        fitReaderMoreCases();
       });
     }
+    window.setTimeout(quietReaderLayoutObservers, 500);
     if (updateHistory) {
       history.pushState({ view: 'read', file: relativePath }, '', '#read');
     }
-    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   async function openCaseStudy(relativePath, { updateHistory = true } = {}) {
@@ -556,6 +654,18 @@ import { ICONS } from './icons.js';
   });
 
   mainReader.addEventListener('click', (e) => {
+    const morePick = e.target.closest('.reader-more-cases .mini-poster[data-md-path]');
+    if (morePick) {
+      const path = morePick.getAttribute('data-md-path');
+      if (path) {
+        void openCaseStudy(path).catch((err) => {
+          console.error(err);
+          alert('Could not open this case study.');
+        });
+      }
+      return;
+    }
+
     const copyBtn = e.target.closest('.code-block__copy');
     if (copyBtn) {
       e.preventDefault();
@@ -649,6 +759,7 @@ import { ICONS } from './icons.js';
     enhancePosterImageHalftone(mainReader, getGalleryConfig());
     schedulePosterTitleFit();
     if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
+    else scheduleReaderMoreCasesEnhance();
   }
 
   function scheduleConfigReload() {
