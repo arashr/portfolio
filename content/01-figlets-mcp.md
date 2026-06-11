@@ -6,6 +6,8 @@ year: 2026
 
 # Figlets MCP
 
+![Figlets MCP](./src/figlets-hero.png)
+
 An AI interface for managing Figma design systems through plain language. It helps designers audit components, document decisions, and run repeatable QA without relying on slow, fragile, manual workflows.
 
 
@@ -57,6 +59,8 @@ AI changes that model.
 
 The user can start with intent instead of navigation. They can say what they want in plain language, even if they do not know the method yet. The agent can translate that intent into the right workflow, ask for missing context, explain errors, and turn dead ends into next steps.
 
+![Figlets MCP](./src/figlets-ds-health.png "iso Figlets MCP checking the design system health in seconds")
+
 That is how I see Figlets. The AI is not there to freely edit Figma. It is there to make a structured system easier to use. The agent listens, guides, explains, and asks. Figlets does the reliable work underneath.
 
 ## Product Vision
@@ -77,6 +81,8 @@ Every write path starts read-only. First it syncs the file. Then it audits the s
 
 The designer always sees what will change before anything is applied.
 
+![Figlets Approval](./src/figlets-approve.png "iso The agent asks for approval before changing anything in Figma")
+
 ## Approval Boundaries
 
 Approval has to match intent.
@@ -86,6 +92,8 @@ If a designer approves fixing four Mobile spacing aliases, Figlets should not cr
 So repairs are grouped by scope. Foundation repairs, primitive updates, and semantic token writes each need separate approval.
 
 After a repair is applied, Figlets syncs the file again, checks the result, and stops. It does not move into the next category unless the designer asks.
+
+![Figlets Boundries](./src/figlets-boundries.png "iso Figlet respects the boundries with minimum context")
 
 The repair menus use designer language too. “Fix the 4 spacing alias repairs” is better than exposing internal commands. It keeps the user focused on the decision, not the tool name.
 
@@ -114,6 +122,8 @@ So I built an Agent Interface exposed through MCP:
 - `figlets_workflow_guide` gives step-by-step instructions with approval gates built in.
 
 If the designer already states a goal, Figlets routes directly. If the request is unclear, it offers a structured choice instead of guessing.
+
+![Figlets Flow](./src/figlets-flow.png "iso The flows are defined in the scripts. No need for long prompts.")
 
 ## Core Workflows
 
@@ -169,7 +179,7 @@ There are now more than one hundred automated tests behind the workflows. Manual
 
 ## Outcome
 
-Figlets MCP is a working v0.1 product.
+[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working v0.1 product.
 
 It is agent-agnostic, local-first, and built around inspect-first workflows with explicit approval before every Figma write.
 
