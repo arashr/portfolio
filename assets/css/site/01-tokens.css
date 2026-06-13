@@ -3,7 +3,7 @@
 
 :root {
   /* ── Color · primary (light) ─────────────────────────────────── */
-  --color-paper: #fff9f5;
+  --color-paper: #f4f4f4;
   --color-ink: #0c0e10;
   --color-ink-soft: #1b1f24;
   --color-ink-muted: rgba(12, 14, 16, 0.66);
