@@ -43,6 +43,8 @@ Each entry file only `@import`s modules under this directory. Edit the module th
 | `07-theme-dark.css` | Dark mode overrides |
 | `08-filters.css` | Poster search filter |
 | `09-responsive.css` | Narrow header |
+| `10-more-cases.css` | Related case studies below reader |
+| `11-poster-full-bleed.css` | Full-bleed reader posters, inner content grid |
 
 ## portfolio/
 
