@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swiss grid · full bleed · reader demo</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="fonts-link" rel="stylesheet" href="">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <link rel="stylesheet" href="../../assets/reader.css">
+  <link rel="stylesheet" href="../../assets/portfolio.css">
+  <link rel="stylesheet" href="./shared/shell.css">
+  <link rel="stylesheet" href="./shared/swiss-base.css">
+  <link rel="stylesheet" href="./shared/swiss-full-bleed.css">
+  <script>
+    if (localStorage.getItem('md-portfolio-theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</head>
+<body id="app">
+  <div class="demo-swiss__banner" role="note">
+    <strong>Demo · Full bleed · scroll header</strong>
+    <nav class="demo-swiss__nav" aria-label="Swiss grid demos">
+      <a href="index.html">All demos</a>
+      <a href="01-modular-grid.html" data-demo-page="modular">Modular</a>
+      <a href="02-asymmetric-rhythm.html" data-demo-page="asymmetric">Asymmetric</a>
+      <a href="03-full-bleed-content.html" data-demo-page="full-bleed" aria-current="page">Full bleed</a>
+      <a href="../../index.html#read">Live reader</a>
+    </nav>
+  </div>
+
+  <section class="page-reader demo-swiss-reader" id="reader" aria-label="Case study reader">
+    <header class="site-header site-header--reader">
+      <div class="header-inner reader-header">
+        <div class="reader-header__primary">
+          <span class="brand brand--reader site-header__brand" id="demo-reader-brand">Case study</span>
+        </div>
+        <div class="reader-header__meta mono-label">
+          <p class="reader-header__role" id="demo-reader-role">Scroll to explore</p>
+        </div>
+      </div>
+    </header>
+    <div class="reader-layout">
+      <main id="main-reader" class="content-feed collection-feed" aria-live="polite"></main>
+    </div>
+  </section>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "marked": "../../node_modules/marked/lib/marked.esm.js",
+      "dompurify": "../../node_modules/dompurify/dist/purify.es.mjs",
+      "isomorphic-dompurify": "../../node_modules/isomorphic-dompurify/dist/browser.mjs"
+    }
+  }
+  </script>
+  <script type="module">
+    import { mountSwissReaderDemo } from './shared/mount-swiss-reader.js';
+
+    mountSwissReaderDemo({
+      variant: 'full-bleed',
+      contentPath: 'content/01-figlets-mcp.md',
+      currentPage: 'full-bleed'
+    }).catch((err) => {
+      console.error(err);
+      document.getElementById('main-reader').innerHTML =
+        '<p class="mono-label">Could not load case study. Run <code>npm start</code> from the repo root.</p>';
+    });
+  </script>
+</body>
+</html>

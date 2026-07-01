@@ -1,0 +1,27 @@
+/* Demo 2 — asymmetric Swiss rhythm (left axis + hang-right blocks) */
+
+body.demo-swiss-asymmetric .page-reader .poster-gallery.posts-list {
+  row-gap: clamp(2.5rem, 7vw, 5.5rem);
+}
+
+@media (min-width: 900px) {
+  body.demo-swiss-asymmetric .page-reader .poster-gallery .post-card-wrap:nth-child(5n + 1) {
+    grid-column: 1 / span 9;
+  }
+
+  body.demo-swiss-asymmetric .page-reader .poster-gallery .post-card-wrap:nth-child(5n + 2) {
+    grid-column: 4 / span 9;
+  }
+
+  body.demo-swiss-asymmetric .page-reader .poster-gallery .post-card-wrap:nth-child(5n + 3) {
+    grid-column: 1 / span 6;
+  }
+
+  body.demo-swiss-asymmetric .page-reader .poster-gallery .post-card-wrap:nth-child(5n + 4) {
+    grid-column: 6 / span 7;
+  }
+
+  body.demo-swiss-asymmetric .page-reader .poster-gallery .post-card-wrap:nth-child(5n + 5) {
+    grid-column: 2 / span 8;
+  }
+}
