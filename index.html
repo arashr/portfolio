@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="assets/reader.css">
   <link rel="stylesheet" href="assets/portfolio.css">
   <script>
-    if (localStorage.getItem('md-portfolio-theme') === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
+    (function () {
+      if (localStorage.getItem('md-portfolio-theme') !== 'light') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
   </script>
 </head>
 <body id="app">
@@ -26,13 +28,6 @@
       <div class="header-inner reader-header">
         <div class="reader-header__primary">
           <span class="brand brand--reader site-header__brand" id="site-brand">Portfolio</span>
-          <div class="reader-header__tools">
-            <div class="reader-controls" role="group" aria-label="View options">
-              <button type="button" class="btn-icon btn-ghost theme-toggle" id="theme-toggle" aria-label="Dark mode" aria-pressed="false">
-                <span class="theme-toggle__icons" aria-hidden="true"></span>
-              </button>
-            </div>
-          </div>
         </div>
         <div class="reader-header__meta mono-label">
           <p class="reader-header__role" id="landing-site-tagline">Case studies</p>
@@ -68,17 +63,6 @@
             <span class="site-header__brand" id="reader-site-brand">Portfolio</span>
           </button>
           <div class="reader-header__tools">
-            <div class="reader-controls" role="group" aria-label="View options">
-              <button type="button" class="btn-icon btn-ghost" id="zoom-out" aria-label="Zoom out">
-                <span data-icon="zoomOut" aria-hidden="true"></span>
-              </button>
-              <button type="button" class="btn-icon btn-ghost" id="zoom-in" aria-label="Zoom in">
-                <span data-icon="zoomIn" aria-hidden="true"></span>
-              </button>
-              <button type="button" class="btn-icon btn-ghost theme-toggle" aria-label="Dark mode" aria-pressed="false">
-                <span class="theme-toggle__icons" aria-hidden="true"></span>
-              </button>
-            </div>
             <div class="nav-toc-wrap">
               <button type="button" class="btn-ghost btn-with-icon" id="toc-toggle" aria-expanded="false" aria-controls="toc-panel">
                 <span class="btn-icon-slot" data-icon="list" aria-hidden="true"></span>

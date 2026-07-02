@@ -1,0 +1,163 @@
+/* Reader chrome — scroll-linked ground colors (classes set in scroll-linked-header.js) */
+
+.page-reader .site-header--reader,
+.page-reader .toc-panel,
+.page-reader .reader-toc-rail__inner {
+  transition:
+    background-color 0.45s ease,
+    color 0.45s ease,
+    border-color 0.45s ease;
+}
+
+.page-reader .site-header--reader[class*='ground-'],
+.page-reader .site-header--reader.reader-header--paper,
+.page-reader .toc-panel[class*='ground-'],
+.page-reader .toc-panel.reader-header--paper,
+.page-reader .reader-toc-rail__inner[class*='ground-'],
+.page-reader .reader-toc-rail__inner.reader-header--paper {
+  background: var(--surface, var(--paper));
+  color: var(--on-ground-body, var(--ink-soft));
+  border-color: color-mix(in oklch, var(--on-ground-muted, var(--hair)) 55%, transparent);
+}
+
+.page-reader .site-header--reader.reader-header--paper,
+.page-reader .toc-panel.reader-header--paper,
+.page-reader .reader-toc-rail__inner.reader-header--paper {
+  --surface: var(--paper);
+  --on-ground-display: var(--ink-soft);
+  --on-ground-body: var(--ink-soft);
+  --on-ground-muted: var(--ink-mute);
+  --on-ground-link-hover-text: var(--paper);
+  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-toc-hover-text: var(--ink);
+}
+
+.page-reader .site-header--reader[class*='ground-'] .site-header__brand,
+.page-reader .site-header--reader[class*='ground-'] .brand,
+.page-reader .site-header--reader.reader-header--paper .site-header__brand,
+.page-reader .site-header--reader.reader-header--paper .brand {
+  color: var(--on-ground-display, var(--ink-soft));
+}
+
+.page-reader .site-header--reader[class*='ground-'] .reader-header__role,
+.page-reader .site-header--reader.reader-header--paper .reader-header__role {
+  color: var(--on-ground-muted, var(--ink-mute));
+}
+
+.page-reader .site-header--reader[class*='ground-'] .reader-header__meta,
+.page-reader .site-header--reader.reader-header--paper .reader-header__meta {
+  border-top-color: color-mix(in oklch, var(--on-ground-muted, var(--hair)) 45%, transparent);
+  border-bottom-color: color-mix(in oklch, var(--on-ground-muted, var(--hair)) 45%, transparent);
+}
+
+.page-reader .site-header--reader[class*='ground-'] .chrome-link,
+.page-reader .site-header--reader.reader-header--paper .chrome-link,
+.page-reader .site-header--reader[class*='ground-'] .reader-header__meta-aside a,
+.page-reader .site-header--reader.reader-header--paper .reader-header__meta-aside a {
+  color: var(--on-ground-muted, var(--ink-mute));
+}
+
+.page-reader .site-header--reader[class*='ground-'] .chrome-link:hover,
+.page-reader .site-header--reader[class*='ground-'] .chrome-link:focus-visible,
+.page-reader .site-header--reader.reader-header--paper .chrome-link:hover,
+.page-reader .site-header--reader.reader-header--paper .chrome-link:focus-visible,
+.page-reader .site-header--reader[class*='ground-'] .reader-header__meta-aside a:hover,
+.page-reader .site-header--reader[class*='ground-'] .reader-header__meta-aside a:focus-visible,
+.page-reader .site-header--reader.reader-header--paper .reader-header__meta-aside a:hover,
+.page-reader .site-header--reader.reader-header--paper .reader-header__meta-aside a:focus-visible {
+  color: var(--on-ground-link-hover-text, var(--paper));
+  background: var(--on-ground-link-hover-bg, var(--ink));
+  text-decoration: none;
+}
+
+.page-reader .site-header--reader[class*='ground-'] .btn-ghost,
+.page-reader .site-header--reader.reader-header--paper .btn-ghost {
+  border-color: color-mix(in oklch, var(--on-ground-muted, var(--hair)) 55%, transparent);
+  color: var(--on-ground-body, var(--ink-soft));
+  box-shadow: none;
+}
+
+.page-reader .site-header--reader[class*='ground-'] .btn-ghost:hover:not(:disabled),
+.page-reader .site-header--reader[class*='ground-'] .btn-ghost:focus-visible:not(:disabled),
+.page-reader .site-header--reader[class*='ground-'] .btn-ghost[aria-expanded='true']:not(:disabled),
+.page-reader .site-header--reader.reader-header--paper .btn-ghost:hover:not(:disabled),
+.page-reader .site-header--reader.reader-header--paper .btn-ghost:focus-visible:not(:disabled),
+.page-reader .site-header--reader.reader-header--paper .btn-ghost[aria-expanded='true']:not(:disabled) {
+  border-color: var(--on-ground-display, var(--ink));
+  color: var(--on-ground-display, var(--ink));
+}
+
+/* TOC drawer + sticky rail */
+.page-reader .toc-panel[class*='ground-'],
+.page-reader .toc-panel.reader-header--paper,
+.page-reader .reader-toc-rail__inner[class*='ground-'],
+.page-reader .reader-toc-rail__inner.reader-header--paper {
+  box-shadow: none;
+}
+
+.page-reader .toc-panel[class*='ground-'] .toc-panel__label,
+.page-reader .toc-panel.reader-header--paper .toc-panel__label,
+.page-reader .reader-toc-rail__inner[class*='ground-'] .toc-panel__label,
+.page-reader .reader-toc-rail__inner.reader-header--paper .toc-panel__label {
+  color: var(--on-ground-accent, var(--red));
+}
+
+.page-reader .toc-panel[class*='ground-'] .toc-item a,
+.page-reader .toc-panel.reader-header--paper .toc-item a,
+.page-reader .reader-toc-rail__inner[class*='ground-'] .toc-item a,
+.page-reader .reader-toc-rail__inner.reader-header--paper .toc-item a {
+  color: var(--on-ground-body, var(--ink-soft));
+}
+
+.page-reader .toc-panel[class*='ground-'] .toc-item a:hover,
+.page-reader .toc-panel[class*='ground-'] .toc-item a.is-active,
+.page-reader .toc-panel.reader-header--paper .toc-item a:hover,
+.page-reader .toc-panel.reader-header--paper .toc-item a.is-active,
+.page-reader .reader-toc-rail__inner[class*='ground-'] .toc-item a:hover,
+.page-reader .reader-toc-rail__inner[class*='ground-'] .toc-item a.is-active,
+.page-reader .reader-toc-rail__inner.reader-header--paper .toc-item a:hover,
+.page-reader .reader-toc-rail__inner.reader-header--paper .toc-item a.is-active {
+  color: var(--on-ground-toc-hover-text, var(--ink));
+  background: transparent;
+}
+
+/* Dark chrome defaults lose to grounded reader chrome */
+html[data-theme='dark'] .page-reader .site-header--reader[class*='ground-'] .site-header__brand,
+html[data-theme='dark'] .page-reader .site-header--reader[class*='ground-'] .brand,
+html[data-theme='dark'] .page-reader .site-header--reader.reader-header--paper .site-header__brand,
+html[data-theme='dark'] .page-reader .site-header--reader.reader-header--paper .brand {
+  color: var(--on-ground-display, var(--ink-soft));
+}
+
+html[data-theme='dark'] .page-reader .site-header--reader[class*='ground-'] .reader-header__role,
+html[data-theme='dark'] .page-reader .site-header--reader.reader-header--paper .reader-header__role {
+  color: var(--on-ground-muted, var(--ink-mute));
+}
+
+html[data-theme='dark'] .page-reader .toc-panel[class*='ground-'] .toc-item a,
+html[data-theme='dark'] .page-reader .toc-panel.reader-header--paper .toc-item a,
+html[data-theme='dark'] .page-reader .reader-toc-rail__inner[class*='ground-'] .toc-item a,
+html[data-theme='dark'] .page-reader .reader-toc-rail__inner.reader-header--paper .toc-item a {
+  color: var(--on-ground-body, var(--chrome-ink-soft));
+  background-color: none;
+}
+
+html[data-theme='dark'] .page-reader .toc-panel[class*='ground-'] .toc-item a:hover,
+html[data-theme='dark'] .page-reader .toc-panel[class*='ground-'] .toc-item a.is-active,
+html[data-theme='dark'] .page-reader .toc-panel.reader-header--paper .toc-item a:hover,
+html[data-theme='dark'] .page-reader .toc-panel.reader-header--paper .toc-item a.is-active,
+html[data-theme='dark'] .page-reader .reader-toc-rail__inner[class*='ground-'] .toc-item a:hover,
+html[data-theme='dark'] .page-reader .reader-toc-rail__inner[class*='ground-'] .toc-item a.is-active,
+html[data-theme='dark'] .page-reader .reader-toc-rail__inner.reader-header--paper .toc-item a:hover,
+html[data-theme='dark'] .page-reader .reader-toc-rail__inner.reader-header--paper .toc-item a.is-active {
+  color: var(--on-ground-toc-hover-text, var(--ink));
+  background: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-reader .site-header--reader,
+  .page-reader .toc-panel,
+  .page-reader .reader-toc-rail__inner {
+    transition: none;
+  }
+}

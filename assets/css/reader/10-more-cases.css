@@ -1,7 +1,11 @@
 /* Reader — other case studies grid below the last poster */
 
 .page-reader .poster-gallery .post-card-wrap.reader-more-cases-wrap {
-  margin-top: calc(2rem - clamp(1.25rem, 3vw, 2rem));
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+  padding-top: var(--layout-gap);
 }
 
 .page-reader .poster-gallery .post-card-wrap.reader-more-cases-wrap > .post-card {
@@ -10,19 +14,31 @@
 
 .reader-more-cases {
   width: 100%;
-  max-width: min(var(--poster-width), 100%);
+  max-width: none;
   min-width: 0;
 }
 
 .reader-more-cases__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--layout-gap);
-  row-gap: clamp(1rem, 2vw, 1.125rem);
+  grid-template-columns: 1fr;
+  column-gap: 0;
+  row-gap: 0;
   width: 100%;
   min-width: 0;
   padding: 0;
   margin: 0;
+}
+
+@media (min-width: 600px) {
+  .reader-more-cases__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .page-reader .poster-gallery .post-card-wrap.reader-more-cases-wrap {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Reset poster-gallery grid-column span inherited by nested post-card-wrap */
@@ -33,13 +49,11 @@
   min-width: 0;
 }
 
-.reader-more-cases__grid > .post-card-wrap .post-card,
-.reader-more-cases__grid > .post-card-wrap .mini-poster {
-  max-width: 100%;
-}
-
-@media (max-width: 599px) {
-  .reader-more-cases__grid {
-    grid-template-columns: 1fr;
-  }
+.page-reader .poster-gallery .reader-more-cases__grid > .post-card-wrap .mini-poster.landing-pick-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  min-height: clamp(8.5rem, 42cqi, 11.5rem);
+  height: 100%;
 }

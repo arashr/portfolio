@@ -1,7 +1,7 @@
 {
   "theme": {
     "edgeHalftone": {
-      "enabled": true,
+      "enabled": false,
       "heightPx": 80,
       "dotPx": 6,
       "angleDeg": 22,
@@ -273,8 +273,7 @@
         "opacityMin": 0.2,
         "opacityMax": 0.4,
         "blendModes": {
-          "exclusion": { "min": 0.6, "max": 0.9 },
-          "overlay": { "min": 0.5, "max": 0.8 }
+          "exclusion": { "min": 0.6, "max": 0.9 }
         }
       }
     },
@@ -287,6 +286,29 @@
           "multiply": { "min": 0.5, "max": 0.9 },
           "overlay": { "min": 0.5, "max": 0.8 },
           "color-dodge": { "min": 0.5, "max": 0.9 }
+        }
+      }
+    },
+    "green": {
+      "glyph": {
+        "color": "white",
+        "opacity": 0.2,
+        "opacityMin": 0.1,
+        "opacityMax": 0.3,
+        "blendModes": {
+          "exclusion": { "min": 0.1, "max": 0.2 },
+          "exclusion": { "min": 0.9, "max": 1 },
+          "soft-light": { "min": 0.7, "max": 0.9 },
+          "overlay": { "min": 0.1, "max": 0.3 }
+        }
+      },
+      "heroGlyph": {
+        "color": "white",
+        "opacityMin": 0.2,
+        "opacityMax": 0.4,
+        "blendModes": {
+          "exclusion": { "min": 0.05, "max": 0.2 },
+          "overlay": { "min": 0.4, "max": 0.6 }
         }
       }
     }
@@ -306,11 +328,11 @@
       "lineHeight": "1.45"
     },
     "titleFaces": [
+      { "id": "inter900", "google": "Inter:wght@900", "lineHeight": "0.95", "letterSpacing": "-0.02em" },
       { "id": "ultra", "google": "Ultra", "lineHeight": "1.1", "letterSpacing": "-0.005em" },
       { "id": "limelight", "google": "BBH+Bogle", "lineHeight": "0.8", "letterSpacing": "0.01em" },
-      { "id": "jersey25", "google": "Jersey+25", "lineHeight": "0.7", "letterSpacing": "-0.01em" },
-      { "id": "blackops", "google": "Black+Ops+One", "lineHeight": "0.86", "letterSpacing": "0.02em" },
-      
+      { "id": "jersey25", "google": "Jersey+25", "lineHeight": "0.77", "letterSpacing": "-0.01em" },
+      { "id": "caprasimo", "google": "Caprasimo", "lineHeight": "0.8", "letterSpacing": "-0.03em" },
       { "id": "calsans", "google": "Cal+Sans", "lineHeight": "0.94", "letterSpacing": "-0.01em" }
     ]
   },
@@ -340,5 +362,10 @@
         "floorPx": 14
       }
     ]
+  },
+  "reader": {
+    "titleBleed": {
+      "symbolPool": "."
+    }
   }
 }

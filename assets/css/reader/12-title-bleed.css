@@ -1,0 +1,173 @@
+/* Previous poster title ghost — partial-line bleed at section boundary */
+
+.page-reader .collection-feed,
+.page-reader .poster-gallery.posts-list {
+  overflow-x: visible;
+}
+
+html:has(body.page-collection),
+body.page-collection {
+  overflow-x: visible;
+}
+
+#posters > .post-card-wrap:not(.reader-more-cases-wrap) {
+  position: relative;
+  overflow: visible;
+}
+
+#posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+  overflow: visible;
+}
+
+.post-card__title-bleed {
+  --title-bleed-reveal: 0.23;
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: visible;
+  overflow-y: hidden;
+  line-height: 1;
+  
+  width: max-content;
+  max-width: none;
+  font-size: clamp(3.75rem, 17cqi, 12rem);
+  background: none;
+  background-color: transparent;
+}
+
+/* Ground class only supplies --surface ink; never paint a fill on the clip window */
+.post-card__title-bleed[class*='ground-'] {
+  background: none;
+  background-color: transparent;
+}
+
+.post-card__title-bleed-text {
+  display: block;
+  position: relative;
+  width: max-content;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  transform: translateY(calc(-100% * (1 - var(--title-bleed-reveal, 0.3))));
+  font-size: 1em;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  text-align: inherit;
+}
+
+.post-card__title-bleed[class*='ground-'] .post-card__title-bleed-text {
+  color: var(--surface);
+}
+
+.post-card-wrap:has(> .post-card[class*='title-face-']) > .post-card__title-bleed .post-card__title-bleed-text {
+  width: max-content;
+  max-width: none;
+  padding: 0;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  font-size: 1em;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.post-card-wrap:has(> .post-card.title-face-ultra) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Ultra, serif;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-monoton) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Rubik Dirt', cursive;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-limelight) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'BBH Bogle', sans-serif;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-jersey25) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Jersey 25', sans-serif;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-blackops) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Black Ops One', sans-serif;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-notable) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Notable, cursive;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-calsans) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Cal Sans', sans-serif;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-caprasimo) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Caprasimo, serif;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-inter900) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Inter, sans-serif;
+  font-weight: 900;
+}
+
+@media (min-width: 900px) {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .post-card__title-bleed,
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .post-card__title-bleed {
+    left: var(--pad);
+    right: auto;
+    text-align: left;
+  }
+
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-card__title-bleed {
+    left: var(--pad);
+    right: var(--pad);
+    width: auto;
+    text-align: center;
+  }
+
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-card__title-bleed-text {
+    margin-inline: auto;
+    transform: translateY(calc(-100% * (1 - var(--title-bleed-reveal, 0.3))));
+  }
+
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-card__title-bleed {
+    left: auto;
+    right: var(--pad);
+    text-align: right;
+  }
+
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-card__title-bleed-text {
+    margin-left: auto;
+    transform: translateY(calc(-100% * (1 - var(--title-bleed-reveal, 0.3))));
+  }
+
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .post-card__title-bleed,
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .post-card__title-bleed {
+    left: calc(
+      var(--pad) + (100% - 2 * var(--pad) - 11 * var(--layout-gap)) / 12 + var(--layout-gap)
+    );
+    right: auto;
+    text-align: left;
+  }
+}
+
+@media (max-width: 899px) {
+  .post-card__title-bleed {
+    font-size: clamp(2.75rem, 14vw, 6rem);
+  }
+}

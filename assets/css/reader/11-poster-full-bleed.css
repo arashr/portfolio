@@ -1,10 +1,21 @@
 /* Reader posters — full-bleed sections, inner 12-col content rhythm (case study only) */
 
+.page-reader .collection-feed {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.page-reader .collection-hero {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .page-reader .poster-gallery.posts-list {
   row-gap: 0;
   column-gap: 0;
   margin-inline: calc(-1 * var(--pad));
   width: calc(100% + 2 * var(--pad));
+  padding-top: 0;
   padding-bottom: 0;
   background: transparent;
 }
@@ -13,12 +24,22 @@
   padding-top: 0;
 }
 
-.page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) {
+.page-reader .poster-gallery .post-card-wrap.reader-more-cases-wrap {
+  padding-top: 0;
+}
+
+/* Direct case-study posters only — not nested picks in .reader-more-cases */
+#posters > .post-card-wrap:not(.reader-more-cases-wrap) {
   width: 100%;
   max-width: none;
 }
 
-.page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+/* Seamless stack — wrap carries ground surface (toolbar strip stays transparent via ::after only) */
+#posters > .post-card-wrap:not(.reader-more-cases-wrap)[class*='ground-'] {
+  background: var(--surface);
+}
+
+#posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--layout-gap);
@@ -27,13 +48,17 @@
   max-width: none;
   min-height: min(100dvh, 56rem);
   margin: 0;
-  padding-block: clamp(2.5rem, 8vh, 5rem);
+  --poster-pad-block: clamp(2.5rem, 8vh, 5rem);
+  /* Inside every poster, above the title (this is the usual “breathing room” knob) */
+  --poster-pad-top: clamp(5rem, 12vh, 7rem);
+  padding-top: var(--poster-pad-top);
+  padding-bottom: var(--poster-pad-block);
   padding-inline: var(--pad);
   box-sizing: border-box;
 }
 
-.page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header,
-.page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .prose {
+#posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header,
+#posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .prose {
   width: auto;
   max-width: none;
   margin: 0;
@@ -42,46 +67,51 @@
 }
 
 @media (min-width: 900px) {
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+    --poster-pad-block: clamp(3.5rem, 10vh, 6.5rem);
+    --poster-pad-top: clamp(6rem, 14vh, 8.5rem);
+  }
+
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap) {
     grid-column: 1 / -1;
   }
 
   /* Inner content positions — 6-poster cycle */
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .post-header {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .post-header {
     grid-column: 1 / span 6;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .prose {
     grid-column: 1 / span 5;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-header {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-header {
     grid-column: 3 / span 8;
     text-align: center;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .prose {
     grid-column: 4 / span 6;
     margin-inline: auto;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-header {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-header {
     grid-column: 7 / span 6;
     text-align: right;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .prose {
     grid-column: 6 / span 7;
     margin-left: auto;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .post-header {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .post-header {
     grid-column: 1 / span 5;
     grid-row: 1;
     align-self: start;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .prose {
     grid-column: 6 / span 7;
     grid-row: 1;
     align-self: start;
@@ -89,32 +119,39 @@
     padding-left: var(--layout-gap);
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .post-header {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .post-header {
     grid-column: 2 / span 10;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .prose {
     grid-column: 3 / span 8;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .post-header {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .post-header {
     grid-column: 2 / span 6;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .prose {
     grid-column: 4 / span 6;
   }
 }
 
+@media (min-width: 1200px) {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+    --poster-pad-block: clamp(4rem, 12vh, 8rem);
+    --poster-pad-top: clamp(7rem, 16vh, 10rem);
+  }
+}
+
 @media (max-width: 899px) {
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
     display: flex;
     flex-direction: column;
     min-height: 0;
   }
 
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) .post-header,
-  .page-reader .poster-gallery .post-card-wrap:not(.reader-more-cases-wrap) .prose {
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap) .post-header,
+  #posters > .post-card-wrap:not(.reader-more-cases-wrap) .prose {
     grid-column: auto;
     grid-row: auto;
     text-align: left;

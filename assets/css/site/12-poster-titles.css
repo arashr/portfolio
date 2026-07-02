@@ -162,6 +162,28 @@ h2.poster__title.post-title,
   font-family: 'Cal Sans', sans-serif;
   font-weight: 400;
 }
+
+.post-card.title-face-caprasimo .poster__title,
+.post-card.title-face-caprasimo .post-title a,
+.post-card.title-face-caprasimo .prose :is(h2, h3, h4),
+.collection-card.title-face-caprasimo .poster__title,
+.mini-poster.title-face-caprasimo .poster__title,
+.mini-poster.title-face-caprasimo .post-title,
+.legend-sample.title-face-caprasimo {
+  font-family: Caprasimo, serif;
+  font-weight: 400;
+}
+
+.post-card.title-face-inter900 .poster__title,
+.post-card.title-face-inter900 .post-title a,
+.post-card.title-face-inter900 .prose :is(h2, h3, h4),
+.collection-card.title-face-inter900 .poster__title,
+.mini-poster.title-face-inter900 .poster__title,
+.mini-poster.title-face-inter900 .post-title,
+.legend-sample.title-face-inter900 {
+  font-family: Inter, sans-serif;
+  font-weight: 900;
+}
 .post-title a {
   display: block;
   width: 100%;

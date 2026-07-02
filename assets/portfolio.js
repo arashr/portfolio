@@ -24,6 +24,7 @@ import { enhancePosterImageHalftone } from '../lib/image-halftone.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
 import { mountEdgeHalftone } from '../lib/edge-halftone.js';
+import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { ICONS } from './icons.js';
 
 (function () {
@@ -84,6 +85,8 @@ import { ICONS } from './icons.js';
   let contentWatchTimer = 0;
   /** @type {{ destroy: () => void, refresh: () => void }} */
   let edgeHalftone = { destroy() {}, refresh() {} };
+  /** @type {(() => void) | null} */
+  let scrollLinkedHeaderTeardown = null;
 
   const CONTENT_POLL_MS = 3000;
   const isLocalDev =
@@ -168,6 +171,20 @@ import { ICONS } from './icons.js';
 
   function readerHeaderEl() {
     return document.querySelector('#reader .site-header--reader');
+  }
+
+  function setupScrollLinkedHeader() {
+    scrollLinkedHeaderTeardown?.();
+    scrollLinkedHeaderTeardown = null;
+    const header = readerHeaderEl();
+    if (!header || reader.hidden) return;
+    const sections = collectScrollSections(mainReader);
+    scrollLinkedHeaderTeardown = initScrollLinkedHeader({ header, sections, root: mainReader });
+  }
+
+  function teardownScrollLinkedHeader() {
+    scrollLinkedHeaderTeardown?.();
+    scrollLinkedHeaderTeardown = null;
   }
 
   function readAnchorOffsetPx() {
@@ -276,8 +293,8 @@ import { ICONS } from './icons.js';
     readerZoom = clampZoom(readerZoom);
     document.documentElement.style.setProperty('--reader-zoom', String(readerZoom));
     localStorage.setItem(ZOOM_KEY, String(readerZoom));
-    zoomOut.disabled = readerZoom <= ZOOM_MIN;
-    zoomIn.disabled = readerZoom >= ZOOM_MAX;
+    if (zoomOut) zoomOut.disabled = readerZoom <= ZOOM_MIN;
+    if (zoomIn) zoomIn.disabled = readerZoom >= ZOOM_MAX;
     updateScrollOffset();
     schedulePosterTitleFit({ realignHash: true });
     updateTocLayout();
@@ -412,6 +429,7 @@ import { ICONS } from './icons.js';
   }
 
   function showLanding() {
+    teardownScrollLinkedHeader();
     landing.classList.remove('is-hidden');
     reader.hidden = true;
     reader.classList.remove('is-active');
@@ -546,6 +564,7 @@ import { ICONS } from './icons.js';
       history.pushState({ view: 'read', file: relativePath }, '', '#read');
     }
     window.scrollTo({ top: 0, behavior: 'auto' });
+    setupScrollLinkedHeader();
   }
 
   async function openCaseStudy(relativePath, { updateHistory = true } = {}) {
@@ -602,7 +621,7 @@ import { ICONS } from './icons.js';
     injectIcons();
     applyZoom();
     setupEdgeHalftone();
-    applyTheme(localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light');
+    applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
     try {
       await loadHome();
       startContentWatch();
@@ -713,12 +732,12 @@ import { ICONS } from './icons.js';
 
   readerHome?.addEventListener('click', () => goHome());
 
-  zoomOut.addEventListener('click', () => {
+  zoomOut?.addEventListener('click', () => {
     readerZoom = clampZoom(readerZoom - ZOOM_STEP);
     applyZoom();
   });
 
-  zoomIn.addEventListener('click', () => {
+  zoomIn?.addEventListener('click', () => {
     readerZoom = clampZoom(readerZoom + ZOOM_STEP);
     applyZoom();
   });

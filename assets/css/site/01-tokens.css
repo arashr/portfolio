@@ -131,6 +131,7 @@
   --color-ground-mint: #a7dbce;
   --color-ground-carmine: #b52840;
   --color-ground-forest: #b8d8c5;
+  --color-ground-green: #09b557;
 
   /* ── Ground · primary (foreground · shared) ──────────────────── */
   --color-ground-fg-muted: #1f2428;
@@ -145,16 +146,48 @@
   --color-ground-pink-accent: #5c1028;
   --color-ground-white-display: #2c2781;
   --color-ground-white-accent: #b00037;
-  --color-ground-lime-accent: #88e6e6;
+  --color-ground-lime-display: #0c0e10;
+  --color-ground-lime-accent: #2a5c5c;
+  --color-ground-tangerine-display: #0c0e10;
+  --color-ground-tangerine-accent: #2f2114;
   --color-ground-lilac-display: #110b84;
   --color-ground-lilac-accent: #3d2a9e;
-  --color-ground-butter-accent: #ff6201;
+  --color-ground-butter-display: #0c0e10;
+  --color-ground-butter-accent: #a83800;
+  --color-ground-butter-toc-hover-text: #a83800;
   --color-ground-mint-display: #0f00b7;
   --color-ground-mint-accent: #004535;
   --color-ground-mint-glyph: #b5b2d9;
-  --color-ground-forest-display: #0a3d28;
-  --color-ground-forest-accent: #0a3d28;
   --color-ground-carmine-fg: #ffffff;
+  --color-ground-carmine-display: var(--color-ground-carmine-fg);
+  --color-ground-forest-display: #0a3d28;
+  --color-ground-forest-accent: #0f5c3a;
+  --color-ground-green-display: #010804;
+  --color-ground-green-accent: #0a4528;
+
+  /* Link hover chips — per ground (accessible pairs on each surface) */
+  --color-ground-pink-link-hover-bg: var(--color-ground-pink-display);
+  --color-ground-white-link-hover-bg: var(--color-ground-white-display);
+  --color-ground-lime-link-hover-bg: var(--color-ground-lime-display);
+  --color-ground-tangerine-link-hover-bg: var(--color-ground-tangerine-accent);
+  --color-ground-lilac-link-hover-bg: var(--color-ground-lilac-display);
+  --color-ground-butter-link-hover-bg: var(--color-ground-butter-accent);
+  --color-ground-mint-link-hover-bg: var(--color-ground-mint-accent);
+  --color-ground-carmine-link-hover-bg: #ffffff;
+  --color-ground-carmine-link-hover-text: var(--color-ground-carmine);
+  --color-ground-forest-link-hover-bg: var(--color-ground-forest-display);
+  --color-ground-green-link-hover-bg: var(--color-ground-green-display);
+
+  /* TOC link hover — text on ground surface (no chip); use accent hues vs body ink */
+  --color-ground-pink-toc-hover-text: var(--color-ground-pink-accent);
+  --color-ground-white-toc-hover-text: var(--color-ground-white-accent);
+  --color-ground-lime-toc-hover-text: var(--color-ground-mint-accent);
+  --color-ground-tangerine-toc-hover-text: var(--color-ground-tangerine-accent);
+  --color-ground-lilac-toc-hover-text: var(--color-ground-lilac-accent);
+  --color-ground-mint-toc-hover-text: var(--color-ground-mint-display);
+  --color-ground-carmine-toc-hover-text: var(--color-ground-butter);
+  --color-ground-forest-toc-hover-text: var(--color-ground-forest-accent);
+  --color-ground-green-toc-hover-text: #053318;
 
   /* ── Ground · semantic (surfaces) ────────────────────────────── */
   --ground-pink: var(--color-ground-pink);
@@ -166,6 +199,7 @@
   --ground-mint: var(--color-ground-mint);
   --ground-carmine: var(--color-ground-carmine);
   --ground-forest: var(--color-ground-forest);
+  --ground-green: var(--color-ground-green);
 
   /* ── Graphics ──────────────────────────────────────────────────── */
   --glyph-pattern-color: var(--red);

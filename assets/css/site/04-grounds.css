@@ -18,7 +18,8 @@
   --on-ground-accent: var(--color-ground-pink-accent);
   --on-ground-focus: var(--ink);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-pink-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-pink-toc-hover-text);
 }
 
 .ground-white {
@@ -30,31 +31,34 @@
   --on-ground-accent: var(--color-ground-white-accent);
   --on-ground-focus: var(--ink);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-white-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-white-toc-hover-text);
 }
 
 .ground-lime {
   background: var(--ground-lime);
   --surface: var(--ground-lime);
-  --on-ground-display: var(--color-ground-fg-ink-deep);
+  --on-ground-display: var(--color-ground-lime-display);
   --on-ground-body: var(--ink);
   --on-ground-muted: var(--color-ground-fg-muted);
   --on-ground-accent: var(--color-ground-lime-accent);
   --on-ground-focus: var(--ink);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-lime-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-lime-toc-hover-text);
 }
 
 .ground-tangerine {
   background: var(--ground-tangerine);
   --surface: var(--ground-tangerine);
-  --on-ground-display: var(--color-ground-fg-ink-deep);
+  --on-ground-display: var(--color-ground-tangerine-display);
   --on-ground-body: var(--ink);
   --on-ground-muted: var(--color-ground-fg-tangerine-muted);
-  --on-ground-accent: var(--color-ground-fg-ink-deep);
-  --on-ground-focus: var(--color-ground-fg-ink-deep);
+  --on-ground-accent: var(--color-ground-tangerine-accent);
+  --on-ground-focus: var(--color-ground-tangerine-display);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-tangerine-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-tangerine-toc-hover-text);
 }
 
 .ground-lilac {
@@ -66,19 +70,21 @@
   --on-ground-accent: var(--color-ground-lilac-accent);
   --on-ground-focus: var(--ink);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-lilac-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-lilac-toc-hover-text);
 }
 
 .ground-butter {
   background: var(--ground-butter);
   --surface: var(--ground-butter);
-  --on-ground-display: var(--color-ground-fg-ink-deep);
+  --on-ground-display: var(--color-ground-butter-display);
   --on-ground-body: var(--ink);
   --on-ground-muted: var(--color-ground-fg-muted);
   --on-ground-accent: var(--color-ground-butter-accent);
   --on-ground-focus: var(--ink);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-butter-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-butter-toc-hover-text);
 }
 
 .ground-mint {
@@ -90,19 +96,21 @@
   --on-ground-accent: var(--color-ground-mint-accent);
   --on-ground-focus: var(--ink);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-mint-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-mint-toc-hover-text);
 }
 
 .ground-carmine {
   background: var(--ground-carmine);
   --surface: var(--ground-carmine);
-  --on-ground-display: var(--color-ground-carmine-fg);
+  --on-ground-display: var(--color-ground-carmine-display);
   --on-ground-body: var(--color-ground-carmine-fg);
   --on-ground-muted: var(--color-ground-fg-carmine-muted);
   --on-ground-accent: var(--color-ground-carmine-fg);
   --on-ground-focus: var(--color-ground-carmine-fg);
-  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-carmine-link-hover-text);
+  --on-ground-link-hover-bg: var(--color-ground-carmine-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-carmine-toc-hover-text);
   /* Foreground is white; structural edges stay ink (tables, card borders, iso, shadows) */
   --on-ground-edge: var(--ink);
   --on-ground-edge-1: var(--ink);
@@ -117,7 +125,21 @@
   --on-ground-accent: var(--color-ground-forest-accent);
   --on-ground-focus: var(--color-ground-forest-accent);
   --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--ink);
+  --on-ground-link-hover-bg: var(--color-ground-forest-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-forest-toc-hover-text);
+}
+
+.ground-green {
+  background: var(--ground-green);
+  --surface: var(--ground-green);
+  --on-ground-display: var(--color-ground-green-display);
+  --on-ground-body: var(--ink);
+  --on-ground-muted: var(--color-ground-fg-muted);
+  --on-ground-accent: var(--color-ground-green-accent);
+  --on-ground-focus: var(--ink);
+  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
+  --on-ground-link-hover-bg: var(--color-ground-green-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-green-toc-hover-text);
 }
 
 /* Colored posters and post cards */
