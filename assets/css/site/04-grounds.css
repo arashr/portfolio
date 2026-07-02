@@ -142,6 +142,22 @@
   --on-ground-toc-hover-text: var(--color-ground-green-toc-hover-text);
 }
 
+.ground-indigo {
+  background: var(--ground-indigo);
+  --surface: var(--ground-indigo);
+  --on-ground-display: var(--color-ground-indigo-display);
+  --on-ground-body: var(--color-ground-indigo-fg);
+  --on-ground-muted: var(--color-ground-indigo-muted);
+  --on-ground-accent: var(--color-ground-indigo-accent);
+  --on-ground-focus: var(--color-ground-indigo-fg);
+  --on-ground-link-hover-text: var(--color-ground-indigo-link-hover-text);
+  --on-ground-link-hover-bg: var(--color-ground-indigo-link-hover-bg);
+  --on-ground-toc-hover-text: var(--color-ground-indigo-toc-hover-text);
+  /* Foreground is white; structural edges stay ink (tables, card borders, iso, shadows) */
+  --on-ground-edge: var(--ink);
+  --on-ground-edge-1: var(--ink);
+}
+
 /* Colored posters and post cards */
 .post-card[class*='ground-'],
 .poster[class*='ground-'],

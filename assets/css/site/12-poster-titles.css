@@ -174,15 +174,16 @@ h2.poster__title.post-title,
   font-weight: 400;
 }
 
-.post-card.title-face-inter900 .poster__title,
-.post-card.title-face-inter900 .post-title a,
-.post-card.title-face-inter900 .prose :is(h2, h3, h4),
-.collection-card.title-face-inter900 .poster__title,
-.mini-poster.title-face-inter900 .poster__title,
-.mini-poster.title-face-inter900 .post-title,
-.legend-sample.title-face-inter900 {
-  font-family: Inter, sans-serif;
-  font-weight: 900;
+.post-card.title-face-roboto700 .poster__title,
+.post-card.title-face-roboto700 .post-title a,
+.post-card.title-face-roboto700 .prose :is(h2, h3, h4),
+.collection-card.title-face-roboto700 .poster__title,
+.mini-poster.title-face-roboto700 .poster__title,
+.mini-poster.title-face-roboto700 .post-title,
+.legend-sample.title-face-roboto700 {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-variation-settings: 'wdth' 80;
 }
 .post-title a {
   display: block;

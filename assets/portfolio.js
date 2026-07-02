@@ -262,7 +262,7 @@ import { ICONS } from './icons.js';
     cancelAnimationFrame(titleScaleFrame);
     titleScaleFrame = requestAnimationFrame(() => {
       void mainReader.offsetHeight;
-      fitPosterTitles(posterEls, getGalleryConfig().titleScale);
+      fitPosterTitles(posterEls, getGalleryConfig());
       renderGlyphs();
       updateTocLayout();
       if (realignHash && location.hash) realignScrollToHash();
@@ -324,12 +324,12 @@ import { ICONS } from './icons.js';
   function scheduleLandingMiniGlyphs() {
     requestAnimationFrame(() => {
       const miniPosters = landingMiniPosterEls();
-      fitMiniPosterTitles(miniPosters, getGalleryConfig().titleScale);
+      fitMiniPosterTitles(miniPosters, getGalleryConfig());
       renderPosterGlyphPatterns(miniPosters, getGalleryConfig());
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
           const readyMiniPosters = landingMiniPosterEls();
-          fitMiniPosterTitles(readyMiniPosters, getGalleryConfig().titleScale);
+          fitMiniPosterTitles(readyMiniPosters, getGalleryConfig());
           renderPosterGlyphPatterns(readyMiniPosters, getGalleryConfig());
         });
       }
@@ -343,7 +343,7 @@ import { ICONS } from './icons.js';
   function fitReaderMoreCases() {
     const miniPosters = readerMoreMiniPosterEls();
     if (!miniPosters.length) return;
-    fitMiniPosterTitles(miniPosters, getGalleryConfig().titleScale);
+    fitMiniPosterTitles(miniPosters, getGalleryConfig());
     renderPosterGlyphPatterns(miniPosters, getGalleryConfig());
   }
 

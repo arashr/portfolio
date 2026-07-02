@@ -311,6 +311,27 @@
           "overlay": { "min": 0.4, "max": 0.6 }
         }
       }
+    },
+    "indigo": {
+      "glyph": {
+        "color": "red",
+        "opacity": 0.25,
+        "opacityMin": 0.15,
+        "opacityMax": 0.35,
+        "blendModes": {
+          "screen": { "min": 0.7, "max": 0.9 },
+          "overlay": { "min": 0.5, "max": 0.8 }
+        }
+      },
+      "heroGlyph": {
+        "color": "red",
+        "opacityMin": 0.15,
+        "opacityMax": 0.3,
+        "blendModes": {
+          "screen": { "min": 0.2, "max": 0.3 },
+          "overlay": { "min": 0.1, "max": 0.2 }
+        }
+      }
     }
   },
   "fonts": {
@@ -328,40 +349,64 @@
       "lineHeight": "1.45"
     },
     "titleFaces": [
-      { "id": "inter900", "google": "Inter:wght@900", "lineHeight": "0.95", "letterSpacing": "-0.02em" },
+      {
+        "id": "roboto700",
+        "google": "Roboto:wdth,wght@80,700",
+        "lineHeight": "0.95",
+        "letterSpacing": "-0.05em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 150,
+          "maxWidthRatio": 0.45,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412
+        }
+      },
       { "id": "ultra", "google": "Ultra", "lineHeight": "1.1", "letterSpacing": "-0.005em" },
       { "id": "limelight", "google": "BBH+Bogle", "lineHeight": "0.8", "letterSpacing": "0.01em" },
       { "id": "jersey25", "google": "Jersey+25", "lineHeight": "0.77", "letterSpacing": "-0.01em" },
-      { "id": "caprasimo", "google": "Caprasimo", "lineHeight": "0.8", "letterSpacing": "-0.03em" },
-      { "id": "calsans", "google": "Cal+Sans", "lineHeight": "0.94", "letterSpacing": "-0.01em" }
-    ]
-  },
-  "titleScale": {
-    "minPx": 64,
-    "maxPx": 280,
-    "maxWidthRatio": 0.45,
-    "floorPx": 14,
-    "slackMinPx": 56,
-    "bAspect": 1.412,
-    "tiers": [
-      { "maxChars": 18 },
       {
-        "maxChars": 42,
-        "maxWidthRatio": 0.34,
-        "minPx": 36,
-        "maxPx": 120,
-        "maxLines": 4
+        "id": "caprasimo",
+        "google": "Caprasimo",
+        "lineHeight": "0.95",
+        "letterSpacing": "-0.03em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 160,
+          "maxWidthRatio": 0.45,
+          "floorPx": 14
+        }
       },
-      {
-        "maxChars": null,
-        "maxWidthRatio": 0.26,
-        "minPx": 20,
-        "maxPx": 80,
-        "maxLines": 3,
-        "maxPxRatio": 0.72,
-        "floorPx": 14
-      }
-    ]
+      { "id": "calsans", "google": "Cal+Sans", "lineHeight": "0.94", "letterSpacing": "-0.01em" }
+    ],
+    "titleScale": {
+      "minPx": 64,
+      "maxPx": 280,
+      "maxWidthRatio": 0.45,
+      "floorPx": 14,
+      "slackMinPx": 56,
+      "bAspect": 1.412,
+      "tiers": [
+        { "maxChars": 18 },
+        {
+          "maxChars": 42,
+          "maxWidthRatio": 0.34,
+          "minPx": 36,
+          "maxPx": 120,
+          "maxLines": 4
+        },
+        {
+          "maxChars": null,
+          "maxWidthRatio": 0.26,
+          "minPx": 20,
+          "maxPx": 80,
+          "maxLines": 3,
+          "maxPxRatio": 0.72,
+          "floorPx": 14
+        }
+      ]
+    }
   },
   "reader": {
     "titleBleed": {

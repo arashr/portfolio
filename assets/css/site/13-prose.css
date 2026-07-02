@@ -115,7 +115,7 @@
 
 .post-card[class*='ground-'] .prose-img-iso__frame {
   background: var(--surface);
-  border-color: var(--on-ground-edge);
+  border: var(--chrome-stroke-width) solid var(--on-ground-edge);
   box-shadow:
     var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
       var(--on-ground-edge),

@@ -120,9 +120,10 @@ body.page-collection {
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-inter900) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: Inter, sans-serif;
-  font-weight: 900;
+.post-card-wrap:has(> .post-card.title-face-roboto700) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Roboto, sans-serif;
+  font-weight: 700;
+  font-variation-settings: 'wdth' 80;
 }
 
 @media (min-width: 900px) {
