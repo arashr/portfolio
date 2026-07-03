@@ -20,6 +20,8 @@ test('renderLandingMosaic uses indigo name band and reader-style poster stack', 
   assert.match(html, /id="landing-posters"/);
   assert.match(html, /post-card-wrap/);
   assert.match(html, /landing-pick-card.*data-md-path="a\.md"/);
+  assert.match(html, /landing-pick-more/);
+  assert.match(html, /READ MORE/);
   assert.match(html, /table-wrap/);
   assert.match(html, /data-glyph-canvas/);
   assert.match(html, /landing-aside-wrap/);

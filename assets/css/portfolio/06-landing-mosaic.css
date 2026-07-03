@@ -38,6 +38,27 @@
   outline: none;
 }
 
+/* Touch-only affordance — desktop uses custom cursor CTA */
+.landing-pick-more {
+  display: none;
+  margin: 0.65rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  color: var(--ink-soft);
+}
+
+.post-card[class*='ground-'] .landing-pick-more {
+  color: var(--on-ground-muted, var(--ink-soft));
+}
+
+@media (hover: none), (pointer: coarse) {
+  .landing-pick-card .landing-pick-more {
+    display: block;
+  }
+}
+
 /* Name band — full bleed on desktop; mobile uses same edge alignment as #landing-posters */
 .page-landing #landing-name.post-card-wrap {
   position: relative;

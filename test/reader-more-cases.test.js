@@ -25,4 +25,5 @@ test('renderReaderMoreCases emits aligned wrap and mini-poster picks', () => {
   assert.match(html, /reader-more-cases__grid/);
   assert.match(html, /landing-pick-card/);
   assert.match(html, /data-md-path="content\/02-other.md"/);
+  assert.match(html, /landing-pick-more/);
 });

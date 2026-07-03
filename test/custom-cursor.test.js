@@ -89,13 +89,13 @@ test('resolveCursorState returns default on hash anchors', () => {
   );
 });
 
-test('resolveCursorState returns default on reader more-case picks', () => {
+test('resolveCursorState returns cta on reader more-case picks', () => {
   assert.equal(
     stateAt(
       '<div class="reader-more-cases"><button type="button" class="post-card mini-poster landing-pick-card" data-md-path="other.md">Other</button></div>',
       'button'
     ),
-    'default'
+    'cta'
   );
 });
 
