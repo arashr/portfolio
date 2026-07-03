@@ -61,7 +61,7 @@
           "offsetXRatioMax": 0.35
         },
         "accessibility": {
-          "excludeTitleFaces": ["monoton", "jersey25"]
+          "excludeTitleFaces": ["ibm-plex-mono", "anton"]
         }
       },
       "typePattern": {
@@ -336,8 +336,8 @@
   },
   "fonts": {
     "uiSans": {
-      "family": "Inconsolata",
-      "google": "Inconsolata:ital,wght@0,500;0,700;0,900;1,400"
+      "family": "Space Grotesk",
+      "google": "Space+Grotesk:wght@400;500;700"
     },
     "uiSerif": {
       "family": "Libre Baskerville",
@@ -350,35 +350,55 @@
     },
     "titleFaces": [
       {
-        "id": "roboto700",
-        "google": "Roboto:wdth,wght@80,700",
+        "id": "space-grotesk",
+        "google": "Space+Grotesk:wght@400;500;700",
         "lineHeight": "0.95",
-        "letterSpacing": "-0.05em",
-        "titleScale": {
-          "minPx": 64,
-          "maxPx": 150,
-          "maxWidthRatio": 0.45,
-          "floorPx": 14,
-          "slackMinPx": 56,
-          "bAspect": 1.412
-        }
+        "letterSpacing": "-0.07em"
       },
-      { "id": "ultra", "google": "Ultra", "lineHeight": "1.1", "letterSpacing": "-0.005em" },
-      { "id": "limelight", "google": "BBH+Bogle", "lineHeight": "0.8", "letterSpacing": "0.01em" },
-      { "id": "jersey25", "google": "Jersey+25", "lineHeight": "0.77", "letterSpacing": "-0.01em" },
       {
-        "id": "caprasimo",
-        "google": "Caprasimo",
-        "lineHeight": "0.95",
-        "letterSpacing": "-0.03em",
-        "titleScale": {
-          "minPx": 64,
-          "maxPx": 160,
-          "maxWidthRatio": 0.45,
-          "floorPx": 14
-        }
+        "id": "archivo-black",
+        "google": "Archivo+Black",
+        "lineHeight": "0.96",
+        "letterSpacing": "-0.03em"
       },
-      { "id": "calsans", "google": "Cal+Sans", "lineHeight": "0.94", "letterSpacing": "-0.01em" }
+      {
+        "id": "bricolage-grotesque",
+        "google": "Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800",
+        "lineHeight": "0.87",
+        "letterSpacing": "-0.04em"
+      },
+      {
+        "id": "chakra-petch",
+        "google": "Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400",
+        "lineHeight": "0.96",
+        "letterSpacing": "-0.06em"
+      },
+      { "id": "ultra", "google": "Ultra", "lineHeight": "1.02", "letterSpacing": "-0.01em" },
+      {
+        "id": "dm-serif-display",
+        "google": "DM+Serif+Display:ital@0;1",
+        "lineHeight": "1",
+        "letterSpacing": "-0.02em"
+      },
+      {
+        "id": "unbounded",
+        "google": "Unbounded:wght@400;700",
+        "lineHeight": "1",
+        "letterSpacing": "-0.05em"
+      },
+      {
+        "id": "oswald",
+        "google": "Oswald:wght@400;500;700",
+        "lineHeight": "1.05",
+        "letterSpacing": "-0.02em"
+      },
+      {
+        "id": "ibm-plex-mono",
+        "google": "IBM+Plex+Mono:wght@400;500;700",
+        "lineHeight": "1",
+        "letterSpacing": "-0.08em"
+      },
+      { "id": "anton", "google": "Anton", "lineHeight": "1", "letterSpacing": "-0.01em" }
     ],
     "titleScale": {
       "minPx": 64,

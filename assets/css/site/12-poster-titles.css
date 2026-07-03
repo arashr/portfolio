@@ -97,93 +97,104 @@ h2.poster__title.post-title,
   font-weight: 400;
 }
 
-.post-card.title-face-monoton .poster__title,
-.post-card.title-face-monoton .post-title a,
-.post-card.title-face-monoton .prose :is(h2, h3, h4),
-.collection-card.title-face-monoton .poster__title,
-.mini-poster.title-face-monoton .poster__title,
-.mini-poster.title-face-monoton .post-title,
-.legend-sample.title-face-monoton {
-  font-family: 'Rubik Dirt', cursive;
+.post-card.title-face-space-grotesk .poster__title,
+.post-card.title-face-space-grotesk .post-title a,
+.post-card.title-face-space-grotesk .prose :is(h2, h3, h4),
+.collection-card.title-face-space-grotesk .poster__title,
+.mini-poster.title-face-space-grotesk .poster__title,
+.mini-poster.title-face-space-grotesk .post-title,
+.legend-sample.title-face-space-grotesk {
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 400;
 }
 
-.post-card.title-face-limelight .poster__title,
-.post-card.title-face-limelight .post-title a,
-.post-card.title-face-limelight .prose :is(h2, h3, h4),
-.collection-card.title-face-limelight .poster__title,
-.mini-poster.title-face-limelight .poster__title,
-.mini-poster.title-face-limelight .post-title,
-.legend-sample.title-face-limelight {
-  font-family: 'BBH Bogle', sans-serif;
+.post-card.title-face-archivo-black .poster__title,
+.post-card.title-face-archivo-black .post-title a,
+.post-card.title-face-archivo-black .prose :is(h2, h3, h4),
+.collection-card.title-face-archivo-black .poster__title,
+.mini-poster.title-face-archivo-black .poster__title,
+.mini-poster.title-face-archivo-black .post-title,
+.legend-sample.title-face-archivo-black {
+  font-family: 'Archivo Black', sans-serif;
   font-weight: 400;
 }
 
-.post-card.title-face-jersey25 .poster__title,
-.post-card.title-face-jersey25 .post-title a,
-.post-card.title-face-jersey25 .prose :is(h2, h3, h4),
-.collection-card.title-face-jersey25 .poster__title,
-.mini-poster.title-face-jersey25 .poster__title,
-.mini-poster.title-face-jersey25 .post-title,
-.legend-sample.title-face-jersey25 {
-  font-family: 'Jersey 25', sans-serif;
+.post-card.title-face-bricolage-grotesque .poster__title,
+.post-card.title-face-bricolage-grotesque .post-title a,
+.post-card.title-face-bricolage-grotesque .prose :is(h2, h3, h4),
+.collection-card.title-face-bricolage-grotesque .poster__title,
+.mini-poster.title-face-bricolage-grotesque .poster__title,
+.mini-poster.title-face-bricolage-grotesque .post-title,
+.legend-sample.title-face-bricolage-grotesque,
+.landing-mosaic__hero-title.title-face-bricolage-grotesque {
+  font-family: 'Bricolage Grotesque', sans-serif;
   font-weight: 400;
 }
 
-.post-card.title-face-blackops .poster__title,
-.post-card.title-face-blackops .post-title a,
-.post-card.title-face-blackops .prose :is(h2, h3, h4),
-.collection-card.title-face-blackops .poster__title,
-.mini-poster.title-face-blackops .poster__title,
-.mini-poster.title-face-blackops .post-title,
-.legend-sample.title-face-blackops {
-  font-family: 'Black Ops One', sans-serif;
+.post-card.title-face-chakra-petch .poster__title,
+.post-card.title-face-chakra-petch .post-title a,
+.post-card.title-face-chakra-petch .prose :is(h2, h3, h4),
+.collection-card.title-face-chakra-petch .poster__title,
+.mini-poster.title-face-chakra-petch .poster__title,
+.mini-poster.title-face-chakra-petch .post-title,
+.legend-sample.title-face-chakra-petch {
+  font-family: 'Chakra Petch', sans-serif;
   font-weight: 400;
 }
 
-.post-card.title-face-notable .poster__title,
-.post-card.title-face-notable .post-title a,
-.post-card.title-face-notable .prose :is(h2, h3, h4),
-.collection-card.title-face-notable .poster__title,
-.mini-poster.title-face-notable .poster__title,
-.mini-poster.title-face-notable .post-title,
-.legend-sample.title-face-notable {
-  font-family: Notable, cursive;
+.post-card.title-face-dm-serif-display .poster__title,
+.post-card.title-face-dm-serif-display .post-title a,
+.post-card.title-face-dm-serif-display .prose :is(h2, h3, h4),
+.collection-card.title-face-dm-serif-display .poster__title,
+.mini-poster.title-face-dm-serif-display .poster__title,
+.mini-poster.title-face-dm-serif-display .post-title,
+.legend-sample.title-face-dm-serif-display {
+  font-family: 'DM Serif Display', serif;
   font-weight: 400;
 }
 
-.post-card.title-face-calsans .poster__title,
-.post-card.title-face-calsans .post-title a,
-.post-card.title-face-calsans .prose :is(h2, h3, h4),
-.collection-card.title-face-calsans .poster__title,
-.mini-poster.title-face-calsans .poster__title,
-.mini-poster.title-face-calsans .post-title,
-.legend-sample.title-face-calsans {
-  font-family: 'Cal Sans', sans-serif;
+.post-card.title-face-unbounded .poster__title,
+.post-card.title-face-unbounded .post-title a,
+.post-card.title-face-unbounded .prose :is(h2, h3, h4),
+.collection-card.title-face-unbounded .poster__title,
+.mini-poster.title-face-unbounded .poster__title,
+.mini-poster.title-face-unbounded .post-title,
+.legend-sample.title-face-unbounded {
+  font-family: Unbounded, sans-serif;
   font-weight: 400;
 }
 
-.post-card.title-face-caprasimo .poster__title,
-.post-card.title-face-caprasimo .post-title a,
-.post-card.title-face-caprasimo .prose :is(h2, h3, h4),
-.collection-card.title-face-caprasimo .poster__title,
-.mini-poster.title-face-caprasimo .poster__title,
-.mini-poster.title-face-caprasimo .post-title,
-.legend-sample.title-face-caprasimo {
-  font-family: Caprasimo, serif;
+.post-card.title-face-oswald .poster__title,
+.post-card.title-face-oswald .post-title a,
+.post-card.title-face-oswald .prose :is(h2, h3, h4),
+.collection-card.title-face-oswald .poster__title,
+.mini-poster.title-face-oswald .poster__title,
+.mini-poster.title-face-oswald .post-title,
+.legend-sample.title-face-oswald {
+  font-family: Oswald, sans-serif;
   font-weight: 400;
 }
 
-.post-card.title-face-roboto700 .poster__title,
-.post-card.title-face-roboto700 .post-title a,
-.post-card.title-face-roboto700 .prose :is(h2, h3, h4),
-.collection-card.title-face-roboto700 .poster__title,
-.mini-poster.title-face-roboto700 .poster__title,
-.mini-poster.title-face-roboto700 .post-title,
-.legend-sample.title-face-roboto700 {
-  font-family: Roboto, sans-serif;
-  font-weight: 700;
-  font-variation-settings: 'wdth' 80;
+.post-card.title-face-ibm-plex-mono .poster__title,
+.post-card.title-face-ibm-plex-mono .post-title a,
+.post-card.title-face-ibm-plex-mono .prose :is(h2, h3, h4),
+.collection-card.title-face-ibm-plex-mono .poster__title,
+.mini-poster.title-face-ibm-plex-mono .poster__title,
+.mini-poster.title-face-ibm-plex-mono .post-title,
+.legend-sample.title-face-ibm-plex-mono {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-weight: 400;
+}
+
+.post-card.title-face-anton .poster__title,
+.post-card.title-face-anton .post-title a,
+.post-card.title-face-anton .prose :is(h2, h3, h4),
+.collection-card.title-face-anton .poster__title,
+.mini-poster.title-face-anton .poster__title,
+.mini-poster.title-face-anton .post-title,
+.legend-sample.title-face-anton {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
 }
 .post-title a {
   display: block;

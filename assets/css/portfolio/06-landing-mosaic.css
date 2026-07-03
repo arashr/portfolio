@@ -82,9 +82,6 @@
 
 .landing-mosaic__hero-title {
   margin: 0;
-  font-family: Roboto, sans-serif;
-  font-weight: 700;
-  font-variation-settings: 'wdth' 80;
   font-size: clamp(3rem, 10vw, 9rem);
   line-height: 0.78;
   letter-spacing: -0.04em;

@@ -85,45 +85,49 @@ body.page-collection {
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-monoton) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: 'Rubik Dirt', cursive;
+.post-card-wrap:has(> .post-card.title-face-space-grotesk) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-limelight) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: 'BBH Bogle', sans-serif;
+.post-card-wrap:has(> .post-card.title-face-archivo-black) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Archivo Black', sans-serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-jersey25) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: 'Jersey 25', sans-serif;
+.post-card-wrap:has(> .post-card.title-face-bricolage-grotesque) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Bricolage Grotesque', sans-serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-blackops) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: 'Black Ops One', sans-serif;
+.post-card-wrap:has(> .post-card.title-face-chakra-petch) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'Chakra Petch', sans-serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-notable) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: Notable, cursive;
+.post-card-wrap:has(> .post-card.title-face-dm-serif-display) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'DM Serif Display', serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-calsans) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: 'Cal Sans', sans-serif;
+.post-card-wrap:has(> .post-card.title-face-unbounded) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Unbounded, sans-serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-caprasimo) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: Caprasimo, serif;
+.post-card-wrap:has(> .post-card.title-face-oswald) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Oswald, sans-serif;
   font-weight: 400;
 }
 
-.post-card-wrap:has(> .post-card.title-face-roboto700) > .post-card__title-bleed .post-card__title-bleed-text {
-  font-family: Roboto, sans-serif;
-  font-weight: 700;
-  font-variation-settings: 'wdth' 80;
+.post-card-wrap:has(> .post-card.title-face-ibm-plex-mono) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-weight: 400;
+}
+
+.post-card-wrap:has(> .post-card.title-face-anton) > .post-card__title-bleed .post-card__title-bleed-text {
+  font-family: Anton, sans-serif;
+  font-weight: 400;
 }
 
 @media (min-width: 900px) {

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font pairing demo — MD Portfolio</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link id="demo-fonts-link" rel="stylesheet" href="">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <link rel="stylesheet" href="../../assets/reader.css">
+  <link rel="stylesheet" href="demo.css">
+  <script>
+    (function () {
+      if (localStorage.getItem('md-portfolio-theme') !== 'light') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body id="app" class="font-pairing-demo">
+  <header class="font-pairing-demo__toolbar" aria-label="Font pairing controls">
+    <p class="font-pairing-demo__title">Font pairing lab</p>
+    <p class="font-pairing-demo__pairing" id="pairing-label" aria-live="polite"></p>
+    <div class="font-pairing-demo__field">
+      <label for="body-font">Body</label>
+      <select id="body-font" name="body-font"></select>
+    </div>
+    <div class="font-pairing-demo__field">
+      <label for="display-font">Display</label>
+      <select id="display-font" name="display-font"></select>
+    </div>
+    <div class="font-pairing-demo__field">
+      <label for="title-line-1">Line 1</label>
+      <input type="text" id="title-line-1" name="title-line-1" value="Koggle" spellcheck="false">
+    </div>
+    <div class="font-pairing-demo__field">
+      <label for="title-line-2">Line 2</label>
+      <input type="text" id="title-line-2" name="title-line-2" value="Plahhos" spellcheck="false">
+    </div>
+    <div class="font-pairing-demo__field font-pairing-demo__field--narrow">
+      <label for="title-size">Size (px)</label>
+      <input type="number" id="title-size" name="title-size" min="24" max="200" step="1" value="72">
+    </div>
+    <div class="font-pairing-demo__field font-pairing-demo__field--narrow">
+      <label for="title-line-height">Line height</label>
+      <input type="text" id="title-line-height" name="title-line-height" value="0.95" inputmode="decimal">
+    </div>
+    <div class="font-pairing-demo__field">
+      <label for="title-letter-spacing">Letter spacing</label>
+      <input type="text" id="title-letter-spacing" name="title-letter-spacing" value="-0.03em">
+    </div>
+    <div class="font-pairing-demo__actions">
+      <button type="button" class="font-pairing-demo__btn" id="reset-typography">Reset type</button>
+      <button type="button" class="font-pairing-demo__btn" id="copy-config">Copy config</button>
+      <button type="button" class="font-pairing-demo__btn" id="shuffle-layout">Shuffle grounds</button>
+      <button type="button" class="font-pairing-demo__btn" id="random-pairing">Random pairing</button>
+    </div>
+    <div class="font-pairing-demo__config-wrap">
+      <p class="font-pairing-demo__config-label">gallery.config.json — titleFaces entry</p>
+      <pre class="font-pairing-demo__config" id="config-snippet"></pre>
+    </div>
+    <p class="font-pairing-demo__note" id="pairing-note" hidden></p>
+  </header>
+
+  <section class="page-reader is-active font-pairing-demo__reader" aria-label="Demo sections">
+  <div class="reader-layout">
+    <main id="main-reader" class="content-feed collection-feed">
+      <header class="poster collection-hero" id="demo-hero"></header>
+      <div id="posters" class="posts-list poster-gallery" aria-label="Demo sections"></div>
+    </main>
+  </div>
+  </section>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "marked": "../../node_modules/marked/lib/marked.esm.js",
+      "dompurify": "../../node_modules/dompurify/dist/purify.es.mjs",
+      "isomorphic-dompurify": "../../node_modules/isomorphic-dompurify/dist/browser.mjs",
+      "html2canvas": "../../node_modules/html2canvas/dist/html2canvas.esm.js"
+    }
+  }
+  </script>
+  <script type="module" src="demo.js"></script>
+</body>
+</html>
