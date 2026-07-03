@@ -55,7 +55,8 @@
   box-sizing: border-box;
 }
 
-#landing-posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+#landing-posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card,
+.page-landing #landing-name > .post-card.landing-name-card {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--layout-gap);
@@ -72,6 +73,14 @@
   box-sizing: border-box;
 }
 
+.page-landing #landing-name > .post-card.landing-name-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+  min-height: 66vh;
+}
+
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header,
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .prose {
   width: auto;
@@ -82,7 +91,8 @@
 }
 
 @media (min-width: 900px) {
-  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card,
+  .page-landing #landing-name > .post-card.landing-name-card {
     --poster-pad-block: clamp(3.5rem, 10vh, 6.5rem);
     --poster-pad-top: clamp(6rem, 14vh, 8.5rem);
   }
@@ -159,16 +169,36 @@
 }
 
 @media (max-width: 899px) {
+  :is(.page-reader, .page-landing) .reader-layout {
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  :is(.page-reader, .page-landing) .poster-gallery.posts-list {
+    margin-inline: 0;
+    width: 100%;
+  }
+
   #posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
     display: flex;
     flex-direction: column;
     min-height: 0;
   }
 
-  #landing-posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+  #landing-posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card,
+  .page-landing #landing-name > .post-card.landing-name-card {
     display: flex;
     flex-direction: column;
+  }
+
+  #landing-posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
     min-height: min(28dvh, 18rem);
+  }
+
+  .page-landing #landing-name > .post-card.landing-name-card {
+    min-height: 66vh;
+    justify-content: flex-end;
   }
 
   :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .post-header,

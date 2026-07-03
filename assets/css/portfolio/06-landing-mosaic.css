@@ -5,7 +5,6 @@
   min-width: 0;
   width: 100%;
   max-width: none;
-  overflow-x: visible;
 }
 
 .page-landing #landing-gallery-grid {
@@ -39,13 +38,19 @@
   outline: none;
 }
 
-/* Name band — full bleed, indigo, ~2/3 viewport */
+/* Name band — full bleed on desktop; mobile uses same edge alignment as #landing-posters */
 .page-landing #landing-name.post-card-wrap {
   position: relative;
-  width: calc(100% + 2 * var(--pad));
+  width: 100%;
   max-width: none;
-  margin-inline: calc(-1 * var(--pad));
-  overflow: visible;
+  margin-inline: 0;
+}
+
+@media (min-width: 900px) {
+  .page-landing #landing-name.post-card-wrap {
+    width: calc(100% + 2 * var(--pad));
+    margin-inline: calc(-1 * var(--pad));
+  }
 }
 
 .page-landing #landing-name.post-card-wrap[class*='ground-'] {
@@ -54,16 +59,9 @@
 
 .page-landing #landing-name > .post-card.landing-name-card {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: stretch;
-  min-height: 66vh;
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: clamp(1.5rem, 3vw, 2.5rem) var(--pad);
-  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -82,8 +80,4 @@
 
 .page-landing #landing-name .landing-name-body p {
   margin: 0;
-}
-
-.page-landing .landing-posters.posts-list {
-  overflow-x: visible;
 }

@@ -1,26 +1,45 @@
 /* Previous poster title ghost — partial-line bleed at section boundary */
 
-.page-reader .collection-feed,
-.page-reader .poster-gallery.posts-list,
-.page-landing .collection-feed,
-.page-landing .poster-gallery.posts-list {
-  overflow-x: visible;
-}
-
-html:has(body.page-collection),
-body.page-collection,
-html:has(body.page-landing),
-body.page-landing {
-  overflow-x: visible;
-}
-
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) {
   position: relative;
-  overflow: visible;
 }
 
-:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
-  overflow: visible;
+@media (min-width: 900px) {
+  .page-reader .collection-feed,
+  .page-reader .poster-gallery.posts-list,
+  .page-landing .collection-feed,
+  .page-landing .poster-gallery.posts-list {
+    overflow-x: visible;
+  }
+
+  html:has(body.page-collection),
+  body.page-collection,
+  html:has(body.page-landing),
+  body.page-landing {
+    overflow-x: visible;
+  }
+
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) {
+    overflow: visible;
+  }
+
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+    overflow: visible;
+  }
+}
+
+@media (max-width: 899px) {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) {
+    overflow-x: clip;
+  }
+
+  .post-card__title-bleed {
+    left: var(--pad);
+    right: var(--pad);
+    width: auto;
+    overflow-x: hidden;
+    font-size: clamp(2.75rem, 14vw, 6rem);
+  }
 }
 
 .post-card__title-bleed {
@@ -172,11 +191,5 @@ body.page-landing {
     );
     right: auto;
     text-align: left;
-  }
-}
-
-@media (max-width: 899px) {
-  .post-card__title-bleed {
-    font-size: clamp(2.75rem, 14vw, 6rem);
   }
 }
