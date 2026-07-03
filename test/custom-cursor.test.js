@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
-import { resolveCursorState } from '../lib/custom-cursor.js';
+import { resolveCursorState, ctaKeyForTarget, nextCtaTiltDegrees, CTA_TILT_ANGLES } from '../lib/custom-cursor.js';
 
 /** @param {string} html */
 function stateAt(html, selector) {
@@ -126,4 +126,19 @@ test('resolveCursorState returns close on lightbox backdrop only', () => {
   const img = dom.window.document.querySelector('.image-lightbox__img');
   assert.equal(resolveCursorState(img), 'default');
   assert.equal(resolveCursorState(dialog), 'close');
+});
+
+test('ctaKeyForTarget reads data-md-path from landing picks', () => {
+  const dom = new JSDOM(
+    '<button class="landing-pick-card" type="button" data-md-path="a.md"><span>Case</span></button>'
+  );
+  const span = dom.window.document.querySelector('span');
+  assert.equal(ctaKeyForTarget(span), 'a.md');
+});
+
+test('nextCtaTiltDegrees toggles between negative and positive CTA angles', () => {
+  const [a, b] = CTA_TILT_ANGLES;
+  assert.equal(nextCtaTiltDegrees(a), b);
+  assert.equal(nextCtaTiltDegrees(b), a);
+  assert.ok(a < 0 && b > 0);
 });

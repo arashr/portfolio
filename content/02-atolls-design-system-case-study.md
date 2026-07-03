@@ -95,10 +95,6 @@ Primaries → Brand Layer → Semantics → Patterns
 
 Once the framework was solid, we designed the actual elements, assigned component-specific tokens, and handed them to developers with full documentation, all states defined, and expectations set.
 
-| Primaries | Semantics | Connections |
-|---:|---:|---:|
-| ![Primaries](./src/atolls-ds-spacing.png "Primaries") | ![Semantics](./src/atolls-ds-colors.png "Semantics") | ![Connections](./src/atolls-ds-links.png "Connections") |
-
 ## Delivery
 
 Long story short: we delivered.

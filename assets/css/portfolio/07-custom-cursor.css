@@ -1,5 +1,11 @@
 /* Custom cursor — Figma Cursor component (Default / Link / CTA / Plus / Close) */
 
+@property --cursor-tilt {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: -4.43deg;
+}
+
 @media (pointer: fine) {
   body.custom-cursor-active,
   body.custom-cursor-active * {
@@ -217,10 +223,27 @@
   white-space: nowrap;
 }
 
+.custom-cursor--tilt-a {
+  --cursor-tilt: -4.43deg;
+}
+
+.custom-cursor--tilt-b {
+  --cursor-tilt: 4.43deg;
+}
+
 .custom-cursor__label {
   display: block;
   transform: rotate(var(--cursor-tilt));
   transform-origin: center center;
+  transition: transform var(--cursor-duration) var(--cursor-ease-active);
+}
+
+.custom-cursor--tilt-a .custom-cursor__label {
+  transform: rotate(-4.43deg);
+}
+
+.custom-cursor--tilt-b .custom-cursor__label {
+  transform: rotate(4.43deg);
 }
 
 .custom-cursor__tracks {
@@ -245,8 +268,12 @@
   margin-bottom: 0;
 }
 
-.custom-cursor--glyphs-entering .custom-cursor__glyph {
-  animation: custom-cursor-glyph-rise var(--cursor-duration) var(--cursor-ease-expand) forwards;
+.custom-cursor--glyphs-entering.custom-cursor--tilt-a .custom-cursor__glyph {
+  animation: custom-cursor-glyph-rise-a var(--cursor-duration) var(--cursor-ease-expand) forwards;
+}
+
+.custom-cursor--glyphs-entering.custom-cursor--tilt-b .custom-cursor__glyph {
+  animation: custom-cursor-glyph-rise-b var(--cursor-duration) var(--cursor-ease-expand) forwards;
 }
 
 .custom-cursor--glyphs-entering .custom-cursor__glyph:nth-child(4) {
@@ -265,20 +292,37 @@
   animation-delay: calc(var(--cursor-stagger) * 3);
 }
 
-.custom-cursor--glyphs-visible .custom-cursor__glyph {
+.custom-cursor--glyphs-visible.custom-cursor--tilt-a .custom-cursor__glyph {
   opacity: 1;
-  transform: rotate(var(--cursor-tilt)) translateY(0);
+  transform: rotate(-4.43deg) translateY(0);
 }
 
-@keyframes custom-cursor-glyph-rise {
+.custom-cursor--glyphs-visible.custom-cursor--tilt-b .custom-cursor__glyph {
+  opacity: 1;
+  transform: rotate(4.43deg) translateY(0);
+}
+
+@keyframes custom-cursor-glyph-rise-a {
   from {
     opacity: 0;
-    transform: rotate(var(--cursor-tilt)) translateY(0.65em);
+    transform: rotate(-4.43deg) translateY(0.65em);
   }
 
   to {
     opacity: 1;
-    transform: rotate(var(--cursor-tilt)) translateY(0);
+    transform: rotate(-4.43deg) translateY(0);
+  }
+}
+
+@keyframes custom-cursor-glyph-rise-b {
+  from {
+    opacity: 0;
+    transform: rotate(4.43deg) translateY(0.65em);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(4.43deg) translateY(0);
   }
 }
 
@@ -295,12 +339,23 @@
     animation: none;
   }
 
-  .custom-cursor--glyphs-visible .custom-cursor__glyph,
-  .custom-cursor--cta .custom-cursor__glyph,
+  .custom-cursor--glyphs-visible.custom-cursor--tilt-a .custom-cursor__glyph,
+  .custom-cursor--glyphs-visible.custom-cursor--tilt-b .custom-cursor__glyph,
+  .custom-cursor--cta.custom-cursor--tilt-a .custom-cursor__glyph,
+  .custom-cursor--cta.custom-cursor--tilt-b .custom-cursor__glyph,
   .custom-cursor--plus .custom-cursor__glyph,
   .custom-cursor--close .custom-cursor__glyph {
     opacity: 1;
-    transform: rotate(var(--cursor-tilt)) translateY(0);
+  }
+
+  .custom-cursor--glyphs-visible.custom-cursor--tilt-a .custom-cursor__glyph,
+  .custom-cursor--cta.custom-cursor--tilt-a .custom-cursor__glyph {
+    transform: rotate(-4.43deg) translateY(0);
+  }
+
+  .custom-cursor--glyphs-visible.custom-cursor--tilt-b .custom-cursor__glyph,
+  .custom-cursor--cta.custom-cursor--tilt-b .custom-cursor__glyph {
+    transform: rotate(4.43deg) translateY(0);
   }
 
   .custom-cursor--link .custom-cursor__ring {
