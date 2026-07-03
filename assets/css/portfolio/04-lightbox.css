@@ -29,6 +29,10 @@
   justify-content: center;
 }
 
+.image-lightbox > .custom-cursor {
+  z-index: 1;
+}
+
 .image-lightbox::backdrop {
   background: color-mix(in oklch, var(--lightbox-backdrop-color, var(--ink)) 72%, transparent);
 }

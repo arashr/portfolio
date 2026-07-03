@@ -1,0 +1,310 @@
+/* Custom cursor — Figma Cursor component (Default / Link / CTA / Plus / Close) */
+
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+.custom-cursor {
+  --cursor-ease-expand: ease-out;
+  --cursor-ease-collapse: cubic-bezier(0.34, 1.45, 0.64, 1);
+  --cursor-ease-active: var(--cursor-ease-expand);
+  --cursor-duration: 0.2s;
+  --cursor-stagger: 50ms;
+  --cursor-link-size: 40px;
+  --cursor-link-dot: 8px;
+  --cursor-tilt: -4.43deg;
+  --cursor-label-size: 20px;
+  --cursor-label-track: -0.04em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200000;
+  pointer-events: none;
+  margin: 0;
+  transform: translate3d(-100px, -100px, 0);
+  will-change: transform;
+}
+
+.custom-cursor[hidden] {
+  display: none;
+}
+
+.custom-cursor__pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: #000;
+  color: #fff;
+  overflow: clip;
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    width var(--cursor-duration) var(--cursor-ease-active),
+    height var(--cursor-duration) var(--cursor-ease-active),
+    padding var(--cursor-duration) var(--cursor-ease-active),
+    gap var(--cursor-duration) var(--cursor-ease-active),
+    border-radius var(--cursor-duration) var(--cursor-ease-active),
+    background-color var(--cursor-duration) var(--cursor-ease-active),
+    border-color var(--cursor-duration) var(--cursor-ease-active);
+}
+
+.custom-cursor__dot,
+.custom-cursor__ring {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  pointer-events: none;
+  transition:
+    width var(--cursor-duration) var(--cursor-ease-active),
+    height var(--cursor-duration) var(--cursor-ease-active),
+    opacity var(--cursor-duration) var(--cursor-ease-active),
+    transform var(--cursor-duration) var(--cursor-ease-active);
+}
+
+.custom-cursor__dot {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000;
+}
+
+.custom-cursor__ring {
+  display: block;
+  width: var(--cursor-link-size);
+  height: var(--cursor-link-size);
+  color: #000;
+  opacity: 0;
+  transform: scale(0.55);
+}
+
+.custom-cursor__ring circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: butt;
+  stroke-dasharray: 5.5 7;
+}
+
+.custom-cursor--default {
+  --cursor-ease-active: var(--cursor-ease-collapse);
+}
+
+.custom-cursor--cta,
+.custom-cursor--plus,
+.custom-cursor--close,
+.custom-cursor--link {
+  --cursor-ease-active: var(--cursor-ease-expand);
+}
+
+.custom-cursor--default .custom-cursor__pill {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  gap: 0;
+  border-radius: 24px;
+  background: transparent;
+  border-color: transparent;
+}
+
+.custom-cursor--default .custom-cursor__dot {
+  width: 16px;
+  height: 16px;
+  opacity: 1;
+  transform: none;
+}
+
+.custom-cursor--default .custom-cursor__ring {
+  opacity: 0;
+  transform: scale(0.55);
+}
+
+.custom-cursor--link .custom-cursor__pill {
+  width: var(--cursor-link-size);
+  height: var(--cursor-link-size);
+  padding: 0;
+  gap: 0;
+  border-radius: 50%;
+  background: transparent;
+  border-color: transparent;
+}
+
+.custom-cursor--link .custom-cursor__dot {
+  width: var(--cursor-link-dot);
+  height: var(--cursor-link-dot);
+  opacity: 1;
+  transform: none;
+}
+
+.custom-cursor--link .custom-cursor__ring {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.custom-cursor--cta .custom-cursor__pill,
+.custom-cursor--plus .custom-cursor__pill,
+.custom-cursor--close .custom-cursor__pill {
+  gap: 8px;
+  padding: 16px 32px 16px 24px;
+  min-height: 48px;
+  border-radius: 0;
+}
+
+.custom-cursor--cta .custom-cursor__pill {
+  min-width: 7.5rem;
+}
+
+.custom-cursor--plus .custom-cursor__pill,
+.custom-cursor--close .custom-cursor__pill {
+  min-width: 3.75rem;
+  padding-inline: 24px 28px;
+}
+
+.custom-cursor__main {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  min-width: 0;
+  transition:
+    opacity 0.28s var(--cursor-ease-active),
+    transform var(--cursor-duration) var(--cursor-ease-active);
+}
+
+.custom-cursor--default .custom-cursor__main,
+.custom-cursor--default .custom-cursor__tracks,
+.custom-cursor--link .custom-cursor__main,
+.custom-cursor--link .custom-cursor__tracks {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+
+.custom-cursor--cta .custom-cursor__dot,
+.custom-cursor--cta .custom-cursor__ring,
+.custom-cursor--plus .custom-cursor__dot,
+.custom-cursor--plus .custom-cursor__ring,
+.custom-cursor--close .custom-cursor__dot,
+.custom-cursor--close .custom-cursor__ring {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.custom-cursor--cta .custom-cursor__main,
+.custom-cursor--plus .custom-cursor__main,
+.custom-cursor--close .custom-cursor__main,
+.custom-cursor--cta .custom-cursor__tracks,
+.custom-cursor--plus .custom-cursor__tracks,
+.custom-cursor--close .custom-cursor__tracks {
+  opacity: 1;
+  transform: none;
+}
+
+.custom-cursor__label,
+.custom-cursor__glyph {
+  font-family: 'Space Grotesk', var(--font-ui-sans, sans-serif);
+  font-size: var(--cursor-label-size);
+  font-weight: 400;
+  letter-spacing: var(--cursor-label-track);
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.custom-cursor__label {
+  display: block;
+  transform: rotate(var(--cursor-tilt));
+  transform-origin: center center;
+}
+
+.custom-cursor__tracks {
+  position: absolute;
+  top: 0;
+  right: -0.2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 14px;
+}
+
+.custom-cursor__glyph {
+  display: block;
+  line-height: 0.78;
+  margin-bottom: -4px;
+  transform: rotate(var(--cursor-tilt)) translateY(0.65em);
+  opacity: 0;
+}
+
+.custom-cursor__glyph:last-child {
+  margin-bottom: 0;
+}
+
+.custom-cursor--glyphs-entering .custom-cursor__glyph {
+  animation: custom-cursor-glyph-rise var(--cursor-duration) var(--cursor-ease-expand) forwards;
+}
+
+.custom-cursor--glyphs-entering .custom-cursor__glyph:nth-child(4) {
+  animation-delay: 0ms;
+}
+
+.custom-cursor--glyphs-entering .custom-cursor__glyph:nth-child(3) {
+  animation-delay: calc(var(--cursor-stagger) * 1);
+}
+
+.custom-cursor--glyphs-entering .custom-cursor__glyph:nth-child(2) {
+  animation-delay: calc(var(--cursor-stagger) * 2);
+}
+
+.custom-cursor--glyphs-entering .custom-cursor__glyph:nth-child(1) {
+  animation-delay: calc(var(--cursor-stagger) * 3);
+}
+
+.custom-cursor--glyphs-visible .custom-cursor__glyph {
+  opacity: 1;
+  transform: rotate(var(--cursor-tilt)) translateY(0);
+}
+
+@keyframes custom-cursor-glyph-rise {
+  from {
+    opacity: 0;
+    transform: rotate(var(--cursor-tilt)) translateY(0.65em);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(var(--cursor-tilt)) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor__pill,
+  .custom-cursor__main,
+  .custom-cursor__tracks,
+  .custom-cursor__dot,
+  .custom-cursor__ring {
+    transition-duration: 0.01ms;
+  }
+
+  .custom-cursor--glyphs-entering .custom-cursor__glyph {
+    animation: none;
+  }
+
+  .custom-cursor--glyphs-visible .custom-cursor__glyph,
+  .custom-cursor--cta .custom-cursor__glyph,
+  .custom-cursor--plus .custom-cursor__glyph,
+  .custom-cursor--close .custom-cursor__glyph {
+    opacity: 1;
+    transform: rotate(var(--cursor-tilt)) translateY(0);
+  }
+
+  .custom-cursor--link .custom-cursor__ring {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

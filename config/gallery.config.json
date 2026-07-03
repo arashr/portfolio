@@ -1,5 +1,8 @@
 {
   "theme": {
+    "customCursor": {
+      "enabled": true
+    },
     "edgeHalftone": {
       "enabled": false,
       "heightPx": 80,

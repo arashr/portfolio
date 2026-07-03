@@ -24,6 +24,7 @@ import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
 import { mountEdgeHalftone } from '../lib/edge-halftone.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
+import { mountCustomCursor } from '../lib/custom-cursor.js';
 import { ICONS } from './icons.js';
 
 (function () {
@@ -314,6 +315,11 @@ import { ICONS } from './icons.js';
   function setupEdgeHalftone() {
     edgeHalftone.destroy();
     edgeHalftone = mountEdgeHalftone(getGalleryConfig());
+  }
+
+  function setupCustomCursor() {
+    const enabled = getGalleryConfig().theme?.customCursor?.enabled !== false;
+    mountCustomCursor({ enabled });
   }
 
   function landingGlyphEls() {
@@ -620,6 +626,7 @@ import { ICONS } from './icons.js';
     injectIcons();
     applyZoom();
     setupEdgeHalftone();
+    setupCustomCursor();
     applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
     try {
       await loadHome();
@@ -774,6 +781,7 @@ import { ICONS } from './icons.js';
   async function reloadConfigAndRefresh() {
     await reloadGalleryConfig();
     setupEdgeHalftone();
+    setupCustomCursor();
     enhancePosterImageHalftone(mainReader, getGalleryConfig());
     schedulePosterTitleFit();
     if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
