@@ -3,6 +3,10 @@
     "customCursor": {
       "enabled": true
     },
+    "layout": {
+      "measure": "65ch",
+      "posterWidth": "42rem"
+    },
     "edgeHalftone": {
       "enabled": false,
       "heightPx": 80,

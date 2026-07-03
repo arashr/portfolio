@@ -44,6 +44,8 @@
 .page-landing .landing-feed {
   grid-column: 1 / -1;
   min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
   width: 100%;
   padding: 0;
 }
@@ -332,7 +334,8 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
 .landing-foot {
   position: relative;
   z-index: 9991;
-  width: min(100%, var(--layout-max));
+  width: 100%;
+  max-width: none;
   margin: 0 auto;
   padding: 0.75rem var(--pad) 1.25rem;
   box-sizing: border-box;

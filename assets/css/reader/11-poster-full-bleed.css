@@ -13,8 +13,9 @@
 :is(.page-reader, .page-landing) .poster-gallery.posts-list {
   row-gap: 0;
   column-gap: 0;
-  margin-inline: calc(-1 * var(--pad));
-  width: calc(100% + 2 * var(--pad));
+  margin-inline: 0;
+  width: 100%;
+  max-width: 100%;
   padding-top: 0;
   padding-bottom: 0;
   background: transparent;
@@ -85,7 +86,7 @@
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .prose {
   width: auto;
   max-width: none;
-  margin: 0;
+  margin: 0 0 0 0;
   position: relative;
   z-index: 1;
 }
@@ -170,8 +171,6 @@
 
 @media (max-width: 899px) {
   :is(.page-reader, .page-landing) .reader-layout {
-    width: 100%;
-    max-width: none;
     padding-inline: 0;
   }
 

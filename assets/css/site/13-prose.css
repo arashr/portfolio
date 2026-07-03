@@ -149,6 +149,9 @@
 .prose p {
   margin: 0 0 1em;
 }
+.prose p.meta-strip {
+  margin-top: 16px;
+}
 .prose ul,
 .prose ol {
   margin: 0 0 1em;

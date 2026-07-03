@@ -1,6 +1,32 @@
 /* Reader grid, hero spacing, poster gallery, TOC rail */
 
 /* Reader grid — 12 columns; content cols 1–9 + TOC cols 10–12 when rail fits, else full width */
+
+/* Full-bleed — no shell cap on large displays (4K TV, ultrawide) */
+:is(.page-reader, .page-landing) {
+  --layout-shell-right: var(--pad);
+  /* Prose/cards fill their grid column — not the global 65ch / 42rem caps */
+  --measure: 100%;
+  --poster-width: 100%;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+:is(.page-reader, .page-landing) .reader-layout {
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+}
+
+.page-reader.is-active.has-toc-rail .reader-layout {
+  padding-right: var(--pad);
+}
+
+.page-reader .site-header .header-inner {
+  width: 100%;
+  max-width: none;
+}
+
 .reader-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -18,6 +44,8 @@
 .page-reader .collection-feed {
   grid-column: 1;
   min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
   padding-top: 32px;
 }
 
@@ -30,7 +58,7 @@
 
 :is(.page-reader, .page-landing) .collection-hero .doc-meta,
 :is(.page-reader, .page-landing) .collection-hero .case-hero__sub {
-  max-width: min(var(--measure), 100%);
+  max-width: 100%;
 }
 
 .page-reader .poster-gallery.posts-list {

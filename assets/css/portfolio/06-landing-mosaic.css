@@ -42,7 +42,7 @@
 .landing-pick-more {
   display: none;
   margin: 0.65rem 0 0;
-  font-size: 0.75rem;
+  font-size: inherit;
   letter-spacing: 0.08em;
   text-decoration: underline;
   text-underline-offset: 0.15em;
@@ -51,6 +51,7 @@
 
 .post-card[class*='ground-'] .landing-pick-more {
   color: var(--on-ground-muted, var(--ink-soft));
+  margin-top: 2em;
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -63,15 +64,8 @@
 .page-landing #landing-name.post-card-wrap {
   position: relative;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   margin-inline: 0;
-}
-
-@media (min-width: 900px) {
-  .page-landing #landing-name.post-card-wrap {
-    width: calc(100% + 2 * var(--pad));
-    margin-inline: calc(-1 * var(--pad));
-  }
 }
 
 .page-landing #landing-name.post-card-wrap[class*='ground-'] {
@@ -96,9 +90,10 @@
 }
 
 .page-landing #landing-name .landing-name-body {
-  margin-top: 0.75rem;
+  margin-top: 0;
 }
 
 .page-landing #landing-name .landing-name-body p {
   margin: 0;
+  text-transform: uppercase;
 }
