@@ -68,9 +68,9 @@
   max-width: 100%;
 }
 
-/* Homepage gallery — 12-col shell, uniform spans (no poster stagger) */
+/* Homepage gallery — 12-col shell (legacy; mosaic host opts out in 06-landing-mosaic.css) */
 @media (min-width: 900px) {
-  .page-landing .landing-gallery--home.posts-list {
+  .page-landing .landing-gallery--home.posts-list:not(.landing-mosaic-host) {
     display: grid;
     grid-template-columns: repeat(var(--layout-cols), minmax(0, 1fr));
     column-gap: var(--layout-gap);
@@ -79,13 +79,13 @@
     align-items: stretch;
   }
 
-  .page-landing .landing-gallery--home .post-card-wrap {
+  .page-landing .landing-gallery--home.posts-list:not(.landing-mosaic-host) .post-card-wrap {
     grid-column: span 6;
   }
 }
 
 @media (min-width: 1080px) {
-  .page-landing .landing-gallery--home .post-card-wrap {
+  .page-landing .landing-gallery--home.posts-list:not(.landing-mosaic-host) .post-card-wrap {
     grid-column: span 4;
   }
 }
@@ -334,33 +334,15 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
   z-index: 9991;
   width: min(100%, var(--layout-max));
   margin: 0 auto;
-  padding: 1rem var(--pad) 2rem;
+  padding: 0.75rem var(--pad) 1.25rem;
   box-sizing: border-box;
   color: var(--ink-mute);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
 }
 
-.landing-foot__row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.landing-foot__lead,
-.landing-foot__meta {
+.landing-foot__lead {
   margin: 0;
-}
-
-.landing-foot__meta {
-  margin-left: auto;
-  text-align: right;
-}
-
-.landing-foot__sep {
-  margin: 0 0.5rem;
 }
 
 .landing-foot code {

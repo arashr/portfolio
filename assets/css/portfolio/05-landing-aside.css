@@ -75,10 +75,6 @@
 }
 
 @container reader-shell (min-width: 75rem) {
-  .page-landing .landing-feed {
-    grid-column: 1 / 10;
-  }
-
   .page-landing .landing-aside {
     display: block;
     grid-column: 10 / -1;

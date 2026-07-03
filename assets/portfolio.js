@@ -1,9 +1,8 @@
 import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
 import { renderDocument, renderToc, setAssetDimensions, setRenderContentPath } from '../lib/render-document.js';
-import { renderLandingGallery } from '../lib/render-landing-gallery.js';
+import { renderLandingMosaic } from '../lib/render-landing-mosaic.js';
 import { renderReaderMoreCases } from '../lib/render-reader-more-cases.js';
 import { posterStaggerCol } from '../lib/stagger.js';
-import { renderHomeAside } from '../lib/render-home-aside.js';
 import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
 import { fitMiniPosterTitles, fitPosterTitles } from '../lib/fit-poster-title.js';
 import {
@@ -37,8 +36,6 @@ import { ICONS } from './icons.js';
   const landing = document.getElementById('landing');
   const reader = document.getElementById('reader');
   const landingMain = document.getElementById('main');
-  const siteBrand = document.getElementById('site-brand');
-  const landingSiteTagline = document.getElementById('landing-site-tagline');
   const landingGalleryGrid = document.getElementById('landing-gallery-grid');
   const landingAside = document.getElementById('landing-aside');
   const mainReader = document.getElementById('main-reader');
@@ -77,6 +74,8 @@ import { ICONS } from './icons.js';
   let titleFitObserver = null;
   let titleFitDebounce = 0;
   let moreCasesResizeObserver = null;
+  /** @type {{ title?: string, tagline?: string }} */
+  let siteConfig = {};
   /** @type {{ path: string, title: string, index: number, subtext?: string, stats?: { value: string, label: string }[], credit?: string }[] | null} */
   let caseStudyItems = null;
   let currentRelativePath = '';
@@ -317,20 +316,20 @@ import { ICONS } from './icons.js';
     edgeHalftone = mountEdgeHalftone(getGalleryConfig());
   }
 
-  function landingMiniPosterEls() {
-    return Array.from(document.querySelectorAll('#landing .mini-poster[data-slug]'));
+  function landingGlyphEls() {
+    return Array.from(document.querySelectorAll('#landing .post-card[data-slug]'));
   }
 
   function scheduleLandingMiniGlyphs() {
     requestAnimationFrame(() => {
-      const miniPosters = landingMiniPosterEls();
-      fitMiniPosterTitles(miniPosters, getGalleryConfig());
-      renderPosterGlyphPatterns(miniPosters, getGalleryConfig());
+      const cards = landingGlyphEls();
+      fitMiniPosterTitles(cards, getGalleryConfig());
+      renderPosterGlyphPatterns(cards, getGalleryConfig());
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
-          const readyMiniPosters = landingMiniPosterEls();
-          fitMiniPosterTitles(readyMiniPosters, getGalleryConfig());
-          renderPosterGlyphPatterns(readyMiniPosters, getGalleryConfig());
+          const readyCards = landingGlyphEls();
+          fitMiniPosterTitles(readyCards, getGalleryConfig());
+          renderPosterGlyphPatterns(readyCards, getGalleryConfig());
         });
       }
     });
@@ -441,18 +440,20 @@ import { ICONS } from './icons.js';
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   }
 
-  function renderHomeGallery(items) {
+  function renderHomeGallery(items, aside) {
     caseStudyItems = items;
-    landingGalleryGrid.innerHTML = renderLandingGallery(
-      items.map(({ path, title, index, subtext, stats, credit }) => ({
+    landingGalleryGrid.innerHTML = renderLandingMosaic({
+      site: siteConfig,
+      items: items.map(({ path, title, index, subtext, stats, credit }) => ({
         path,
         title,
         index,
         subtext: subtext || path.split('/').pop() || path,
         stats: stats || [],
         credit: credit || ''
-      }))
-    );
+      })),
+      aside
+    });
     scheduleLandingMiniGlyphs();
   }
 
@@ -467,13 +468,12 @@ import { ICONS } from './icons.js';
   }
 
   function applySiteConfig(site) {
+    siteConfig = site || {};
     if (site.title) {
-      if (siteBrand) siteBrand.textContent = site.title;
       if (readerSiteBrand) readerSiteBrand.textContent = site.title;
       document.title = site.title;
     }
     if (site.tagline) {
-      if (landingSiteTagline) landingSiteTagline.textContent = site.tagline;
       if (readerSiteTagline) readerSiteTagline.textContent = site.tagline;
     }
   }
@@ -486,9 +486,8 @@ import { ICONS } from './icons.js';
 
   function renderLandingAside(aside) {
     if (!landingAside) return;
-    const html = renderHomeAside(aside);
-    landingAside.innerHTML = html;
-    landingAside.hidden = !html;
+    landingAside.innerHTML = '';
+    landingAside.hidden = true;
   }
 
   async function loadHome({ cacheBust = false } = {}) {
@@ -506,7 +505,7 @@ import { ICONS } from './icons.js';
       return;
     }
     const items = await resolveCaseStudyItems(index, undefined, { cacheBust });
-    renderHomeGallery(items);
+    renderHomeGallery(items, aside);
   }
 
   function enhanceReaderContent() {

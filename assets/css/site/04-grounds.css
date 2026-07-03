@@ -116,19 +116,6 @@
   --on-ground-edge-1: var(--ink);
 }
 
-.ground-forest {
-  background: var(--ground-forest);
-  --surface: var(--ground-forest);
-  --on-ground-display: var(--color-ground-forest-display);
-  --on-ground-body: var(--ink);
-  --on-ground-muted: var(--color-ground-fg-muted);
-  --on-ground-accent: var(--color-ground-forest-accent);
-  --on-ground-focus: var(--color-ground-forest-accent);
-  --on-ground-link-hover-text: var(--color-ground-link-hover-text);
-  --on-ground-link-hover-bg: var(--color-ground-forest-link-hover-bg);
-  --on-ground-toc-hover-text: var(--color-ground-forest-toc-hover-text);
-}
-
 .ground-green {
   background: var(--ground-green);
   --surface: var(--ground-green);

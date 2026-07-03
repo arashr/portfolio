@@ -130,7 +130,6 @@
   --color-ground-butter: #fae44f;
   --color-ground-mint: #a7dbce;
   --color-ground-carmine: #b52840;
-  --color-ground-forest: #b8d8c5;
   --color-ground-green: #09b557;
   --color-ground-indigo: #2c2781;
 
@@ -161,8 +160,6 @@
   --color-ground-mint-glyph: #b5b2d9;
   --color-ground-carmine-fg: #ffffff;
   --color-ground-carmine-display: var(--color-ground-carmine-fg);
-  --color-ground-forest-display: #0a3d28;
-  --color-ground-forest-accent: #0f5c3a;
   --color-ground-green-display: #010804;
   --color-ground-green-accent: #0a4528;
   --color-ground-indigo-fg: #ffffff;
@@ -180,7 +177,6 @@
   --color-ground-mint-link-hover-bg: var(--color-ground-mint-accent);
   --color-ground-carmine-link-hover-bg: #ffffff;
   --color-ground-carmine-link-hover-text: var(--color-ground-carmine);
-  --color-ground-forest-link-hover-bg: var(--color-ground-forest-display);
   --color-ground-green-link-hover-bg: var(--color-ground-green-display);
   --color-ground-indigo-link-hover-bg: #ffffff;
   --color-ground-indigo-link-hover-text: var(--color-ground-indigo);
@@ -193,7 +189,6 @@
   --color-ground-lilac-toc-hover-text: var(--color-ground-lilac-accent);
   --color-ground-mint-toc-hover-text: var(--color-ground-mint-display);
   --color-ground-carmine-toc-hover-text: var(--color-ground-butter);
-  --color-ground-forest-toc-hover-text: var(--color-ground-forest-accent);
   --color-ground-green-toc-hover-text: #053318;
   --color-ground-indigo-toc-hover-text: var(--color-ground-indigo-accent);
 
@@ -206,7 +201,6 @@
   --ground-butter: var(--color-ground-butter);
   --ground-mint: var(--color-ground-mint);
   --ground-carmine: var(--color-ground-carmine);
-  --ground-forest: var(--color-ground-forest);
   --ground-green: var(--color-ground-green);
   --ground-indigo: var(--color-ground-indigo);
 
