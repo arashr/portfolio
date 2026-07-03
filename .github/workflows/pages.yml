@@ -12,17 +12,15 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,10 +37,42 @@ jobs:
       - name: Build content index
         run: npm run build:content
 
+      # Re-runs can leave a stale artifact on this workflow run; see upload-pages-artifact#97
+      - name: Delete stale Pages artifact
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: github-pages
+          failOnError: false
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Upload retries can create >1 artifact in a single run; deploy-pages requires exactly one
+      - name: Prune duplicate github-pages artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          resp=$(gh api "/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts")
+          count=$(echo "$resp" | jq '[.artifacts[] | select(.name == "github-pages")] | length')
+          echo "Found $count github-pages artifact(s) in this run."
+          if [ "$count" -le 1 ]; then
+            exit 0
+          fi
+          echo "$resp" | jq -r '[.artifacts[] | select(.name == "github-pages")] | sort_by(.created_at) | reverse | .[1:] | .[].id' | while read -r id; do
+            [ -n "$id" ] || continue
+            echo "Deleting duplicate artifact $id"
+            gh api -X DELETE "/repos/${{ github.repository }}/actions/artifacts/$id"
+          done
 
       - name: Deploy to GitHub Pages
         id: deployment
