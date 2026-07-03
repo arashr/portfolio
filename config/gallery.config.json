@@ -353,13 +353,46 @@
         "id": "space-grotesk",
         "google": "Space+Grotesk:wght@400;500;700",
         "lineHeight": "0.95",
-        "letterSpacing": "-0.07em"
+        "letterSpacing": "-0.07em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 120,
+          "maxWidthRatio": 0.6,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412
+        }
       },
       {
         "id": "archivo-black",
         "google": "Archivo+Black",
         "lineHeight": "0.96",
-        "letterSpacing": "-0.03em"
+        "letterSpacing": "-0.03em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18 },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 18,
+              "maxPx": 64,
+              "maxLines": 2,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
       },
       {
         "id": "bricolage-grotesque",
@@ -373,12 +406,66 @@
         "lineHeight": "0.96",
         "letterSpacing": "-0.06em"
       },
-      { "id": "ultra", "google": "Ultra", "lineHeight": "1.02", "letterSpacing": "-0.01em" },
+      { "id": "ultra",
+        "google": "Ultra",
+        "lineHeight": "1.02",
+        "letterSpacing": "-0.01em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18 },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 18,
+              "maxPx": 64,
+              "maxLines": 2,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
+      },
       {
         "id": "dm-serif-display",
         "google": "DM+Serif+Display:ital@0;1",
         "lineHeight": "1",
-        "letterSpacing": "-0.02em"
+        "letterSpacing": "-0.02em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18 },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 18,
+              "maxPx": 64,
+              "maxLines": 2,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
       },
       {
         "id": "unbounded",

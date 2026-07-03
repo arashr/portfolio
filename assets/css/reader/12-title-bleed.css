@@ -1,21 +1,25 @@
 /* Previous poster title ghost — partial-line bleed at section boundary */
 
 .page-reader .collection-feed,
-.page-reader .poster-gallery.posts-list {
+.page-reader .poster-gallery.posts-list,
+.page-landing .collection-feed,
+.page-landing .poster-gallery.posts-list {
   overflow-x: visible;
 }
 
 html:has(body.page-collection),
-body.page-collection {
+body.page-collection,
+html:has(body.page-landing),
+body.page-landing {
   overflow-x: visible;
 }
 
-#posters > .post-card-wrap:not(.reader-more-cases-wrap) {
+:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) {
   position: relative;
   overflow: visible;
 }
 
-#posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
   overflow: visible;
 }
 
@@ -131,38 +135,38 @@ body.page-collection {
 }
 
 @media (min-width: 900px) {
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .post-card__title-bleed,
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .post-card__title-bleed {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 1) .post-card__title-bleed,
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .post-card__title-bleed {
     left: var(--pad);
     right: auto;
     text-align: left;
   }
 
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-card__title-bleed {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-card__title-bleed {
     left: var(--pad);
     right: var(--pad);
     width: auto;
     text-align: center;
   }
 
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-card__title-bleed-text {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 2) .post-card__title-bleed-text {
     margin-inline: auto;
     transform: translateY(calc(-100% * (1 - var(--title-bleed-reveal, 0.3))));
   }
 
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-card__title-bleed {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-card__title-bleed {
     left: auto;
     right: var(--pad);
     text-align: right;
   }
 
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-card__title-bleed-text {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 3) .post-card__title-bleed-text {
     margin-left: auto;
     transform: translateY(calc(-100% * (1 - var(--title-bleed-reveal, 0.3))));
   }
 
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .post-card__title-bleed,
-  #posters > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .post-card__title-bleed {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 5) .post-card__title-bleed,
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 6) .post-card__title-bleed {
     left: calc(
       var(--pad) + (100% - 2 * var(--pad) - 11 * var(--layout-gap)) / 12 + var(--layout-gap)
     );

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
-import { resolveLightboxCaption } from '../lib/image-lightbox.js';
+import { resolveLightboxCaption, resolveLightboxGround } from '../lib/image-lightbox.js';
 
 /** @param {string} html */
 function imgFrom(html) {
@@ -29,4 +29,22 @@ test('resolveLightboxCaption uses title attribute when present', () => {
 test('resolveLightboxCaption falls back to alt', () => {
   const img = imgFrom('<img src="a.png" alt="Alt text">');
   assert.equal(resolveLightboxCaption(img), 'Alt text');
+});
+
+test('resolveLightboxGround reads post-card ground class', () => {
+  const dom = new JSDOM(`
+    <article class="post-card ground-lime title-face-oswald">
+      <div class="prose post-body">
+        <img src="a.png" alt="Screen">
+      </div>
+    </article>
+  `);
+  const img = dom.window.document.querySelector('img');
+  assert.ok(img);
+  assert.equal(resolveLightboxGround(img), 'ground-lime');
+});
+
+test('resolveLightboxGround returns null outside a grounded poster', () => {
+  const img = imgFrom('<div class="prose"><img src="a.png" alt="Screen"></div>');
+  assert.equal(resolveLightboxGround(img), null);
 });

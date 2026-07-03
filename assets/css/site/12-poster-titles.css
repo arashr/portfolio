@@ -123,10 +123,10 @@ h2.poster__title.post-title,
 .post-card.title-face-bricolage-grotesque .post-title a,
 .post-card.title-face-bricolage-grotesque .prose :is(h2, h3, h4),
 .collection-card.title-face-bricolage-grotesque .poster__title,
+.collection-hero .poster__title.title-face-bricolage-grotesque,
 .mini-poster.title-face-bricolage-grotesque .poster__title,
 .mini-poster.title-face-bricolage-grotesque .post-title,
-.legend-sample.title-face-bricolage-grotesque,
-.landing-mosaic__hero-title.title-face-bricolage-grotesque {
+.legend-sample.title-face-bricolage-grotesque {
   font-family: 'Bricolage Grotesque', sans-serif;
   font-weight: 400;
 }

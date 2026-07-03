@@ -323,12 +323,12 @@ import { ICONS } from './icons.js';
   function scheduleLandingMiniGlyphs() {
     requestAnimationFrame(() => {
       const cards = landingGlyphEls();
-      fitMiniPosterTitles(cards, getGalleryConfig());
+      fitPosterTitles(cards, getGalleryConfig());
       renderPosterGlyphPatterns(cards, getGalleryConfig());
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
           const readyCards = landingGlyphEls();
-          fitMiniPosterTitles(readyCards, getGalleryConfig());
+          fitPosterTitles(readyCards, getGalleryConfig());
           renderPosterGlyphPatterns(readyCards, getGalleryConfig());
         });
       }
@@ -651,7 +651,7 @@ import { ICONS } from './icons.js';
   }
 
   landingGalleryGrid?.addEventListener('click', (e) => {
-    const pick = e.target.closest('.mini-poster[data-md-path]');
+    const pick = e.target.closest('.landing-pick-card[data-md-path]');
     if (!pick) return;
     const path = pick.getAttribute('data-md-path');
     if (!path) return;

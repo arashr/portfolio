@@ -21,15 +21,15 @@
   padding-top: 32px;
 }
 
-.page-reader .collection-hero {
+:is(.page-reader, .page-landing) .collection-hero {
   padding-inline: 0;
   margin-bottom: 2rem;
   margin-top: 2rem;
   padding-block: 0;
 }
 
-.page-reader .collection-hero .doc-meta,
-.page-reader .collection-hero .case-hero__sub {
+:is(.page-reader, .page-landing) .collection-hero .doc-meta,
+:is(.page-reader, .page-landing) .collection-hero .case-hero__sub {
   max-width: min(var(--measure), 100%);
 }
 
@@ -98,8 +98,8 @@
     grid-column: 1 / -1;
   }
 
-  .page-reader .collection-hero .doc-meta,
-  .page-reader .collection-hero .case-hero__sub {
+  :is(.page-reader, .page-landing) .collection-hero .doc-meta,
+  :is(.page-reader, .page-landing) .collection-hero .case-hero__sub {
     max-width: min(
       var(--poster-width),
       calc(100% * var(--poster-grid-span) / var(--poster-grid-cols))
@@ -138,7 +138,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .page-reader .collection-hero {
+  :is(.page-reader, .page-landing) .collection-hero {
     padding: 0;
     margin-top: 2rem;
     margin-bottom: 2rem;

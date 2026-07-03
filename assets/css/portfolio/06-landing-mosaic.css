@@ -1,271 +1,89 @@
-/* Homepage — hero band (2/3 height) + uneven trio case rows + notes */
+/* Homepage — indigo name band (2/3 height) + compact reader-style poster stack */
 
-.page-landing .landing-main--portfolio .reader-layout {
-  display: block;
-  max-width: none;
-  width: 100%;
-  padding-inline: 0;
-  container-type: normal;
-}
-
-.page-landing .landing-feed {
+.page-landing .landing-feed.collection-feed {
   grid-column: 1 / -1;
   min-width: 0;
   width: 100%;
   max-width: none;
+  overflow-x: visible;
 }
 
-.page-landing .landing-gallery--home.landing-mosaic-host.posts-list {
-  display: block;
-  padding: 0;
-  margin: 0;
-  gap: 0;
-  background: var(--ink);
+.page-landing #landing-gallery-grid {
+  width: 100%;
+  min-width: 0;
 }
 
-/* Mosaic tiles are full grid tracks — not capped at --poster-width */
-.landing-mosaic .post-card.landing-mosaic__cell,
-.landing-mosaic .landing-mosaic__aside.post-card,
-.landing-mosaic .landing-mosaic__hero.post-card {
+.page-landing .landing-posters .post-card {
   max-width: none;
-  width: 100%;
 }
 
-@media (min-width: 900px) {
-  .page-landing .landing-gallery--home.landing-mosaic-host.posts-list {
-    display: block;
-    grid-template-columns: none;
-    column-gap: 0;
-    row-gap: 0;
-  }
-}
-
-.landing-mosaic {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  width: 100%;
-  background: var(--ink);
-}
-
-/* Hero — 2/3 viewport height, indigo + glyphs */
-.landing-mosaic__hero-band {
-  min-height: 66vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.landing-mosaic__hero {
-  position: relative;
-  overflow: hidden;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 100%;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  box-sizing: border-box;
-}
-
-.landing-mosaic__hero > *:not(.post-card__glyph-layer) {
-  position: relative;
-  z-index: 1;
-}
-
-.landing-mosaic__hero-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  justify-content: flex-end;
-  min-width: 0;
-}
-
-.landing-mosaic__hero-title {
-  margin: 0;
-  font-size: clamp(3rem, 10vw, 9rem);
-  line-height: 0.78;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  text-wrap: balance;
-  color: var(--on-ground-body, var(--ink));
-}
-
-.landing-mosaic__hero-tagline {
-  margin: 0;
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--on-ground-muted, var(--ink-mute));
-}
-
-/* Case rows — 3-up with rotating uneven columns */
-.landing-mosaic__cases {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.landing-mosaic__row {
-  display: grid;
-  gap: 1px;
-  width: 100%;
-  min-height: clamp(16rem, 28vw, 24rem);
-}
-
-.landing-mosaic__row--trio-0 {
-  grid-template-columns: 42fr 33fr 25fr;
-}
-
-.landing-mosaic__row--trio-1 {
-  grid-template-columns: 25fr 42fr 33fr;
-}
-
-.landing-mosaic__row--trio-2 {
-  grid-template-columns: 33fr 25fr 42fr;
-}
-
-.landing-mosaic__row--duo-a {
-  grid-template-columns: 58fr 42fr;
-}
-
-.landing-mosaic__row--duo-b {
-  grid-template-columns: 38fr 62fr;
-}
-
-.landing-mosaic__row:not([class*='landing-mosaic__row--']) {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.landing-mosaic__cell {
-  min-width: 0;
-  width: 100%;
-  min-height: 100%;
-  background: var(--surface);
-  box-sizing: border-box;
-}
-
-/* Aside note tiles — palette cycle + glyphs at end */
-.landing-mosaic__aside {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(1.25rem, 2vw, 2rem);
-}
-
-.landing-mosaic__aside > *:not(.post-card__glyph-layer) {
-  position: relative;
-  z-index: 1;
-}
-
-.landing-mosaic__aside-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.landing-mosaic__aside-title {
-  margin: 0;
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
-  font-weight: 900;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  color: var(--on-ground-body, var(--ink));
-}
-
-.landing-mosaic__aside-desc {
-  margin: 0;
-  font-size: clamp(0.85rem, 1.6vw, 1rem);
-  line-height: 1.5;
-  color: var(--on-ground-body, var(--ink));
-}
-
-.landing-mosaic__aside-desc + .landing-mosaic__aside-desc {
-  margin-top: 0.5rem;
-}
-
-.landing-mosaic__notes {
-  width: 100%;
-}
-
-.landing-mosaic__notes--grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--ink);
-}
-
-.landing-mosaic__notes--grid .landing-mosaic__aside {
-  min-height: clamp(12rem, 22vw, 18rem);
-}
-
-@media (min-width: 1100px) {
-  .landing-mosaic__notes--grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* Mosaic picks — flat cells, full grid track */
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  container-type: normal;
-  min-width: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  margin: 0;
+.page-landing button.post-card.landing-pick-card {
+  font: inherit;
+  color: inherit;
   border: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding: clamp(1.25rem, 2vw, 2rem);
-  text-align: left;
+  background: transparent;
   cursor: pointer;
+  text-align: inherit;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell:hover,
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell:focus-visible,
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell:active,
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell[class*='ground-']:hover,
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell[class*='ground-']:focus-visible,
-.landing-mosaic .mini-poster.landing-pick-card.landing-mosaic__cell[class*='ground-']:active {
+.page-landing button.post-card.landing-pick-card:hover,
+.page-landing button.post-card.landing-pick-card:focus-visible,
+.page-landing button.post-card.landing-pick-card:active,
+.page-landing button.post-card.landing-pick-card[class*='ground-']:hover,
+.page-landing button.post-card.landing-pick-card[class*='ground-']:focus-visible,
+.page-landing button.post-card.landing-pick-card[class*='ground-']:active {
   border: none;
   box-shadow: none;
   outline: none;
 }
 
-.landing-mosaic .mini-poster.landing-mosaic__pick .mini-poster__lede {
-  -webkit-line-clamp: 2;
+/* Name band — full bleed, indigo, ~2/3 viewport */
+.page-landing #landing-name.post-card-wrap {
+  position: relative;
+  width: calc(100% + 2 * var(--pad));
+  max-width: none;
+  margin-inline: calc(-1 * var(--pad));
+  overflow: visible;
 }
 
-@media (max-width: 699px) {
-  .landing-mosaic__hero-band {
-    min-height: clamp(18rem, 55vh, 28rem);
-  }
+.page-landing #landing-name.post-card-wrap[class*='ground-'] {
+  background: var(--surface);
+}
 
-  .landing-mosaic__hero-title {
-    font-size: clamp(2.25rem, 12vw, 3.5rem);
-  }
+.page-landing #landing-name > .post-card.landing-name-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+  min-height: 66vh;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem) var(--pad);
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
-  .landing-mosaic__row,
-  .landing-mosaic__row--trio-0,
-  .landing-mosaic__row--trio-1,
-  .landing-mosaic__row--trio-2,
-  .landing-mosaic__row--duo-a,
-  .landing-mosaic__row--duo-b {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: 0;
-  }
+.page-landing #landing-name > .post-card.landing-name-card > *:not(.post-card__glyph-layer) {
+  position: relative;
+  z-index: 1;
+}
 
-  .landing-mosaic__notes--grid {
-    grid-template-columns: 1fr;
-  }
+.page-landing #landing-name .post-header {
+  margin: 0;
+}
 
-  .landing-mosaic__row > .landing-mosaic__cell,
-  .landing-mosaic__row > .mini-poster.landing-mosaic__cell {
-    min-height: clamp(14rem, 55vw, 18rem);
-  }
+.page-landing #landing-name .landing-name-body {
+  margin-top: 0.75rem;
+}
+
+.page-landing #landing-name .landing-name-body p {
+  margin: 0;
+}
+
+.page-landing .landing-posters.posts-list {
+  overflow-x: visible;
 }

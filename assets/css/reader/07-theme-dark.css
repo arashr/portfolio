@@ -86,7 +86,7 @@ html[data-theme='dark'] .site-header .nav-highlight-clear.btn-ghost:focus-visibl
 
 html[data-theme='dark'] .site-header .btn-ghost,
 html[data-theme='dark'] .landing-gallery__back.btn-ghost,
-html[data-theme='dark'] .image-lightbox__tools .btn-icon {
+html[data-theme='dark'] .image-lightbox:not(:has(.image-lightbox__shell[class*='ground-'])) .image-lightbox__tools .btn-icon {
   background: var(--surface);
   color: var(--chrome-ink-soft);
   border-color: var(--chrome-stroke);
@@ -97,17 +97,17 @@ html[data-theme='dark'] .site-header .btn-ghost:focus-visible:not(:disabled),
 html[data-theme='dark'] .site-header .btn-ghost[aria-expanded='true']:not(:disabled),
 html[data-theme='dark'] .landing-gallery__back.btn-ghost:hover,
 html[data-theme='dark'] .landing-gallery__back.btn-ghost:focus-visible,
-html[data-theme='dark'] .image-lightbox__tools .btn-icon:hover:not(:disabled),
-html[data-theme='dark'] .image-lightbox__tools .btn-icon:focus-visible:not(:disabled) {
+html[data-theme='dark'] .image-lightbox:not(:has(.image-lightbox__shell[class*='ground-'])) .image-lightbox__tools .btn-icon:hover:not(:disabled),
+html[data-theme='dark'] .image-lightbox:not(:has(.image-lightbox__shell[class*='ground-'])) .image-lightbox__tools .btn-icon:focus-visible:not(:disabled) {
   color: var(--chrome-ink);
   border-color: var(--chrome-stroke);
 }
 
-html[data-theme='dark'] .image-lightbox__caption {
+html[data-theme='dark'] .image-lightbox:not(:has(.image-lightbox__shell[class*='ground-'])) .image-lightbox__caption {
   color: var(--chrome-ink-mute);
 }
 
-html[data-theme='dark'] .image-lightbox__tools .btn-icon:disabled:hover {
+html[data-theme='dark'] .image-lightbox:not(:has(.image-lightbox__shell[class*='ground-'])) .image-lightbox__tools .btn-icon:disabled:hover {
   color: var(--chrome-ink-soft);
   border-color: var(--chrome-stroke);
 }
