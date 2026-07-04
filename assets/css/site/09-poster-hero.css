@@ -11,12 +11,6 @@
   color: var(--hero-body);
 }
 
-.collection-hero .kicker {
-  color: var(--hero-display);
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
 .collection-hero .doc-meta,
 .collection-hero .case-hero__sub {
   color: var(--hero-body);

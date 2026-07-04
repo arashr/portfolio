@@ -1,4 +1,4 @@
-/* Post cards, glyph layer, toolbar */
+/* Post cards and glyph layer */
 
 /* Default: height hugs content. B-size min height only on .post-card--roomy (short posters). */
 .post-card {
@@ -26,8 +26,7 @@
   flex-direction: column;
 }
 
-.post-card > .post-header,
-.post-card > .post-figure {
+.post-card > .post-header {
   width: 100%;
   min-width: 0;
   max-width: 100%;
@@ -116,72 +115,10 @@
   max-width: min(var(--poster-width), 100%);
 }
 
-/* Ground tokens for the external toolbar; poster surface stays on .post-card */
 .post-card-wrap[class*='ground-'] {
   background: transparent;
 }
 
-/* Invisible strip: poster → external toolbar (wrap box ends at card edge) */
-.post-card-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 3rem;
-  height: 100%;
-  pointer-events: none;
-}
-
-.post-card-wrap:hover::after,
-.post-card-wrap:focus-within::after {
-  pointer-events: auto;
-}
-
-.post-card__toolbar {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  right: auto;
-  margin-left: 0.5rem;
-  z-index: 3;
-  display: flex;
-  gap: 0.35rem;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    opacity var(--card-hover-duration) var(--card-hover-ease),
-    visibility 0s linear 0.32s;
-}
-
-.post-card-wrap:hover .post-card__toolbar,
-.post-card-wrap:focus-within .post-card__toolbar {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition-delay: 0s;
-}
-
-.post-card-wrap:has(.post-card.is-exporting) .post-card__toolbar {
-  display: none !important;
-}
-
-/* Narrow viewports: keep control on the poster (top-right inside) */
-@media (max-width: 899px) {
-  .post-card-wrap::after {
-    content: none;
-  }
-
-  .post-card__toolbar {
-    top: 0.75rem;
-    right: 0.75rem;
-    left: auto;
-    margin-left: 0;
-  }
-}
-
-/* Solid-ink poster tool buttons (PDF export, code copy) */
-.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost,
 .post-card[class*='ground-'] .code-block__copy.btn-ghost {
   border: var(--chrome-stroke-width) solid var(--on-ground-edge);
   border-radius: 0;
@@ -193,8 +130,6 @@
     color var(--chrome-ink-duration) var(--chrome-ink-ease);
 }
 
-.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost:hover:not(:disabled),
-.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost:focus-visible:not(:disabled),
 .post-card[class*='ground-'] .code-block__copy.btn-ghost:hover:not(:disabled),
 .post-card[class*='ground-'] .code-block__copy.btn-ghost:focus-visible:not(:disabled) {
   color: var(--on-ground-display);
@@ -202,7 +137,6 @@
   box-shadow: var(--poster-ink-shadow);
 }
 
-.post-card-wrap[class*='ground-'] .post-card__export.btn-ghost:active:not(:disabled),
 .post-card[class*='ground-'] .code-block__copy.btn-ghost:active:not(:disabled) {
   box-shadow: var(--chrome-ink-shadow-rest);
 }
@@ -212,27 +146,12 @@
   border-color: currentColor;
 }
 
-.post-card__export[aria-busy='true'] {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-@media (hover: none) {
-  .post-card__toolbar {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .post-card__toolbar,
   .code-block__toolbar {
     transition: none;
     visibility: visible;
   }
 
-  .post-card-wrap[class*='ground-'] .post-card__export.btn-ghost,
   .post-card[class*='ground-'] .code-block__copy.btn-ghost {
     transition: none !important;
   }

@@ -156,7 +156,6 @@
 .post-card[class*='ground-'] .post-title,
 .post-card[class*='ground-'] .post-title a,
 .poster[class*='ground-'] .poster__title,
-.poster[class*='ground-'] .kicker,
 .mini-poster[class*='ground-'] .poster__title,
 .mini-poster[class*='ground-'] .post-title {
   color: var(--on-ground-display);
@@ -174,10 +173,6 @@
 .mini-poster[class*='ground-'] .meta-strip .post-date,
 .poster[class*='ground-'] .case-hero__sub {
   color: var(--on-ground-muted);
-}
-
-.post-card[class*='ground-'] .post-tag {
-  color: var(--on-ground-accent);
 }
 
 .post-card[class*='ground-'] .prose {

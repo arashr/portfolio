@@ -1,4 +1,4 @@
-/* Reader controls, theme toggle, reduced motion */
+/* Reader controls, reduced motion */
 
 .reader-controls {
   display: flex;
@@ -15,17 +15,6 @@
   padding-right: 0.5rem;
   font-size: 1.1rem;
   line-height: 1;
-}
-
-.theme-toggle__icons {
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-}
-
-html:not([data-theme='dark']) .theme-toggle .icon-theme-light,
-html[data-theme='dark'] .theme-toggle .icon-theme-dark {
-  display: none;
 }
 
 .btn-icon:disabled {
@@ -49,7 +38,6 @@ html[data-theme='dark'] .theme-toggle .icon-theme-dark {
   .btn-ghost,
   .btn-icon,
   .toc-panel,
-  .nav-search-input,
   .back-to-top {
     transition: none !important;
   }

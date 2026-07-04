@@ -1,18 +1,10 @@
 /* Shared type: labels, crumbs, poster titles */
 
-.mono-label,
-.kicker {
+.mono-label {
   font-family: inherit;
   font-size: var(--label-size, 1rem);
   font-weight: var(--label-weight, 500);
   letter-spacing: var(--label-letter-spacing, 0.06em);
-}
-
-.crumb {
-  font-family: inherit;
-  font-size: var(--crumb-size, 0.85rem);
-  letter-spacing: normal;
-  text-transform: none;
 }
 
 .poster__title {

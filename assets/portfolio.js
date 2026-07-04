@@ -29,21 +29,15 @@ import { ICONS } from './icons.js';
   'use strict';
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const THEME_KEY = 'md-portfolio-theme';
-  const ZOOM_KEY = 'md-portfolio-zoom';
 
   const landing = document.getElementById('landing');
   const reader = document.getElementById('reader');
-  const landingMain = document.getElementById('main');
   const landingGalleryGrid = document.getElementById('landing-gallery-grid');
   const mainReader = document.getElementById('main-reader');
   const readerHome = document.getElementById('reader-home');
   const readerSiteBrand = document.getElementById('reader-site-brand');
   const readerSiteTagline = document.getElementById('reader-site-tagline');
   const readerLayout = document.querySelector('.reader-layout');
-  const zoomOut = document.getElementById('zoom-out');
-  const zoomIn = document.getElementById('zoom-in');
-  const themeToggles = document.querySelectorAll('.theme-toggle');
   const tocToggle = document.getElementById('toc-toggle');
   const tocPanel = document.getElementById('toc-panel');
   const tocRoot = document.getElementById('toc-root');
@@ -51,9 +45,6 @@ import { ICONS } from './icons.js';
   const tocRailRoot = document.getElementById('toc-rail-root');
   const backToTop = document.getElementById('back-to-top');
 
-  const ZOOM_MIN = 0.85;
-  const ZOOM_MAX = 1.5;
-  const ZOOM_STEP = 0.1;
   const TOC_RAIL_MIN_PX = 1200;
   let lastReaderHeaderHeight = 0;
   let scrollAnchorGen = 0;
@@ -71,7 +62,6 @@ import { ICONS } from './icons.js';
     return readerLayout.clientWidth - padInline >= TOC_RAIL_MIN_PX;
   }
 
-  let readerZoom = clampZoom(parseFloat(localStorage.getItem(ZOOM_KEY) || '1', 10));
   let posterEls = [];
   let titleScaleFrame = 0;
   let titleFitObserver = null;
@@ -82,23 +72,13 @@ import { ICONS } from './icons.js';
   /** @type {{ path: string, title: string, index: number, subtext?: string, stats?: { value: string, label: string }[], credit?: string }[] | null} */
   let caseStudyItems = null;
   let currentRelativePath = '';
-  let openCaseText = '';
-  let homeIndexSignature = '';
-  let contentWatchTimer = 0;
   /** @type {(() => void) | null} */
   let scrollLinkedHeaderTeardown = null;
-
-  const CONTENT_POLL_MS = 3000;
-  const isLocalDev =
-    location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 
   function injectIcons() {
     document.querySelectorAll('[data-icon]').forEach((slot) => {
       const key = slot.getAttribute('data-icon');
       if (ICONS[key]) slot.innerHTML = ICONS[key];
-    });
-    document.querySelectorAll('.theme-toggle__icons').forEach((wrap) => {
-      wrap.innerHTML = ICONS.moon + ICONS.sun;
     });
   }
 
@@ -303,33 +283,6 @@ import { ICONS } from './icons.js';
     posterEls.forEach((card) => titleFitObserver.observe(card));
   }
 
-  function clampZoom(value) {
-    if (Number.isNaN(value)) return 1;
-    return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(value * 100) / 100));
-  }
-
-  function applyZoom() {
-    readerZoom = clampZoom(readerZoom);
-    document.documentElement.style.setProperty('--reader-zoom', String(readerZoom));
-    localStorage.setItem(ZOOM_KEY, String(readerZoom));
-    if (zoomOut) zoomOut.disabled = readerZoom <= ZOOM_MIN;
-    if (zoomIn) zoomIn.disabled = readerZoom >= ZOOM_MAX;
-    updateScrollOffset();
-    schedulePosterTitleFit();
-    updateTocLayout();
-  }
-
-  function applyTheme(theme) {
-    const dark = theme === 'dark';
-    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
-    else document.documentElement.removeAttribute('data-theme');
-    themeToggles.forEach((btn) => {
-      btn.setAttribute('aria-pressed', String(dark));
-      btn.setAttribute('aria-label', dark ? 'Light mode' : 'Dark mode');
-    });
-    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
-  }
-
   function setupCustomCursor() {
     const enabled = getGalleryConfig().theme?.customCursor?.enabled !== false;
     mountCustomCursor({ enabled });
@@ -475,11 +428,6 @@ import { ICONS } from './icons.js';
     scheduleLandingMiniGlyphs();
   }
 
-  function indexSignature(index) {
-    if (index.revision) return index.revision;
-    return index.cases.join('\n');
-  }
-
   function goHome() {
     showLanding();
     history.pushState({ view: 'home' }, '', '#');
@@ -510,7 +458,6 @@ import { ICONS } from './icons.js';
     ]);
     applySiteConfig(site);
     setAssetDimensions(index.assetDimensions);
-    homeIndexSignature = indexSignature(index);
     if (!index.cases.length) {
       renderEmptyHome();
       return;
@@ -531,7 +478,6 @@ import { ICONS } from './icons.js';
   function openMarkdown(text, relativePath, { updateHistory = true } = {}) {
     const filename = relativePath.split('/').pop() || relativePath;
     currentRelativePath = relativePath;
-    openCaseText = text;
     setRenderContentPath(relativePath);
     const doc = parseDocument(text, filename);
     const { subtext: description } = peekCaseStudyListing(text, filename);
@@ -591,48 +537,12 @@ import { ICONS } from './icons.js';
     }
   }
 
-  async function refreshContentIfChanged() {
-    if (!isLocalDev) return;
-
-    if (!reader.hidden && currentRelativePath) {
-      const { text } = await fetchBundledMarkdown(currentRelativePath, location.href, {
-        cacheBust: true
-      });
-      if (text !== openCaseText) {
-        openMarkdown(text, currentRelativePath, { updateHistory: false });
-      }
-      return;
-    }
-
-    if (reader.hidden) {
-      const index = await fetchContentIndex(undefined, undefined, { cacheBust: true });
-      const sig = indexSignature(index);
-      if (sig === homeIndexSignature) return;
-      await loadHome({ cacheBust: true });
-    }
-  }
-
-  function startContentWatch() {
-    if (!isLocalDev) return;
-    if (contentWatchTimer) return;
-    contentWatchTimer = window.setInterval(() => {
-      if (document.hidden) return;
-      void refreshContentIfChanged().catch(() => {});
-    }, CONTENT_POLL_MS);
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) void refreshContentIfChanged().catch(() => {});
-    });
-  }
-
   async function boot() {
     await reloadGalleryConfig();
     injectIcons();
-    applyZoom();
     setupCustomCursor();
-    applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
     try {
       await loadHome();
-      startContentWatch();
     } catch (err) {
       console.error(err);
       landingGalleryGrid.innerHTML =
@@ -754,23 +664,6 @@ import { ICONS } from './icons.js';
   tocRailRoot?.addEventListener('click', handleTocLinkClick);
 
   readerHome?.addEventListener('click', () => goHome());
-
-  zoomOut?.addEventListener('click', () => {
-    readerZoom = clampZoom(readerZoom - ZOOM_STEP);
-    applyZoom();
-  });
-
-  zoomIn?.addEventListener('click', () => {
-    readerZoom = clampZoom(readerZoom + ZOOM_STEP);
-    applyZoom();
-  });
-
-  themeToggles.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
-      applyTheme(dark ? 'dark' : 'light');
-    });
-  });
 
   tocToggle.addEventListener('click', (e) => {
     e.stopPropagation();

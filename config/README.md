@@ -74,8 +74,6 @@ Semantic names: `paper`, `ink`, `inkSoft`, `inkMute`, `red`, `redBright`.
 |-----|------|
 | `cardHoverEase` | Card hover easing |
 | `cardHoverDuration` | Card hover duration |
-| `shutterDuration` | Shutter intro duration |
-| `shutterEase` | Shutter intro easing |
 
 ### `theme.graphics` — poster decoration
 
@@ -84,7 +82,6 @@ Poster graphics are grouped by feature. **`lib/resolve-graphics-config.js`** fla
 ```
 theme.graphics
 ├── glyph              … shared pattern ink (CSS tokens)
-├── imageHalftone      … prose photo halftone (independent)
 ├── imageIsometric     … isometric prose image frame (opt-in in markdown)
 ├── heroGlyph          … mega background glyph (one per poster roll)
 │   ├── roll
@@ -110,22 +107,6 @@ theme.graphics
 | `opacity` | `0.07` | Default pattern strength when a ground omits `glyph.opacity`; also used when `typePattern.appearance` omits `opacityMin`/`opacityMax` |
 
 Per-ground overrides live on each entry in `grounds` (see below). Legacy flat keys `glyphPatternColor` / `glyphPatternOpacity` still merge into the global default.
-
-#### `imageHalftone` — prose photos
-
-Independent of glyph patterns. Object under `theme.graphics.imageHalftone`. Defaults in `lib/image-halftone-config.js`.
-
-| Key | Default | Role |
-|-----|---------|------|
-| `enabled` | `true` | Master toggle |
-| `dotPx` | `5` | Dot spacing in CSS px (lower = finer) |
-| `contrast` | `1.2` | Tone punch / dot density (higher = less washed out) |
-| `saturation` | `1.35` | Color boost per dot |
-| `paper` | `"surface"` | Solid fill behind dots: `surface` (poster ground), `paper` (page bg), or hex |
-| `angleDeg` | `15` | Screen angle in degrees |
-| `pattern` | `"stagger"` | `stagger` \| `grid` \| `line` |
-
-Legacy flat keys (`imageHalftoneDotPx`, etc.) still merge if present.
 
 #### `imageIsometric` — isometric prose images
 

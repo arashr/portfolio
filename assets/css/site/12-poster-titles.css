@@ -89,8 +89,7 @@ h2.poster__title.post-title,
 .post-card.title-face-ultra .post-title a,
 .post-card.title-face-ultra .prose :is(h2, h3, h4),
 .mini-poster.title-face-ultra .poster__title,
-.mini-poster.title-face-ultra .post-title,
-.legend-sample.title-face-ultra {
+.mini-poster.title-face-ultra .post-title {
   font-family: Ultra, serif;
   font-weight: 400;
 }
@@ -99,8 +98,7 @@ h2.poster__title.post-title,
 .post-card.title-face-space-grotesk .post-title a,
 .post-card.title-face-space-grotesk .prose :is(h2, h3, h4),
 .mini-poster.title-face-space-grotesk .poster__title,
-.mini-poster.title-face-space-grotesk .post-title,
-.legend-sample.title-face-space-grotesk {
+.mini-poster.title-face-space-grotesk .post-title {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 400;
 }
@@ -109,8 +107,7 @@ h2.poster__title.post-title,
 .post-card.title-face-archivo-black .post-title a,
 .post-card.title-face-archivo-black .prose :is(h2, h3, h4),
 .mini-poster.title-face-archivo-black .poster__title,
-.mini-poster.title-face-archivo-black .post-title,
-.legend-sample.title-face-archivo-black {
+.mini-poster.title-face-archivo-black .post-title {
   font-family: 'Archivo Black', sans-serif;
   font-weight: 400;
 }
@@ -120,8 +117,7 @@ h2.poster__title.post-title,
 .post-card.title-face-bricolage-grotesque .prose :is(h2, h3, h4),
 .collection-hero .poster__title.title-face-bricolage-grotesque,
 .mini-poster.title-face-bricolage-grotesque .poster__title,
-.mini-poster.title-face-bricolage-grotesque .post-title,
-.legend-sample.title-face-bricolage-grotesque {
+.mini-poster.title-face-bricolage-grotesque .post-title {
   font-family: 'Bricolage Grotesque', sans-serif;
   font-weight: 400;
 }
@@ -130,8 +126,7 @@ h2.poster__title.post-title,
 .post-card.title-face-chakra-petch .post-title a,
 .post-card.title-face-chakra-petch .prose :is(h2, h3, h4),
 .mini-poster.title-face-chakra-petch .poster__title,
-.mini-poster.title-face-chakra-petch .post-title,
-.legend-sample.title-face-chakra-petch {
+.mini-poster.title-face-chakra-petch .post-title {
   font-family: 'Chakra Petch', sans-serif;
   font-weight: 400;
 }
@@ -140,8 +135,7 @@ h2.poster__title.post-title,
 .post-card.title-face-dm-serif-display .post-title a,
 .post-card.title-face-dm-serif-display .prose :is(h2, h3, h4),
 .mini-poster.title-face-dm-serif-display .poster__title,
-.mini-poster.title-face-dm-serif-display .post-title,
-.legend-sample.title-face-dm-serif-display {
+.mini-poster.title-face-dm-serif-display .post-title {
   font-family: 'DM Serif Display', serif;
   font-weight: 400;
 }
@@ -150,8 +144,7 @@ h2.poster__title.post-title,
 .post-card.title-face-unbounded .post-title a,
 .post-card.title-face-unbounded .prose :is(h2, h3, h4),
 .mini-poster.title-face-unbounded .poster__title,
-.mini-poster.title-face-unbounded .post-title,
-.legend-sample.title-face-unbounded {
+.mini-poster.title-face-unbounded .post-title {
   font-family: Unbounded, sans-serif;
   font-weight: 400;
 }
@@ -160,8 +153,7 @@ h2.poster__title.post-title,
 .post-card.title-face-oswald .post-title a,
 .post-card.title-face-oswald .prose :is(h2, h3, h4),
 .mini-poster.title-face-oswald .poster__title,
-.mini-poster.title-face-oswald .post-title,
-.legend-sample.title-face-oswald {
+.mini-poster.title-face-oswald .post-title {
   font-family: Oswald, sans-serif;
   font-weight: 400;
 }
@@ -170,8 +162,7 @@ h2.poster__title.post-title,
 .post-card.title-face-ibm-plex-mono .post-title a,
 .post-card.title-face-ibm-plex-mono .prose :is(h2, h3, h4),
 .mini-poster.title-face-ibm-plex-mono .poster__title,
-.mini-poster.title-face-ibm-plex-mono .post-title,
-.legend-sample.title-face-ibm-plex-mono {
+.mini-poster.title-face-ibm-plex-mono .post-title {
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
   font-weight: 400;
 }
@@ -180,8 +171,7 @@ h2.poster__title.post-title,
 .post-card.title-face-anton .post-title a,
 .post-card.title-face-anton .prose :is(h2, h3, h4),
 .mini-poster.title-face-anton .poster__title,
-.mini-poster.title-face-anton .post-title,
-.legend-sample.title-face-anton {
+.mini-poster.title-face-anton .post-title {
   font-family: Anton, sans-serif;
   font-weight: 400;
 }
@@ -215,30 +205,11 @@ h2.poster__title.post-title,
 .meta-divider {
   opacity: 0.5;
 }
-.post-tags {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-}
-.post-tag {
-  cursor: pointer;
-  color: var(--red);
-}
-.post-tag:hover {
+
   text-decoration: underline;
 }
 
-.post-figure {
-  margin: 1.25rem auto 1.5rem;
-}
-.post-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-}
-.figure__caption {
+
   margin: 0.5rem 0 0;
   color: var(--ink-mute);
 }

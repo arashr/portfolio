@@ -71,8 +71,8 @@ function mockGroundCard(groundName) {
   };
 }
 
-/** Grounds in bundled config with no `glyph` / `heroGlyph` keys at all. */
-const BUNDLED_EMPTY_GROUNDS = ['pink'];
+/** Grounds in bundled config used as empty-ground fallbacks in tests. */
+const SYNTHETIC_EMPTY_GROUNDS = { empty: {} };
 
 // ── Blend mode normalization ────────────────────────────────────────────────
 
@@ -301,9 +301,12 @@ test('normalizeGround omits glyph and heroGlyph when ground entry is empty', () 
 });
 
 test('mergeGroundGlyphIntoPatternConfig returns global config when ground has no glyph', () => {
-  const cfg = setGalleryConfig(loadBundledGalleryConfig());
+  const cfg = setGalleryConfig({
+    ...loadBundledGalleryConfig(),
+    grounds: { ...loadBundledGalleryConfig().grounds, ...SYNTHETIC_EMPTY_GROUNDS }
+  });
   const globalPattern = resolveTypePatternConfig(cfg);
-  const def = getGroundDefs(cfg).pink;
+  const def = getGroundDefs(cfg).empty;
 
   const resolved = mergeGroundGlyphIntoPatternConfig(globalPattern, def, cfg);
   assert.equal(resolved, globalPattern);
@@ -315,9 +318,12 @@ test('mergeGroundGlyphIntoPatternConfig returns global config when ground has no
 });
 
 test('mergeGroundHeroGlyphIntoConfig returns global config when ground has no heroGlyph', () => {
-  const cfg = setGalleryConfig(loadBundledGalleryConfig());
+  const cfg = setGalleryConfig({
+    ...loadBundledGalleryConfig(),
+    grounds: { ...loadBundledGalleryConfig().grounds, ...SYNTHETIC_EMPTY_GROUNDS }
+  });
   const globalHero = resolveHeroGlyphConfig(cfg);
-  const def = getGroundDefs(cfg).mint;
+  const def = getGroundDefs(cfg).empty;
 
   const resolved = mergeGroundHeroGlyphIntoConfig(globalHero, def);
   assert.equal(resolved, globalHero);
@@ -360,12 +366,12 @@ test('ground with only heroGlyph still falls back to global typePattern', () => 
 test('ground with only glyph still falls back to global heroGlyph', () => {
   const cfg = setGalleryConfig(loadBundledGalleryConfig());
   const globalHero = resolveHeroGlyphConfig(cfg);
-  const tangerine = getGroundDefs(cfg).tangerine;
+  const carmine = getGroundDefs(cfg).carmine;
 
-  assert.ok(tangerine.glyph);
-  assert.equal(tangerine.heroGlyph, undefined);
+  assert.ok(carmine.glyph);
+  assert.equal(carmine.heroGlyph, undefined);
 
-  const hero = mergeGroundHeroGlyphIntoConfig(globalHero, tangerine);
+  const hero = mergeGroundHeroGlyphIntoConfig(globalHero, carmine);
   assert.equal(hero, globalHero);
   assert.deepEqual(
     resolveBlendOpacityRange(hero, 'overlay'),
@@ -374,11 +380,14 @@ test('ground with only glyph still falls back to global heroGlyph', () => {
 });
 
 test('resolveCardPatternConfig and resolveCardHeroGlyphConfig fall back for empty grounds', () => {
-  const cfg = setGalleryConfig(loadBundledGalleryConfig());
+  const cfg = setGalleryConfig({
+    ...loadBundledGalleryConfig(),
+    grounds: { ...loadBundledGalleryConfig().grounds, ...SYNTHETIC_EMPTY_GROUNDS }
+  });
   const globalPattern = resolveTypePatternConfig(cfg);
   const globalHero = resolveHeroGlyphConfig(cfg);
 
-  for (const name of BUNDLED_EMPTY_GROUNDS) {
+  for (const name of Object.keys(SYNTHETIC_EMPTY_GROUNDS)) {
     const card = mockGroundCard(name);
     const pattern = resolveCardPatternConfig(cfg, card);
     const hero = resolveCardHeroGlyphConfig(cfg, card);
@@ -418,9 +427,9 @@ test('buildGroundStylesheet injects reader-only glyph CSS for empty mint', () =>
     )
   );
   assert.equal(
-    css.split('\n').some((line) => line.startsWith('.ground-pink{--on-ground-glyph-pattern')),
+    css.split('\n').some((line) => line.startsWith('.ground-empty{--on-ground-glyph-pattern')),
     false,
-    'pink empty ground must not get bare glyph CSS'
+    'synthetic empty ground must not get bare glyph CSS'
   );
   const mintGlyphLines = css
     .split('\n')
@@ -430,10 +439,13 @@ test('buildGroundStylesheet injects reader-only glyph CSS for empty mint', () =>
 });
 
 test('bundled empty grounds inherit global CSS glyph tokens', () => {
-  const cfg = setGalleryConfig(loadBundledGalleryConfig());
+  const cfg = setGalleryConfig({
+    ...loadBundledGalleryConfig(),
+    grounds: { ...loadBundledGalleryConfig().grounds, ...SYNTHETIC_EMPTY_GROUNDS }
+  });
   const globalGlyph = resolveGlyphPatternTokens(cfg);
 
-  for (const name of BUNDLED_EMPTY_GROUNDS) {
+  for (const name of Object.keys(SYNTHETIC_EMPTY_GROUNDS)) {
     const tokens = resolveGroundGlyphTokens(getGroundDefs(cfg)[name], cfg, globalGlyph);
     assert.deepEqual(
       tokens,
@@ -524,19 +536,19 @@ test('bundled config per-ground glyph blend restrictions', () => {
 
   assert.deepEqual(
     normalizedBlendPool(mergeGroundGlyphIntoPatternConfig(base, defs.tangerine, cfg)),
-    ['exclusion', 'multiply', 'overlay']
+    ['exclusion', 'multiply', 'overlay', 'soft-light', 'source-over']
   );
   assert.deepEqual(
     normalizedBlendPool(mergeGroundGlyphIntoPatternConfig(base, defs.lilac, cfg)),
-    ['multiply', 'overlay']
+    ['overlay', 'screen']
   );
   assert.deepEqual(
     normalizedBlendPool(mergeGroundGlyphIntoPatternConfig(base, defs.pink, cfg)),
-    normalizedBlendPool(base)
+    ['exclusion', 'screen']
   );
   assert.deepEqual(
     normalizedBlendPool(mergeGroundGlyphIntoPatternConfig(base, defs.mint, cfg)),
-    ['exclusion', 'overlay', 'screen']
+    ['exclusion', 'overlay']
   );
 });
 
@@ -545,18 +557,19 @@ test('bundled config lime ground heroGlyph blend restriction', () => {
   const defs = getGroundDefs(cfg);
   const merged = mergeGroundHeroGlyphIntoConfig(resolveHeroGlyphConfig(cfg), defs.lime);
 
-  assert.deepEqual(normalizedBlendPool(merged), ['exclusion', 'screen']);
+  assert.deepEqual(normalizedBlendPool(merged), ['exclusion', 'saturation', 'screen']);
   assert.equal(merged.color, 'glyph');
   assert.equal(merged.blendModes.includes('difference'), false);
 });
 
-test('bundled config grounds without glyph overrides inherit global pattern color', () => {
+test('bundled config carmine inherits global heroGlyph when ground omits heroGlyph', () => {
   const cfg = setGalleryConfig(loadBundledGalleryConfig());
-  const globalGlyph = resolveGlyphPatternTokens(cfg);
+  const globalHero = resolveHeroGlyphConfig(cfg);
+  const carmine = getGroundDefs(cfg).carmine;
 
-  const pink = resolveGroundGlyphTokens(getGroundDefs(cfg).pink, cfg, globalGlyph);
-  assert.equal(pink.color, globalGlyph.color);
-  assert.equal(pink.opacity, globalGlyph.opacity);
+  assert.ok(carmine.glyph);
+  assert.equal(carmine.heroGlyph, undefined);
+  assert.equal(mergeGroundHeroGlyphIntoConfig(globalHero, carmine), globalHero);
 });
 
 test('bundled config carmine ground glyph opacity and blend pool', () => {
