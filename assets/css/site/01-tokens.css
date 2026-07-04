@@ -221,6 +221,4 @@
   /* ── Motion ────────────────────────────────────────────────────── */
   --card-hover-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-hover-duration: 0.4s;
-  --shutter-duration: 0.9s;
-  --shutter-ease: cubic-bezier(0.77, 0, 0.18, 1);
 }

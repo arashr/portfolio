@@ -7,29 +7,7 @@
       "measure": "65ch",
       "posterWidth": "42rem"
     },
-    "edgeHalftone": {
-      "enabled": false,
-      "heightPx": 80,
-      "dotPx": 6,
-      "angleDeg": 22,
-      "pattern": "stagger",
-      "contrast": 1,
-      "fadePower": 2,
-      "pushPx": 12,
-      "mergeDotScale": 0,
-      "showOnHome": false,
-      "color": "paper"
-    },
     "graphics": {
-      "imageHalftone": {
-        "enabled": false,
-        "dotPx": 1,
-        "contrast": 1.4,
-        "saturation": 1.5,
-        "paper": "surface",
-        "angleDeg": 0,
-        "pattern": "grid"
-      },
       "imageIsometric": {
         "perspective": false,
         "perspectiveOrigin": "50% 50%",

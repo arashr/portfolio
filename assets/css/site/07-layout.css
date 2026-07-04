@@ -16,20 +16,3 @@
 .page-reader .collection-feed {
   min-width: 0;
 }
-
-.search-box {
-  margin-bottom: 1.25rem;
-}
-.search-box label {
-  display: block;
-  margin-bottom: 0.35rem;
-  color: var(--red);
-}
-.search-box input {
-  width: 100%;
-  padding: 0.6rem 0.75rem;
-  border: 1px solid var(--hair);
-  background: var(--paper);
-  font-family: inherit;
-  font-size: 0.95rem;
-}

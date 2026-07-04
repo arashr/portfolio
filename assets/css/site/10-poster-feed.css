@@ -1,8 +1,7 @@
 /* Poster gallery feed containers */
 
 /* Each post = its own poster on paper */
-.content-feed .posts-list,
-#blog-posts {
+.content-feed .posts-list {
   width: 100%;
   min-width: 0;
   height: fit-content;

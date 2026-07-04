@@ -1,49 +1,8 @@
-/* Tag index, responsive header/index */
-
-/* Tags page */
-.tag-index-main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--pad);
-}
-.tag-index-list {
-  list-style: none;
-  padding: 0;
-}
-.tag-index-list > li {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--hair);
-  padding-bottom: 1rem;
-}
-.tag-index-name {
-  font-family: Ultra, serif;
-  color: var(--red);
-  font-size: 1.5rem;
-}
-.tag-index-count {
-  margin-left: 0.5rem;
-  color: var(--ink-mute);
-}
-
-.empty-state {
-  padding: 2rem;
-  text-align: center;
-}
+/* Responsive header layout */
 
 @media (max-width: 900px) {
   .header-inner {
     flex-wrap: wrap;
     gap: 0.35rem 0.75rem;
-  }
-  .nav--highlight {
-    max-width: none;
-    width: 100%;
-    order: 3;
-  }
-  .crumb {
-    overflow-wrap: anywhere;
-  }
-  .index-hero-title {
-    overflow-wrap: anywhere;
   }
 }

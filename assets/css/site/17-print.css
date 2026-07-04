@@ -2,9 +2,7 @@
 
 @media print {
   .site-header,
-  .back-to-top,
-  .shutter-bar,
-  #scroll-progress {
+  .back-to-top {
     display: none !important;
   }
   body {

@@ -4,7 +4,7 @@ import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { parseHomeAside } from '../lib/parse-home-aside.js';
-import { renderHomeAside } from '../lib/render-home-aside.js';
+import { renderLandingMosaic } from '../lib/render-landing-mosaic.js';
 import { shouldIncludeCaseStudyFile } from '../lib/content-catalog.js';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -22,11 +22,13 @@ test('parseHomeAside reads ## sections from bundled file', () => {
   assert.equal(sections[3].title, 'I Use AI Where It Actually Helps');
 });
 
-test('renderHomeAside outputs section blocks', () => {
-  const html = renderHomeAside({
-    sections: [{ title: 'Test', description: 'Body copy.' }]
+test('renderLandingMosaic includes aside sections in the poster grid', () => {
+  const html = renderLandingMosaic({
+    site: { title: 'Portfolio', tagline: 'Case studies' },
+    items: [],
+    aside: { sections: [{ title: 'Test', description: 'Body copy.' }] }
   });
-  assert.match(html, /landing-aside__title/);
+  assert.match(html, /landing-aside-wrap/);
   assert.match(html, /Test/);
   assert.match(html, /Body copy/);
 });

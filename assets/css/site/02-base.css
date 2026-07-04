@@ -26,16 +26,6 @@ body {
   html {
     scroll-behavior: auto;
   }
-  .shutter-bar,
-  .collection-card {
-    animation: none !important;
-    transition: none !important;
-  }
-  .collection-card:hover,
-  .collection-card:focus-visible {
-    transform: none;
-    box-shadow: var(--card-shadow-rest);
-  }
 }
 
 .skip-link {

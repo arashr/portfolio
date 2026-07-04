@@ -45,10 +45,6 @@
   color: var(--hero-title);
 }
 
-.index-hero-title {
-  text-shadow: -4px 4px 0 var(--hair);
-}
-
 h1.poster__title {
   margin-top: 0;
   margin-bottom: 32px;

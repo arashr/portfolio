@@ -19,10 +19,8 @@ import {
 } from '../lib/portfolio-content.js';
 import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
-import { enhancePosterImageHalftone } from '../lib/image-halftone.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
-import { mountEdgeHalftone } from '../lib/edge-halftone.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
 import { ICONS } from './icons.js';
@@ -38,7 +36,6 @@ import { ICONS } from './icons.js';
   const reader = document.getElementById('reader');
   const landingMain = document.getElementById('main');
   const landingGalleryGrid = document.getElementById('landing-gallery-grid');
-  const landingAside = document.getElementById('landing-aside');
   const mainReader = document.getElementById('main-reader');
   const readerHome = document.getElementById('reader-home');
   const readerSiteBrand = document.getElementById('reader-site-brand');
@@ -88,8 +85,6 @@ import { ICONS } from './icons.js';
   let openCaseText = '';
   let homeIndexSignature = '';
   let contentWatchTimer = 0;
-  /** @type {{ destroy: () => void, refresh: () => void }} */
-  let edgeHalftone = { destroy() {}, refresh() {} };
   /** @type {(() => void) | null} */
   let scrollLinkedHeaderTeardown = null;
 
@@ -333,12 +328,6 @@ import { ICONS } from './icons.js';
       btn.setAttribute('aria-label', dark ? 'Light mode' : 'Dark mode');
     });
     localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
-    edgeHalftone.refresh();
-  }
-
-  function setupEdgeHalftone() {
-    edgeHalftone.destroy();
-    edgeHalftone = mountEdgeHalftone(getGalleryConfig());
   }
 
   function setupCustomCursor() {
@@ -454,7 +443,6 @@ import { ICONS } from './icons.js';
     reader.classList.add('is-active');
     document.body.classList.remove('page-landing');
     document.body.classList.add('page-collection');
-    edgeHalftone.refresh();
   }
 
   function showLanding() {
@@ -467,7 +455,6 @@ import { ICONS } from './icons.js';
     document.body.classList.remove('page-collection');
     closeTocPanel();
     updateTocLayout();
-    edgeHalftone.refresh();
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   }
 
@@ -515,12 +502,6 @@ import { ICONS } from './icons.js';
       '<p class="landing-error mono-label">Add a <code>.md</code> file under <code>content/</code> (not dot-prefixed).</p>';
   }
 
-  function renderLandingAside(aside) {
-    if (!landingAside) return;
-    landingAside.innerHTML = '';
-    landingAside.hidden = true;
-  }
-
   async function loadHome({ cacheBust = false } = {}) {
     const [index, site, aside] = await Promise.all([
       fetchContentIndex(undefined, undefined, { cacheBust }),
@@ -529,7 +510,6 @@ import { ICONS } from './icons.js';
     ]);
     applySiteConfig(site);
     setAssetDimensions(index.assetDimensions);
-    renderLandingAside(aside);
     homeIndexSignature = indexSignature(index);
     if (!index.cases.length) {
       renderEmptyHome();
@@ -543,7 +523,6 @@ import { ICONS } from './icons.js';
     enhanceCodeBlocks(mainReader, { copyIcon: ICONS.copy });
     injectIcons();
     applyImageTableLayouts(mainReader);
-    enhancePosterImageHalftone(mainReader, getGalleryConfig());
     setupImageLightbox(mainReader, {
       icons: { zoomIn: ICONS.zoomIn, zoomOut: ICONS.zoomOut, xmark: ICONS.xmark }
     });
@@ -580,12 +559,10 @@ import { ICONS } from './icons.js';
       requestAnimationFrame(updateTocLayout);
     });
     requestAnimationFrame(renderGlyphs);
-    requestAnimationFrame(() => enhancePosterImageHalftone(mainReader, getGalleryConfig()));
     if (document.fonts?.ready) {
       document.fonts.ready.then(() => {
         schedulePosterTitleFit();
         renderGlyphs();
-        enhancePosterImageHalftone(mainReader, getGalleryConfig());
         fitReaderMoreCases();
       });
     }
@@ -651,7 +628,6 @@ import { ICONS } from './icons.js';
     await reloadGalleryConfig();
     injectIcons();
     applyZoom();
-    setupEdgeHalftone();
     setupCustomCursor();
     applyTheme(localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark');
     try {
@@ -824,9 +800,7 @@ import { ICONS } from './icons.js';
 
   async function reloadConfigAndRefresh() {
     await reloadGalleryConfig();
-    setupEdgeHalftone();
     setupCustomCursor();
-    enhancePosterImageHalftone(mainReader, getGalleryConfig());
     schedulePosterTitleFit();
     if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
     else scheduleReaderMoreCasesEnhance();
@@ -852,7 +826,6 @@ import { ICONS } from './icons.js';
       updateTocLayout();
       schedulePosterTitleFit();
       renderGlyphs();
-      enhancePosterImageHalftone(mainReader, getGalleryConfig());
       if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
     }, 120);
   });

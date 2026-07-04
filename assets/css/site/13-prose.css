@@ -20,42 +20,6 @@
   object-fit: contain;
 }
 
-.post-card[class*='ground-'] .prose .halftone--active {
-  background: var(--surface);
-  isolation: isolate;
-}
-
-.halftone {
-  display: block;
-  position: relative;
-  max-width: 100%;
-  width: 100%;
-}
-
-.halftone__canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  vertical-align: top;
-}
-
-.halftone--active .halftone__source {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.prose .halftone:not(.halftone--active) .halftone__canvas {
-  display: none;
-}
-
 /* Isometric UI frame — opt in via image title: ![](path "isometric") */
 .prose-img-iso {
   margin: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(2rem, 5vw, 3.25rem);
@@ -81,7 +45,6 @@
   transition: transform var(--chrome-ink-duration) var(--chrome-ink-ease);
 }
 
-.prose-img-iso__frame .halftone,
 .prose-img-iso__frame img {
   display: block;
   width: 100%;
@@ -356,7 +319,6 @@
 .post-card .poster__title :is(code, strong, em),
 .post-card .post-title :is(code, strong, em),
 .post-card[class*='ground-'] .prose :is(h2, h3, h4) code,
-.collection-card .poster__title :is(code, strong, em),
 .collection-hero .poster__title :is(code, strong, em) {
   font-family: inherit;
   font-size: inherit;

@@ -14,9 +14,7 @@
     "test": "node --test test/*.test.js"
   },
   "dependencies": {
-    "html2canvas": "^1.4.1",
     "isomorphic-dompurify": "^3.14.0",
-    "jspdf": "^4.2.1",
     "marked": "^15.0.7"
   }
 }
