@@ -63,3 +63,20 @@ test('renderMarkdownImage emits width and height when provided', () => {
   });
   assert.match(html, /width="1200" height="800"/);
 });
+
+test('renderMarkdownImage wraps responsive WebP sources when variants provided', () => {
+  const html = renderMarkdownImage({
+    src: '/content/src/hero.png',
+    alt: 'Hero',
+    width: 1920,
+    height: 1080,
+    variants: [
+      { url: '/content/src/hero.960w.webp', w: 960 },
+      { url: '/content/src/hero.webp', w: 1920 }
+    ]
+  });
+  assert.match(html, /^<picture>/);
+  assert.match(html, /type="image\/webp"/);
+  assert.match(html, /hero\.960w\.webp 960w/);
+  assert.match(html, /src="\/content\/src\/hero\.png"/);
+});

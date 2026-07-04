@@ -205,11 +205,3 @@ h2.poster__title.post-title,
 .meta-divider {
   opacity: 0.5;
 }
-
-  text-decoration: underline;
-}
-
-
-  margin: 0.5rem 0 0;
-  color: var(--ink-mute);
-}

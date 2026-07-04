@@ -1,5 +1,5 @@
 import { parseDocument, peekCaseStudyListing } from '../lib/parse-document.js';
-import { renderDocument, renderToc, setAssetDimensions, setRenderContentPath } from '../lib/render-document.js';
+import { renderDocument, renderToc, setAssetDimensions, setImageVariants, setRenderContentPath } from '../lib/render-document.js';
 import { renderLandingMosaic } from '../lib/render-landing-mosaic.js';
 import { renderReaderMoreCases } from '../lib/render-reader-more-cases.js';
 import { posterStaggerCol } from '../lib/stagger.js';
@@ -14,6 +14,7 @@ import { fetchBundledMarkdown } from '../lib/bundled-md.js';
 import {
   fetchContentIndex,
   fetchHomeAside,
+  fetchImageVariants,
   fetchSiteConfig,
   resolveCaseStudyItems
 } from '../lib/portfolio-content.js';
@@ -451,13 +452,15 @@ import { ICONS } from './icons.js';
   }
 
   async function loadHome({ cacheBust = false } = {}) {
-    const [index, site, aside] = await Promise.all([
+    const [index, site, aside, variants] = await Promise.all([
       fetchContentIndex(undefined, undefined, { cacheBust }),
       fetchSiteConfig(undefined, undefined, { cacheBust }),
-      fetchHomeAside(undefined, undefined, { cacheBust })
+      fetchHomeAside(undefined, undefined, { cacheBust }),
+      fetchImageVariants(undefined, undefined, { cacheBust })
     ]);
     applySiteConfig(site);
     setAssetDimensions(index.assetDimensions);
+    setImageVariants(variants);
     if (!index.cases.length) {
       renderEmptyHome();
       return;

@@ -2,7 +2,7 @@
 
 Sister to **md-gallery** (same poster stack, no user file input).
 
-1. **Content** → `.md` case studies under `content/`. Dev (`npm start`): live index + browser refresh. Deploy: `npm run build:content` → `content/cases.index.json`. Guide: `content/CONTENT.md`. Hero: `content/site.json`.
+1. **Content** → `.md` case studies under `content/`. Dev (`npm start`): live index + browser refresh. Deploy: `npm run build:production` → minified assets + `dist/` (includes `content/cases.index.json`). Guide: `content/CONTENT.md`. Hero: `content/site.json`.
 2. **Images** → `lib/content-assets.js` resolves relative `src` paths from each markdown file’s directory.
 3. **App** → `assets/portfolio.js`, `index.html` (not `reader.js`).
 4. **Visual config** → `config/gallery.config.json` + `lib/gallery-config.js` (same as gallery).

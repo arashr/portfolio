@@ -6,15 +6,21 @@
   "type": "module",
   "description": "Static portfolio — case studies as Markdown poster galleries",
   "scripts": {
-    "build": "npm run build:content",
+    "build": "npm run build:production",
     "build:content": "node scripts/build-content-index.js",
+    "build:production": "node scripts/build-production.js",
     "pretest": "npm run build:content",
     "start": "node scripts/dev-server.js",
     "preview": "npm run build:content && npx serve . -l 3000",
+    "preview:prod": "npm run build:production && npx serve dist -l 3000",
     "test": "node --test test/*.test.js"
   },
   "dependencies": {
     "isomorphic-dompurify": "^3.14.0",
     "marked": "^15.0.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "sharp": "^0.34.2"
   }
 }

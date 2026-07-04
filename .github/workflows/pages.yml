@@ -34,8 +34,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build content index
-        run: npm run build:content
+      - name: Build production bundle
+        run: npm run build:production
 
       # Re-runs can leave a stale artifact on this workflow run; see upload-pages-artifact#97
       - name: Delete stale Pages artifact
@@ -47,7 +47,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
   deploy:
     needs: build
