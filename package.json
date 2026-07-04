@@ -9,6 +9,7 @@
     "build": "npm run build:production",
     "build:content": "node scripts/build-content-index.js",
     "build:production": "node scripts/build-production.js",
+    "generate:favicon": "node scripts/generate-favicon.js",
     "pretest": "npm run build:content",
     "start": "node scripts/dev-server.js",
     "preview": "npm run build:content && npx serve . -l 3000",

@@ -71,7 +71,13 @@ function copyStaticFiles() {
   cpSync(join(repoRoot, 'content'), join(distRoot, 'content'), { recursive: true });
   cpSync(join(repoRoot, 'config'), join(distRoot, 'config'), { recursive: true });
 
-  for (const file of ['robots.txt', '.nojekyll']) {
+  for (const file of [
+    'robots.txt',
+    '.nojekyll',
+    'favicon-16x16.png',
+    'favicon-32x32.png',
+    'apple-touch-icon.png'
+  ]) {
     cpSync(join(repoRoot, file), join(distRoot, file));
   }
 }

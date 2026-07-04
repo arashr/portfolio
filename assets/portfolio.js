@@ -391,6 +391,16 @@ import { ICONS } from './icons.js';
     );
   }
 
+  function siteTitle() {
+    return siteConfig.title?.trim() || 'Arash Ranjbaran';
+  }
+
+  /** @param {string} [caseStudyTitle] */
+  function setDocumentTitle(caseStudyTitle) {
+    const site = siteTitle();
+    document.title = caseStudyTitle?.trim() ? `${site} - ${caseStudyTitle.trim()}` : site;
+  }
+
   function showReader() {
     landing.classList.add('is-hidden');
     reader.hidden = false;
@@ -407,6 +417,7 @@ import { ICONS } from './icons.js';
     reader.classList.remove('is-active');
     document.body.classList.add('page-landing');
     document.body.classList.remove('page-collection');
+    setDocumentTitle();
     closeTocPanel();
     updateTocLayout();
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
@@ -438,10 +449,12 @@ import { ICONS } from './icons.js';
     siteConfig = site || {};
     if (site.title) {
       if (readerSiteBrand) readerSiteBrand.textContent = site.title;
-      document.title = site.title;
     }
     if (site.tagline) {
       if (readerSiteTagline) readerSiteTagline.textContent = site.tagline;
+    }
+    if (!reader.classList.contains('is-active')) {
+      setDocumentTitle();
     }
   }
 
@@ -490,6 +503,7 @@ import { ICONS } from './icons.js';
     });
     appendReaderMoreCases(relativePath, doc);
     showReader();
+    setDocumentTitle(doc.title);
     setTocHtml(renderToc(doc.toc));
 
     posterEls = Array.from(
