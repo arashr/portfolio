@@ -10,6 +10,8 @@
     "build:content": "node scripts/build-content-index.js",
     "build:production": "node scripts/build-production.js",
     "generate:favicon": "node scripts/generate-favicon.js",
+    "generate:og-image": "node scripts/generate-og-image.js",
+    "generate:branding": "npm run generate:favicon && npm run generate:og-image",
     "pretest": "npm run build:content",
     "start": "node scripts/dev-server.js",
     "preview": "npm run build:content && npx serve . -l 3000",

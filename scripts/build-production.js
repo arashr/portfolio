@@ -9,6 +9,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
 import { buildImageVariants } from '../lib/image-variants-node.js';
+import { buildSocialMetaTags } from '../lib/social-meta.js';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = join(repoRoot, 'dist');
@@ -76,7 +77,8 @@ function copyStaticFiles() {
     '.nojekyll',
     'favicon-16x16.png',
     'favicon-32x32.png',
-    'apple-touch-icon.png'
+    'apple-touch-icon.png',
+    'og-image.png'
   ]) {
     cpSync(join(repoRoot, file), join(distRoot, file));
   }
@@ -95,13 +97,31 @@ async function optimizeContentImages() {
   );
 }
 
+function readSiteConfig() {
+  try {
+    return JSON.parse(readFileSync(join(repoRoot, 'content/site.json'), 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
 function writeIndexHtml() {
+  const site = readSiteConfig();
+  const title = site.title?.trim() || 'Arash Ranjbaran';
   const html = readFileSync(join(repoRoot, 'index.html'), 'utf8');
   const withoutImportMap = html.replace(
     /\n?\s*<script type="importmap">[\s\S]*?<\/script>/,
     ''
   );
-  const withPreload = withoutImportMap.replace(
+  const withTitle = withoutImportMap.replace(
+    /<title>[^<]*<\/title>/,
+    `<title>${title}</title>`
+  );
+  const withSocial = withTitle.replace(
+    /<meta name="description" content="[^"]*">[\s\S]*?(?=<link rel="icon")/,
+    `${buildSocialMetaTags(site)}\n  <meta name="robots" content="noindex, nofollow">\n  `
+  );
+  const withPreload = withSocial.replace(
     '<link rel="stylesheet" href="assets/site.css">',
     [
       '  <link rel="preload" href="assets/site.css" as="style">',
