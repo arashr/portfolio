@@ -1,6 +1,7 @@
 ---
+title: Figlets MCP
 description: AI Interface for Figma Design Systems  
-role: Product Designer  
+role: Product Designer & Developer
 year: 2026
 ---
 
@@ -13,7 +14,7 @@ An AI interface for managing Figma design systems through plain language. It hel
 
 | AI hosts | Core workflows | Writes gated |
 |---:|---:|:---:|
-| 6+ | 7 | 100% |
+| 6+ | 6 | 100% |
 
 ## Overview
 
@@ -25,7 +26,7 @@ Figlets MCP is my attempt to solve that in a practical way.
 
 The AI is the interface. Figlets is the engine. Designers can ask for what they need in plain language. Figlets runs the structured work locally, explains what it found, and asks before anything changes in Figma.
 
-[Figlets MCP on Github](https://github.com/arashr/figlets-mcp)
+[Figlets MCP on GitHub](https://github.com/arashr/figlets-mcp)
 
 ## The Problem
 
@@ -93,7 +94,7 @@ So repairs are grouped by scope. Foundation repairs, primitive updates, and sema
 
 After a repair is applied, Figlets syncs the file again, checks the result, and stops. It does not move into the next category unless the designer asks.
 
-![Figlets Boundries](./src/figlets-boundries.png "iso Figlet respects the boundries with minimum context")
+![Figlets boundaries](./src/figlets-boundries.png "iso Figlet respects the boundries with minimum context")
 
 The repair menus use designer language too. “Fix the 4 spacing alias repairs” is better than exposing internal commands. It keeps the user focused on the decision, not the tool name.
 
@@ -128,7 +129,7 @@ If the designer already states a goal, Figlets routes directly. If the request i
 ## Core Workflows
 
 **Check my design system**  
-Syncs the file, audits tokens, checks semantic gaps, finds hygiene issues, ranks findings, and ends with a repair menu.
+Audits tokens, checks semantic gaps, finds hygiene issues, ranks findings, and ends with a repair menu.
 
 **Set up a new design system**  
 Bootstraps variables and foundations from config. Intake questions come before token suggestions.
@@ -142,11 +143,8 @@ Creates a handoff spec from the selected component with safer binding logic.
 **Export DESIGN.md**  
 Creates a portable design document for coding agents and cross-team handoff.
 
-**Token-gap completion**  
-Finds missing config-backed tokens and plans repairs with separate approval paths.
-
-**QA binding audit**  
-Checks component variable bindings in read-only mode and groups issues by fixability.
+**Component QA and Audit**  
+Audit selected layers for raw values and suggest safe bindings
 
 ## From Skill Set to Product
 
@@ -179,7 +177,7 @@ There are now more than one hundred automated tests behind the workflows. Manual
 
 ## Outcome
 
-[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working v0.1 product.
+[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working product.
 
 It is agent-agnostic, local-first, and built around inspect-first workflows with explicit approval before every Figma write.
 
