@@ -59,6 +59,11 @@ import { ICONS } from './icons.js';
   const ZOOM_STEP = 0.1;
   const TOC_RAIL_MIN_PX = 1200;
   let lastReaderHeaderHeight = 0;
+  let scrollAnchorGen = 0;
+  /** @type {number[]} */
+  let scrollAnchorTimers = [];
+  let touchStartY = 0;
+  let touchScrollCancelled = false;
 
   function tocRailFits() {
     if (!readerLayout) return false;
@@ -210,7 +215,26 @@ import { ICONS } from './icons.js';
     const height = header.getBoundingClientRect().height;
     if (Math.abs(height - lastReaderHeaderHeight) < 1) return;
     syncScrollOffsetVar();
-    if (location.hash) realignScrollToHash();
+  }
+
+  function cancelScrollAnchorAdjustments() {
+    scrollAnchorGen += 1;
+    for (const id of scrollAnchorTimers) clearTimeout(id);
+    scrollAnchorTimers = [];
+  }
+
+  /** @param {() => void} fn @param {number} ms @param {number} gen */
+  function queueScrollAnchorTimer(fn, ms, gen) {
+    const id = window.setTimeout(() => {
+      if (gen !== scrollAnchorGen) return;
+      fn();
+    }, ms);
+    scrollAnchorTimers.push(id);
+  }
+
+  function scrollTopForTarget(target) {
+    syncScrollOffsetVar();
+    return target.getBoundingClientRect().top + window.scrollY - readAnchorOffsetPx();
   }
 
   function resolveScrollTarget(el) {
@@ -220,52 +244,52 @@ import { ICONS } from './icons.js';
     return el;
   }
 
-  function scrollToEl(el, { behavior = 'auto' } = {}) {
+  function scrollToEl(el, { behavior = 'smooth' } = {}) {
+    cancelScrollAnchorAdjustments();
+    const gen = scrollAnchorGen;
     const target = resolveScrollTarget(el);
-    const root = document.documentElement;
-
-    function fineTune() {
-      syncScrollOffsetVar();
-      const err = target.getBoundingClientRect().top - readAnchorOffsetPx();
-      if (Math.abs(err) > 1.5) window.scrollBy({ top: err, behavior: 'auto' });
-    }
-
-    root.style.overflowAnchor = 'none';
-    syncScrollOffsetVar();
-    target.scrollIntoView({ behavior, block: 'start' });
-    fineTune();
-    requestAnimationFrame(() => requestAnimationFrame(fineTune));
-    for (const ms of [300, 700, 1200]) {
-      window.setTimeout(() => {
-        fineTune();
-        if (ms === 1200) root.style.overflowAnchor = '';
-      }, ms);
-    }
-
     const hashId = el.id;
-    if (hashId) history.replaceState(history.state, '', `#${hashId}`);
-  }
+    const useSmooth = !prefersReducedMotion && behavior === 'smooth';
+    const top = Math.max(0, scrollTopForTarget(target));
 
-  function realignScrollToHash() {
-    const id = location.hash.slice(1);
-    if (!id || reader.hidden) return;
-    const el = document.getElementById(id);
-    if (!el) return;
-    scrollToEl(el, { behavior: 'auto' });
+    const commitHash = () => {
+      if (gen !== scrollAnchorGen || !hashId) return;
+      history.replaceState(history.state, '', `#${hashId}`);
+    };
+
+    window.scrollTo({ top, behavior: useSmooth ? 'smooth' : 'auto' });
+
+    if (!useSmooth) {
+      commitHash();
+      return;
+    }
+
+    let finished = false;
+    const finish = () => {
+      if (finished || gen !== scrollAnchorGen) return;
+      finished = true;
+      window.removeEventListener('scrollend', onScrollEnd);
+      commitHash();
+    };
+    const onScrollEnd = () => finish();
+
+    if ('onscrollend' in window) {
+      window.addEventListener('scrollend', onScrollEnd);
+    }
+    queueScrollAnchorTimer(finish, 900, gen);
   }
 
   function renderGlyphs() {
     renderPosterGlyphPatterns(posterEls, getGalleryConfig());
   }
 
-  function schedulePosterTitleFit({ realignHash = false } = {}) {
+  function schedulePosterTitleFit() {
     cancelAnimationFrame(titleScaleFrame);
     titleScaleFrame = requestAnimationFrame(() => {
       void mainReader.offsetHeight;
       fitPosterTitles(posterEls, getGalleryConfig());
       renderGlyphs();
       updateTocLayout();
-      if (realignHash && location.hash) realignScrollToHash();
     });
   }
 
@@ -296,7 +320,7 @@ import { ICONS } from './icons.js';
     if (zoomOut) zoomOut.disabled = readerZoom <= ZOOM_MIN;
     if (zoomIn) zoomIn.disabled = readerZoom >= ZOOM_MAX;
     updateScrollOffset();
-    schedulePosterTitleFit({ realignHash: true });
+    schedulePosterTitleFit();
     updateTocLayout();
   }
 
@@ -434,6 +458,7 @@ import { ICONS } from './icons.js';
   }
 
   function showLanding() {
+    cancelScrollAnchorAdjustments();
     teardownScrollLinkedHeader();
     landing.classList.remove('is-hidden');
     reader.hidden = true;
@@ -568,6 +593,7 @@ import { ICONS } from './icons.js';
     if (updateHistory) {
       history.pushState({ view: 'read', file: relativePath }, '', '#read');
     }
+    cancelScrollAnchorAdjustments();
     window.scrollTo({ top: 0, behavior: 'auto' });
     setupScrollLinkedHeader();
   }
@@ -678,6 +704,20 @@ import { ICONS } from './icons.js';
     showLanding();
   });
 
+  mainReader.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartY = e.touches[0].clientY;
+    touchScrollCancelled = false;
+  }, { passive: true });
+
+  mainReader.addEventListener('touchmove', (e) => {
+    if (e.touches.length !== 1) return;
+    if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
+      touchScrollCancelled = true;
+      cancelScrollAnchorAdjustments();
+    }
+  }, { passive: true });
+
   mainReader.addEventListener('click', (e) => {
     const morePick = e.target.closest('.reader-more-cases .mini-poster[data-md-path]');
     if (morePick) {
@@ -716,6 +756,7 @@ import { ICONS } from './icons.js';
       const el = document.getElementById(id);
       if (!el) return;
       e.preventDefault();
+      if (e.pointerType === 'touch' && touchScrollCancelled) return;
       scrollToEl(el);
       closeTocPanel();
       return;
@@ -768,12 +809,15 @@ import { ICONS } from './icons.js';
     closeTocPanel();
   });
 
-  if (backToTop) {
-    window.addEventListener('scroll', () => {
-      backToTop.classList.toggle('visible', window.scrollY > 300);
-    });
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  }
+  window.addEventListener('wheel', () => {
+    if (!reader.hidden) cancelScrollAnchorAdjustments();
+  }, { passive: true });
+
+  window.addEventListener('scroll', () => {
+    backToTop?.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+
+  backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   let resizeTimer;
   let configReloadTimer;
@@ -806,7 +850,7 @@ import { ICONS } from './icons.js';
     resizeTimer = setTimeout(() => {
       updateScrollOffset();
       updateTocLayout();
-      schedulePosterTitleFit({ realignHash: true });
+      schedulePosterTitleFit();
       renderGlyphs();
       enhancePosterImageHalftone(mainReader, getGalleryConfig());
       if (!landing.classList.contains('is-hidden')) scheduleLandingMiniGlyphs();
