@@ -2,6 +2,8 @@
 
 Single source of truth for poster grounds, layout, motion, graphics, fonts, and title fitting. **Theme colors and typography** live in `assets/css/site/01-tokens.css` (light + dark primaries). Loaded at startup by `lib/gallery-config.js` and applied as CSS custom properties + a small injected stylesheet for per-ground tokens.
 
+**Audience presets** (homepage order / soft-hide per role) live in a sibling file: [`audiences.json`](./audiences.json). See `content/CONTENT.md` → Audience presets. Loaded by `lib/portfolio-audiences.js` via `?for=`.
+
 ## Applying edits
 
 1. Run the app with **`npm start`** and open **http://localhost:3000** (not `file://` — the config is loaded via `fetch`).

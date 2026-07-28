@@ -80,3 +80,17 @@ Edit `content/site.json` for the header title and tagline (not the per-case grid
 ## Homepage aside panel
 
 Edit `content/home-aside.md`. Each `##` heading is a block title; the paragraph(s) below it are the description. The panel sits in the right column on wide screens and stacks under the case-study grid on narrow viewports. This file is not a case study and is excluded from the gallery index.
+
+## Audience presets (`?for=`)
+
+Share role-shaped homepage orders without rebuilding. Presets live in `config/audiences.json`.
+
+| URL | Preset |
+|-----|--------|
+| `/` or `/?for=default` | All case studies (default order) |
+| `/?for=systems` | Design systems & tooling |
+| `/?for=growth` | Conversion & growth |
+| `/?for=product` | Product design breadth |
+| `/?for=mobile` | Mobile & apps |
+
+Each audience lists case stems (e.g. `01-figlets-mcp` or alias `figlets-mcp`) in display order. Cases omitted from a list are soft-hidden from the homepage and “more cases” strip — files remain in the build. Unknown `?for=` values fall back to `default`. The query string is preserved while navigating (`#read`, in-page anchors).

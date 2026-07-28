@@ -1,0 +1,55 @@
+{
+  "defaultAudience": "default",
+  "audiences": {
+    "default": {
+      "label": "All case studies",
+      "cases": [
+        "01-figlets-mcp",
+        "02-atolls-design-system-case-study",
+        "03-atolls-conversion-growth",
+        "05-zenrooms-app",
+        "04-zenrooms-conversion-boost",
+        "06-zenrooms-hotel-rms"
+      ]
+    },
+    "systems": {
+      "label": "Design systems & tooling",
+      "cases": [
+        "02-atolls-design-system-case-study",
+        "01-figlets-mcp",
+        "06-zenrooms-hotel-rms",
+        "03-atolls-conversion-growth"
+      ]
+    },
+    "growth": {
+      "label": "Conversion & growth",
+      "cases": [
+        "03-atolls-conversion-growth",
+        "04-zenrooms-conversion-boost",
+        "02-atolls-design-system-case-study",
+        "01-figlets-mcp"
+      ]
+    },
+    "product": {
+      "label": "Product design",
+      "cases": [
+        "01-figlets-mcp",
+        "03-atolls-conversion-growth",
+        "05-zenrooms-app",
+        "02-atolls-design-system-case-study",
+        "06-zenrooms-hotel-rms"
+      ]
+    },
+    "mobile": {
+      "label": "Mobile & apps",
+      "cases": [
+        "05-zenrooms-app",
+        "03-atolls-conversion-growth",
+        "04-zenrooms-conversion-boost",
+        "02-atolls-design-system-case-study",
+        "06-zenrooms-hotel-rms",
+        "01-figlets-mcp"
+      ]
+    }
+  }
+}

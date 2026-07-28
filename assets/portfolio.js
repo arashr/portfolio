@@ -18,6 +18,12 @@ import {
   fetchSiteConfig,
   resolveCaseStudyItems
 } from '../lib/portfolio-content.js';
+import {
+  activeAudienceId,
+  appUrlForAudience,
+  fetchAudiencesConfig,
+  filterCatalogForLocation
+} from '../lib/portfolio-audiences.js';
 import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
@@ -70,11 +76,17 @@ import { ICONS } from './icons.js';
   let moreCasesResizeObserver = null;
   /** @type {{ title?: string, tagline?: string }} */
   let siteConfig = {};
+  /** @type {import('../lib/audiences.js').AudiencesConfig} */
+  let audiencesConfig = { defaultAudience: 'default', audiences: { default: { cases: [] } } };
   /** @type {{ path: string, title: string, index: number, subtext?: string, stats?: { value: string, label: string }[], credit?: string }[] | null} */
   let caseStudyItems = null;
   let currentRelativePath = '';
   /** @type {(() => void) | null} */
   let scrollLinkedHeaderTeardown = null;
+
+  function historyUrl(hash) {
+    return appUrlForAudience(audiencesConfig, hash);
+  }
 
   function injectIcons() {
     document.querySelectorAll('[data-icon]').forEach((slot) => {
@@ -230,7 +242,7 @@ import { ICONS } from './icons.js';
 
     const commitHash = () => {
       if (gen !== scrollAnchorGen || !hashId) return;
-      history.replaceState(history.state, '', `#${hashId}`);
+      history.replaceState(history.state, '', historyUrl(`#${hashId}`));
     };
 
     window.scrollTo({ top, behavior: useSmooth ? 'smooth' : 'auto' });
@@ -442,7 +454,7 @@ import { ICONS } from './icons.js';
 
   function goHome() {
     showLanding();
-    history.pushState({ view: 'home' }, '', '#');
+    history.pushState({ view: 'home', audience: activeAudienceId(audiencesConfig) }, '', historyUrl('#'));
   }
 
   function applySiteConfig(site) {
@@ -465,12 +477,14 @@ import { ICONS } from './icons.js';
   }
 
   async function loadHome({ cacheBust = false } = {}) {
-    const [index, site, aside, variants] = await Promise.all([
+    const [index, site, aside, variants, audiences] = await Promise.all([
       fetchContentIndex(undefined, undefined, { cacheBust }),
       fetchSiteConfig(undefined, undefined, { cacheBust }),
       fetchHomeAside(undefined, undefined, { cacheBust }),
-      fetchImageVariants(undefined, undefined, { cacheBust })
+      fetchImageVariants(undefined, undefined, { cacheBust }),
+      fetchAudiencesConfig(undefined, undefined, { cacheBust })
     ]);
+    audiencesConfig = audiences;
     applySiteConfig(site);
     setAssetDimensions(index.assetDimensions);
     setImageVariants(variants);
@@ -478,7 +492,13 @@ import { ICONS } from './icons.js';
       renderEmptyHome();
       return;
     }
-    const items = await resolveCaseStudyItems(index, undefined, { cacheBust });
+    const { paths, audienceId } = filterCatalogForLocation(index.cases, audiencesConfig);
+    document.documentElement.dataset.audience = audienceId;
+    if (!paths.length) {
+      renderEmptyHome();
+      return;
+    }
+    const items = await resolveCaseStudyItems({ cases: paths }, undefined, { cacheBust });
     renderHomeGallery(items, aside);
   }
 
@@ -531,7 +551,11 @@ import { ICONS } from './icons.js';
     }
     window.setTimeout(quietReaderLayoutObservers, 500);
     if (updateHistory) {
-      history.pushState({ view: 'read', file: relativePath }, '', '#read');
+      history.pushState(
+        { view: 'read', file: relativePath, audience: activeAudienceId(audiencesConfig) },
+        '',
+        historyUrl('#read')
+      );
     }
     cancelScrollAnchorAdjustments();
     window.scrollTo({ top: 0, behavior: 'auto' });
@@ -567,8 +591,13 @@ import { ICONS } from './icons.js';
     }
   }
 
-  boot();
-  history.replaceState({ view: 'home' }, '', '#');
+  boot().then(() => {
+    history.replaceState(
+      { view: 'home', audience: activeAudienceId(audiencesConfig) },
+      '',
+      historyUrl('#')
+    );
+  });
 
   const readerHeader = document.querySelector('#reader .site-header--reader');
   if (readerHeader && typeof ResizeObserver !== 'undefined') {
