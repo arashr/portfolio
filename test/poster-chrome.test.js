@@ -11,6 +11,20 @@ test('groundForSlug avoids immediate repeat in sequence', () => {
   assert.notEqual(first, second);
 });
 
+test('groundForSlug avoids grounds used in the last two posters', () => {
+  const slug = 'repeat-candidate';
+  const preferred = groundForSlug(slug);
+  const recent = ['ground-pink', preferred];
+  const next = groundForSlug(slug, preferred, recent);
+  assert.notEqual(next, preferred);
+  assert.notEqual(next, 'ground-pink');
+});
+
+test('groundForSlug keeps slug-stable pick when no recent grounds conflict', () => {
+  const slug = 'content-01-figlets-mcp';
+  assert.equal(groundForSlug(slug), groundForSlug(slug, null, []));
+});
+
 test('groundForSlug keeps existing slugs when a new ground is added to config', () => {
   const slugs = [
     'content-01-figlets-mcp',

@@ -38,3 +38,23 @@ test('renderLandingMosaic uses indigo name band and reader-style poster stack', 
   assert.ok(firstCase > postersStart);
   assert.ok(firstBleed > postersStart && firstBleed < firstCase);
 });
+
+test('renderLandingMosaic continues ground chain into aside sections', () => {
+  const html = renderLandingMosaic({
+    site: { title: 'Portfolio' },
+    items: [
+      { path: '01-figlets-mcp.md', title: 'Figlets MCP', index: 0 },
+      { path: '02-atolls-design-system-case-study.md', title: 'Atolls DS', index: 1 }
+    ],
+    aside: {
+      sections: [{ title: 'I Design Systems, Not Just Screens', description: 'Aside body.' }]
+    }
+  });
+
+  const grounds = [...html.matchAll(/class="post-card-wrap (ground-[\w-]+)/g)].map((m) => m[1]);
+  assert.equal(grounds.length, 4);
+  assert.equal(grounds[0], 'ground-indigo');
+  for (let i = 1; i < grounds.length; i++) {
+    assert.notEqual(grounds[i - 1], grounds[i], `adjacent posters ${i - 1} and ${i} share ${grounds[i]}`);
+  }
+});
