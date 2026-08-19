@@ -9,20 +9,20 @@ role: Lead Product Designer
 
 ![Atolls DS](./src/atolls-1.png)
 <br>
-Rebuilding an outdated design system in under two months to support a new brand identity, making it scalable, accessible, and in sync with code. The new system enables rapid updates, multi-brand adoption, and faster delivery with AI and MCP integration.  
+We had less than two months to rebuild a design system that had become a blocker. It needed to support a new brand, work across four products, stay in sync with code, and make future brand changes much easier. I led the product design work, from deciding what had to ship to defining the foundations, token architecture, components, and documentation.
 <br>
 
-| Faster dev cycles | Products supported | Adoption |
+| Faster feature development | Products supported | Adoption |
 |---:|---:|---:|
 | +50% | 4 | 75% |
 
 ## Overview
 
-We had a design system. So why did we need a new one?
+We already had a design system, but it had stopped helping us move.
 
-It worked for a few years. Did the job. But just like a paper map, its time was over. Are paper maps still a thing?
+Components were hard to adapt. Token changes took too long to reach code. Applying a theme in Figma was painfully slow. Our products were starting to bend around the system instead of the system supporting the products.
 
-Our products were basically designed around the design system, not the other way around. It wasn’t scalable. It wasn’t built for what we needed. We knew the cracks were there, but when the brand design team rolled out a shiny new brand identity, everything came crashing to the surface.
+The new brand identity did not create the problem. It exposed it.
 
 ## The Breaking Point
 
@@ -40,7 +40,9 @@ The new brand wasn’t just a visual refresh. It forced us to admit the system w
 
 ## The Challenge
 
-I got the task of leading the redesign. Luckily, I wasn’t alone: another product designer and a design engineer joined me, and we had support from engineering.
+I led the product design work, but I did not do it alone. I worked with another product designer, a design engineer, and engineers responsible for connecting the system to code.
+
+My part covered prioritization, defining the minimum viable system, building the early proof of concept, and shaping the foundations, semantic tokens, components, states, and documentation.
 
 The wishlist was ambitious:
 
@@ -51,7 +53,7 @@ The wishlist was ambitious:
 - Easy to use
 - In sync with code
 
-The deadline? Less than two months. Don’t ask.
+The deadline was less than two months. So “build everything” was never an option. We had to decide what the products genuinely needed and what could wait.
 
 ## Prioritization
 
@@ -61,58 +63,62 @@ Example: no date pickers. We don’t even use them in our products.
 
 ![Prioritization](./src/atolls-ds-plan.png "iso Prioritization")
 
-Meanwhile, engineers and our design engineer explored the backend: how to link Figma variables to code, and how AI and MCP could give us some speed boosts.
+The first decision was what not to build.
 
-We dumped everything on the table: colors, typography, grids, dimensions, icons. We spotted repeating patterns and flagged which ones should move into the system.
+I ran a workshop with the product designers to map what our products actually used, which patterns repeated, and what could wait. Date pickers stayed out because none of our products needed them. Building one just to make the library look complete would have wasted time we did not have.
 
-Priorities: locked.
+We prioritized the foundations and components that were already appearing across the products: color, typography, grids, dimensions, icons, and the most common interaction patterns.
+
+In parallel, the design engineer and engineers explored how Figma variables would connect to code, and where AI and MCP could make the workflow faster.
+
+That gave us a realistic first release instead of an impressive-looking wishlist.
 
 ## Proof of Concept
 
-Right there in the workshop, I spun up a scrappy version of the new design system. Nothing fancy, just basic elements styled with the new brand, every property tied to a variable. Designers could immediately start messing around and testing visuals.
+During the workshop, I built a deliberately scrappy version of the new system. It used basic elements in the new brand, with every property connected to a variable.
+
+The point was not to make it polished. It was to test the direction immediately and give designers something they could use while the real system was still taking shape.
 
 ![Proof of Concept](./src/atolls-ds-poc.png "iso Proof of Concept")
 
-It wasn’t the final system. It was a proof of concept. A way to keep product design moving while the real system took shape.
+Initial component drafts were ready within a day or so. That let product designers test the new visual direction while the brand team adjusted the identity for product use and engineering worked on the connection to code.
 
-Meanwhile, the brand team made their own tweaks to ensure the new look would actually work for products. Everything was moving in parallel.
-
-Initial component drafts were built within a day or so to get feedback as soon as possible.
+Instead of waiting for each track to finish, the proof of concept let all of them move together.
 
 ## Iteration
 
-Next came refinement. Research best practices. Adjust. Test. Get feedback. Adjust again.
+Once the direction held up, I moved into the foundations underneath it: color ramps, typography scales, grids, dimensions, accessibility, and the variable structure.
 
-Color ramps, typography scales, grid systems, we rebuilt the foundation piece by piece. Accessibility and scalability? Always top of the list.
-
-Variables made the magic happen. By layering semantic tokens, we kept things abstract enough to scale. Value pools fed into brand layers, which fed into semantics, which finally fed into patterns.
-
-That meant fewer variables overall and the ability to swap entire brands by just switching the brand layer.
+The biggest architectural decision was separating raw values from brand choices and component meaning:
 
 ```text
 Primaries → Brand Layer → Semantics → Patterns
 ```
 
-Once the framework was solid, we designed the actual elements, assigned component-specific tokens, and handed them to developers with full documentation, all states defined, and expectations set.
+This meant a brand could change at the brand layer without every component needing to be rebuilt. It also kept the number of variables manageable as the system grew.
+
+With the structure in place, we built the components and gave important patterns their own tokens. States, behavior, and implementation expectations were documented for handoff instead of being left inside the Figma file.
+
+The system was not only a new set of components. It was a shared model for how design decisions should move from brand to product to code.
 
 ## Delivery
 
-Long story short: we delivered.
+We delivered the first version in under two months.
 
-Elements now have different appearances, emphasis, sizes, and can adopt new brands on the fly. Components accept children. The system keeps growing, with more complex patterns being added all the time.
-
-It all lives in one central, documented library, ready for anyone across products to grab and use.
+The system supported four products and reached 75% adoption at the point documented. Components could support different appearances, emphasis levels, sizes, and brands without being rebuilt for every use.
 
 ![Storybook](./src/atolls-ds-storybook.png "iso Storybook")
 
-We set up channels for feedback and updates. The workflow means updates can roll out in as little as a week.
+Everything lived in one central, documented library. We also set up clear channels for feedback and updates because shipping the library was only the beginning. The system needed a way to keep growing without becoming another outdated file.
 
-Developers can now consume the library using AI and MCP, building features more than 50% faster than ever.
+Updates that previously took weeks could now roll out in as little as one week. With the shared library, documentation, and AI and MCP workflow, developers were able to build features more than 50% faster.
 
 ## Lessons Learned
 
-A design system is never finished. It’s alive. It grows with the products.
+The biggest lesson was that rebuilding the components was only part of the job.
 
-The old design system worked for its time. The new one? It’s built to scale, adapt, and move at the speed our products need.
+We also had to decide what not to build, give designers something useful before the final system was ready, connect design decisions to code, and create a way for the system to keep changing after launch.
 
-Most importantly, it’s no longer a blocker. It’s an enabler.
+The early proof of concept kept the products moving. The layered token structure made brand changes possible without rebuilding every component. The feedback workflow gave the system somewhere to grow.
+
+The old system had become a blocker because the products had outgrown it. The new one gave them room to keep moving.
