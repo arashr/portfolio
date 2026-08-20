@@ -1,6 +1,6 @@
 ---
 title: Atolls Conversion Growth
-description: Modern, on-brand design that lifted clicks by 8% without sacrificing conversion
+description: A visual overhaul that challenged old conversion assumptions and increased CTR by 8% across 364K+ sessions
 role: Lead Product Designer
 year: 2023
 ---
@@ -8,17 +8,20 @@ year: 2023
 
 ![Atolls Conversion Growth](src/atolls-conversion-hero.png)
 
-At Atolls, formerly Global Savings Group, we built a white-label coupon and deal platform in partnership with over 50 well-known publishers.
+At Atolls, formerly Global Savings Group, we built a white-label coupon and deal platform used by more than 50 publisher brands.
 
-The goal was simple: help users save money on online shopping while driving revenue for both retailers and publishers.
+Each page lived inside a publisher’s domain and had to feel like part of that publication, even though the underlying product was shared.
 
-Our pages lived within the trusted domains of major publications, adopting each brand’s look and feel to preserve user trust and increase engagement.  
+For users, the value was simple: find a useful discount. For the business, everything depended on whether they clicked the offer and continued to the retailer.
 
 <br>
 
-| CTR Increase | Sessions Tested | Brands |
+| CTR uplift | Sessions tested | Publisher brands on platform |
 |---:|---:|---:|
 | 8% | +364K | 50+ |
+
+### My Role
+I led the product design work from early exploration through large-scale testing. I helped challenge the assumptions behind the existing design, shaped the three main variants, ran preference tests and user interviews, analyzed regional differences, and designed the flexible card structure used for publisher and market adaptations.
 
 ## The Business Model
 
@@ -27,7 +30,7 @@ Our pages lived within the trusted domains of major publications, adopting each 
 - **Retailers:** Offered the deals
 - **Users:** Found discounts and saved money
 
-It worked beautifully. Everyone was winning, until Google’s policy changes killed the model.
+The model depended on a short chain of trust: users trusted the publisher, found a useful offer, and clicked through to the retailer. If that click did not happen, the page did not generate revenue.
 
 ## The User Journey
 
@@ -45,80 +48,75 @@ A razor-thin window for conversion.
 
 ## The Challenge
 
-When the design team was tasked with a full visual overhaul, I led the project.
+I led the product design work for a full visual overhaul.
 
-The brief was clear:
+The design needed to do three things at once:
+- Feel more modern and easier to scan
+- Still belong inside each publisher’s brand
+- Protect the click-through behavior that generated revenue
 
-- Modernize the experience
-- Keep it on-brand for each publisher
-- Most critically, do not let the conversion rate slip
+Those goals did not always point in the same direction. A cleaner design could show fewer offers. A stronger publisher identity could reduce consistency across the platform. A more minimal card could remove the CTA users were already familiar with.
 
-Even a tiny drop would mean a big hit to revenue.
+Even a small conversion drop would have had a real revenue impact, so visual preference alone was never going to be enough.
 
 ## How We Tackled It
 
-We started with a creative workshop, suspending all constraints.
+We started wide on purpose. In the first workshop, we explored what the offer experience could look like without treating the existing card as the answer.
 
-Our blue-sky approach generated fresh concepts, but business needs kept us grounded. Every card needed to show:
-
+We could not ignore the practical constraints for long. Every card still needed to communicate:
 - Offer value
-- Description, mostly for SEO
+- Description, largely for SEO
 - Terms of use
 - Expiration date
 
 ![Collaborative Exploration](./src/atolls-conv-exploration.png "iso Collaborative Exploration")
 
-Research told us users cared most about the offer’s value and the terms that could make or break the deal, such as “new users only.”
+Research gave us a clearer hierarchy. Users cared most about the value of the offer and the terms that could make it useless to them, such as “new users only.”
 
-We also had legacy assumptions to test:
+The more interesting questions came from the assumptions built into the old experience:
+- Did showing more deals above the fold really improve conversion?
+- Did an offer need a traditional CTA button to feel clickable?
 
-- More deals in the first fold means better conversion
-- CTA buttons drive higher conversion
-
-This was our chance to challenge everything.
-
-Some concepts removed the CTA button entirely and focused on visual cues and offer prominence instead.
+We treated those as questions to test, not rules to design around. Some of our concepts removed the CTA entirely and relied on offer prominence, layout, hover feedback, and lighter interaction cues instead.
 
 ## Design Iterations and User Testing
 
-We landed on three main variants:
+We narrowed the exploration down to three main directions. Each one tested how much interaction guidance the card really needed.
 
 ### 1. Value-forward card
 
-Big, bold offer value, right-aligned, with no button.
+A large, right-aligned offer value with no button. This pushed the value itself to do most of the work.
 
 ### 2. Arrow cue
 
-Offer value left-aligned, with an arrow implying clickability.
+A left-aligned offer value with an arrow as a lighter signal that the full card was clickable.
 
 ### 3. Classic CTA
 
-Standard call-to-action button.
-
-We added hover effects to signal interactivity on buttonless cards and tested a grid layout to fit more offers above the fold.
-
-Tags like “App Only” or “Students” highlighted key terms upfront.
-
-After preference tests and interviews, we put our finalists in a large-scale A/B test.
+A traditional call-to-action button that kept the interaction pattern users already knew.
 
 ![Final Test Variants](./src/atolls-conv-variants.png "iso Final Test Variants")
 
+For the buttonless directions, we added hover feedback to make the full card feel interactive. We also tested a grid layout that could fit more offers above the fold without returning to the old visual density.
+
+Tags such as “App Only” and “Students” brought important restrictions forward instead of hiding them inside the description.
+
+Preference tests and user interviews helped us narrow the directions and catch comprehension issues. We then put the finalists into a large-scale A/B test to see what people actually did.
+
 ## What We Learned
 
-Our structured experimentation showed:
+Across more than 364,000 sessions, every new variant outperformed the old design on conversion.
 
-- **8% CTR uplift** as the primary metric
-- **10% E2V uplift** as the secondary metric
-- The best-performing variant used an arrow cue in a grid layout
+The strongest overall result came from the grid layout with the arrow cue:
+- 8% CTR uplift on the primary metric
+- 10% E2V uplift on our internal order-value metric
 
 ![Grid Layout](./src/atolls-conv-grid.png "iso Grid Layout")
 
-Other findings:
+But the most useful finding was that there was no universal winner for every market.
+Buttonless designs performed better in most markets, while Germany still responded better to a traditional CTA. Upfront tags made important terms easier to scan, and the grid increased filter interactions, suggesting that showing more options also created a greater need for narrowing them.
 
-- Buttonless designs outperformed the control, except in Germany, where the CTA still won
-- Users found terms easier to scan, especially with upfront tags
-- The grid drove more filter clicks, suggesting users needed help narrowing choices
-- All new variants beat the old design on conversion
+The result was not simply “remove the button.” It was a better understanding of when different interaction cues worked.
 
 | Before | After |
 |---:|---:|
@@ -126,18 +124,20 @@ Other findings:
 
 ## Iteration and Personalization
 
-With the new flexible card structure, we could easily tweak layouts for each publisher or market.
+The overall winner did not need to become a rigid rule.
 
-This helped us optimize for regional preferences and brand guidelines, making the platform more adaptable and data-driven.
+We designed the card structure so the interaction cue, layout, and visual treatment could be adapted for different publishers and markets. That meant we could preserve a traditional CTA where the evidence supported it, while using the lighter arrow treatment elsewhere.
+
+The same structure also gave each publisher room to feel like itself without requiring a separate product design.
 
 ![Brand Customization](./src/atolls-conv-customization.png "iso Brand Customization")
 
 ## Looking Back
 
-If I had another chance, I would push for an even faster and more iterative approach.
+If I did this again, I would test smaller changes earlier.
 
-I would experiment with smaller changes and measure their impact in real time.
+Our final variants combined several decisions: hierarchy, interaction cues, tags, and layout. The test told us which overall direction performed best, but it could not fully isolate how much each individual change contributed.
 
-We hit our goal with the resources we had, but the pace meant we could not fully isolate which changes moved the needle most.
+We still reached the goal and improved conversion, but a more granular testing plan would have given us clearer evidence about why.
 
-Next time, I would aim for tighter feedback loops and more granular testing, so we could double down on what really works and learn more from the process.
+Next time, I would build shorter feedback loops into the project from the beginning, then use the larger redesign test to confirm the complete experience.
