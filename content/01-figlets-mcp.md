@@ -1,6 +1,6 @@
 ---
 title: Figlets MCP
-description: AI Interface for Figma Design Systems  
+description: A local-first AI interface that helps designers manage Figma design systems through controlled, approval-gated workflows
 role: Product Designer & Developer
 year: 2026
 ---
@@ -9,12 +9,17 @@ year: 2026
 
 ![Figlets MCP](./src/figlets-hero.png)
 
-An AI interface for managing Figma design systems through plain language. It helps designers audit components, document decisions, and run repeatable QA without relying on slow, fragile, manual workflows.
+A working, local-first AI interface for managing Figma design systems through plain language. Designers can audit systems, plan repairs, document components, and run repeatable QA while every Figma write stays explicit and approval-gated.
 
 
-| AI hosts | Core workflows | Writes gated |
+| AI hosts | Core workflows | Figma writes approval-gated |
 |---:|---:|:---:|
 | 6+ | 6 | 100% |
+
+### My Role
+Figlets is a personal project. I designed and developed it, from defining the product contract and core workflows to building the local tools and Figma bridge.
+
+My main design responsibility was deciding what the AI could handle, what needed reliable code, and where the designer had to stay in control.
 
 ## Overview
 
@@ -34,13 +39,14 @@ I first built [Figlets as Claude-only skills](https://github.com/arashr/figlets)
 
 That made the output fragile. The agent could calculate contrast correctly, but it could also get it wrong. It could pick the right token alias, or invent one. It could explain a fix clearly, or jump ahead and make assumptions.
 
-That is fine for a demo. It is not fine for a production design system.
+That was fine for a demo. It was not reliable enough for a real design system.
 
-The main problem was not “can AI help?” It was “what should AI be allowed to decide?”
+The product question was no longer “can AI help?” It was “where should the AI’s authority stop?”
 
-## The Product Split
+## The Product Contract
 
-The rebuild started with a cleaner contract.
+I started the rebuild with one rule: AI should not own work that needed to be repeatable and verifiable.
+That rule became the product contract:
 
 **Code handles the reliable work.** Contrast math, alias selection, token-gap detection, repair planning, and validation.
 
@@ -48,39 +54,37 @@ The rebuild started with a cleaner contract.
 
 **The Figma bridge handles the live file.** Approved changes go through Figma Desktop, not a hidden cloud process.
 
-This split made the product more predictable. The agent could guide the designer, but it could not freestyle over the file.
+The architecture followed the product decision. The agent could guide the designer and adapt to their intent, but it could not freestyle over the file.
 
 ## AI as Interface
 
-The bigger product idea behind Figlets is AI as interface.
+The bigger idea behind Figlets is AI as interface.
 
-Traditional software interfaces are powerful, but they are also rigid. They expect users to know where to go, what setting to change, and what input the system needs. If users do not understand the structure of the tool, they get stuck. If the tool does not support the path they need, the flow ends.
+Traditional tools expect users to understand the structure of the software before they can use it. They need to know where to go, which setting matters, and what input the system expects.
 
-AI changes that model.
+With Figlets, the designer starts with intent. They can explain what they want in plain language, even if they do not know which workflow or tool is needed.
 
-The user can start with intent instead of navigation. They can say what they want in plain language, even if they do not know the method yet. The agent can translate that intent into the right workflow, ask for missing context, explain errors, and turn dead ends into next steps.
+The agent translates that intent, asks for missing context, explains problems, and turns dead ends into next steps. But flexibility at the interface does not mean flexibility in execution. The work underneath still follows defined workflows and approval rules.
+
+> I tell the agent what I want. It checks my Figma file, explains what it found, tells me what can be fixed, asks before changing anything, verifies the result, and suggests the next useful step.
+
+The interface is flexible. The execution is controlled.
 
 ![Figlets MCP](./src/figlets-ds-health.png "iso Figlets MCP checking the design system health in seconds")
-
-That is how I see Figlets. The AI is not there to freely edit Figma. It is there to make a structured system easier to use. The agent listens, guides, explains, and asks. Figlets does the reliable work underneath.
-
-## Product Vision
-
-> I tell the agent what I want in plain language. It checks my Figma file, explains what it found, tells me what can be fixed, asks before changing anything, runs the reliable tools, verifies the result, and suggests the next useful step.
-
-Figlets is not a chatbot that edits Figma freely. That would be risky and too vague.
-
-It is a local-first design system toolkit with a conversational interface on top. The interface is flexible. The execution is controlled.
 
 ## Designing for Trust
 
 The hardest design problem was trust.
 
-For designers to use AI on a real Figma file, the product needs clear boundaries. Figlets can inspect, explain, and recommend. But it does not silently change the file.
+Telling designers that the AI was “safe” would not be enough. Control had to be visible in the workflow:
 
-Every write path starts read-only. First it syncs the file. Then it audits the system. Then it explains the findings. Only after that does it offer repairs.
+```text
+Sync → Inspect → Explain → Propose → Approve → Apply → Verify
+```
 
-The designer always sees what will change before anything is applied.
+Every write path starts read-only. Figlets checks the file and explains what it found before offering a repair. The designer sees the exact scope before anything changes, and Figlets checks the result afterward.
+
+Trust is not a message shown before the workflow. It is how the workflow behaves.
 
 ![Figlets Approval](./src/figlets-approve.png "iso The agent asks for approval before changing anything in Figma")
 
@@ -88,13 +92,13 @@ The designer always sees what will change before anything is applied.
 
 Approval has to match intent.
 
-If a designer approves fixing four Mobile spacing aliases, Figlets should not create Tablet and Desktop modes in the background. That may look helpful from the system side, but it breaks trust from the designer side.
+If a designer approves fixing four Mobile spacing aliases, Figlets should not create Tablet and Desktop modes in the background. That may look helpful from the system side, but it breaks trust from the designer side. That led to an important rule: approval is not permission to “make things better.” It is permission to make the exact change the designer reviewed.
 
 So repairs are grouped by scope. Foundation repairs, primitive updates, and semantic token writes each need separate approval.
 
 After a repair is applied, Figlets syncs the file again, checks the result, and stops. It does not move into the next category unless the designer asks.
 
-![Figlets boundaries](./src/figlets-boundries.png "iso Figlet respects the boundries with minimum context")
+![Figlets boundaries](./src/figlets-boundries.png "iso Figlets keeps approved changes within scope")
 
 The repair menus use designer language too. “Fix the 4 spacing alias repairs” is better than exposing internal commands. It keeps the user focused on the decision, not the tool name.
 
@@ -108,15 +112,17 @@ Figlets explains the conflict and asks the designer to choose the direction. It 
 
 Accessibility follows the same rule. If a suggested repair would fail contrast, Figlets does not show it as a one-click fix. The default path should not recommend bad accessibility decisions.
 
+Stopping and asking is part of the product. It is not a failure of automation.
+
 ## Agent Interface
 
-At first, the interface was scattered across prompts, adapter docs, and tool descriptions. Strong agents could handle it. Weaker agents exposed the cracks.
+The first interface was scattered across prompts, adapter documentation, and tool descriptions.
 
-They dumped JSON. They skipped steps. They wrote ad hoc scripts over local snapshots.
+Strong agents could fill in the gaps. Weaker agents could not. They dumped JSON, skipped steps, or wrote ad hoc scripts instead of following the intended workflow.
 
-That showed me the interface was not just the chat box. It was the contract between the designer, the agent, and the local tools.
+That changed how I understood the interface. It was not only the chat box. It was the full contract between the designer, the agent, and the local tools.
 
-So I built an Agent Interface exposed through MCP:
+I turned that contract into an Agent Interface exposed through MCP:
 
 - `figlets_start` introduces what Figlets can do.
 - `figlets_route_intent` maps a plain request to the right workflow.
@@ -144,13 +150,13 @@ Creates a handoff spec from the selected component with safer binding logic.
 Creates a portable design document for coding agents and cross-team handoff.
 
 **Component QA and Audit**  
-Audit selected layers for raw values and suggest safe bindings
+Audits selected layers for raw values and suggests safe bindings.
 
-## From Skill Set to Product
+## From Skills to Product
 
-The first version was useful, but it was not a product yet. It depended on one AI host and had fuzzy boundaries.
+The first version proved the idea, but it was still a collection of Claude-only skills. It depended on one AI host, and too much of the product behavior relied on the model interpreting instructions correctly.
 
-The MCP rebuild turned it into a clearer system:
+Rebuilding it around MCP forced me to define stable tools, responsibilities, and boundaries:
 
 - `figlets-core` handles analysis.
 - `figlets-mcp-server` exposes stable tools.
@@ -173,16 +179,16 @@ A few things changed through testing:
 - Contextual roles like `on-fill-*` are no longer treated as simple duplicates.
 - Component documentation now uses shared binding logic, so text layers do not bind to icon tokens.
 
-There are now more than one hundred automated tests behind the workflows. Manual smoke testing still matters for approval behavior because trust is not only a technical problem.
+More than one hundred automated tests now cover the workflows and their deterministic behavior. I still test approval behavior manually because passing a test is not the same as making a designer feel in control.
 
 ## Outcome
 
-[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working product.
+[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working, public product.
 
-It is agent-agnostic, local-first, and built around inspect-first workflows with explicit approval before every Figma write.
+It supports more than six AI hosts, includes six core workflows, and has more than one hundred automated tests. Every Figma write is approval-gated.
 
-Designers can audit a design system, approve structured repairs, build a token showcase, document components, and export DESIGN.md through natural language.
+Designers can audit a system, plan and approve repairs, build token showcases, document components, run binding QA, and export DESIGN.md through natural language.
 
-My main design contribution was the product contract: how findings are framed, when the agent must stop, how approval scope stays narrow, and how AI becomes a useful interface instead of an unpredictable shortcut.
+My main design contribution was not a single screen or feature. It was the product contract: how the system frames findings, where the AI’s authority stops, how approval stays narrow, and how every applied change is verified.
 
-That is the difference between “AI might fix your design system” and “AI can become a design-system assistant you can actually trust on a production file.”
+Figlets started as “AI might help with design-system work.” It became a structured assistant that can explain, guide, and act without taking control away from the designer.
