@@ -1,6 +1,6 @@
 ---
 title: ZENRooms Conversion Boost
-description: A full-service budget & mid-range hospitality group in Southeast Asia.
+description: Redesigning a broken booking journey across desktop, mobile web, and a web-view app
 year: 2019
 role: Product Designer
 ---
@@ -9,161 +9,220 @@ role: Product Designer
 
 ![ZENRooms Conversion Boost](src/zen-conversion-hero.png)
 
-ZENRooms was a full-service budget and mid-range hospitality group in Southeast Asia.
+ZENRooms was a budget and mid-range hospitality company operating across Southeast Asia.
 
-ZENRooms.com has since shut down operations.
+The booking experience had grown inconsistent, difficult to use on touch devices, and full of friction. I redesigned the core journey without adding major new features.
 
-| Conversion Uplift | Sessions Tested | Platforms |
+| Headline conversion uplift | Sessions tested | Platforms |
 |---:|---:|---:|
-| 16% | +10K | 3 |
+| 16% | 10K+ | 3 |
 
-## Case Study
+<br>
 
-The ZENRooms website was my first major project at ZENRooms. I was responsible for the overhaul of the product experience.
+*ZENRooms.com has since shut down operations.*
 
-The goal was to redesign the service, update the look, and improve the user experience without introducing new features.
+## My Role
 
-## Research
+This was my first major project at ZENRooms. I was the sole product designer, working directly with the Product Manager and engineering team.
 
-We used the tools and data we already had, including heatmaps, screen recordings, analytics, previous A/B testing results, and competitive analysis.
+I handled discovery, analysis, design recommendations, user flows, wireframes, interface design, the basic design system, and developer handoff.
 
-![Card Details](src/zen-web-card.png "iso Card Details Input on Checkout")
+The Product Manager owned the product direction and final decisions. My responsibility was to find the experience problems, propose solutions, and design the overhaul.
 
-### Key Findings
+## The Problem
 
-The research showed that we had inefficient user flows, flawed interaction patterns, and inconsistent interface elements.
+The goal was to improve the booking experience without relying on new features.
 
-The existing design was not ready for touch devices and worked mostly for desktop users.
+The existing product had several connected problems:
 
-This was a major issue because the ZENRooms app was using a web view and rendering the mobile version of the website.
+- Inefficient user flows
+- Misleading interaction patterns
+- Weak information hierarchy
+- Inconsistent components
+- Poor support for touch devices
+- Checkout errors that left users with no way forward
 
-That meant the new layout needed to work both as a responsive website and as a stand-alone app-like experience.
+The mobile problem affected more than the website. At the time, the ZENRooms app was a web-view wrapper around the mobile website.
 
-| Heatmaps | User Research | Screen Recordings | Data Analysis |
+That meant one responsive product had to work across three surfaces:
+
+- Desktop web
+- Mobile web
+- Mobile app through the web view
+
+## Finding Where the Journey Broke
+
+I started with the evidence we already had:
+
+- Heatmaps
+- Screen recordings
+- Product analytics
+- Previous A/B test results
+- Competitive analysis
+
+The problems were visible across the journey.
+
+Some elements looked clickable but did nothing. Navigation could be blocked on smaller screens. Important information was scattered across pages. Users struggled to understand where to go next.
+
+The biggest problem was checkout.
+
+![Checkout card details](src/zen-web-card.png "iso Checkout card details")
+
+| Heatmaps | Existing experience | Screen recordings | Funnel analysis |
 |---:|---:|---:|---:|
-| ![Heatmap - Unclickable elements looking like buttons](src/zen-web-heat1.png "Heatmap - Unclickable elements looking like buttons")<br>![Heatmap - App bar blocking navigation bar](src/zen-web-heat2.png "Heatmap - App bar blocking navigation bar") | ![User Research and Analysis](src/zen-web-old-list.png "User research and analysis, showing scattered information and no information hierarchy") | ![Screen Recordings](src/zen-web-old-details.png "Screen Recordings") | ![Data Analysis](src/zen-web-failed.png "Data analysis showing faiure on checkout and deadends.") |
+| ![Unclickable elements looking like buttons](src/zen-web-heat1.png "Unclickable elements looking like buttons")<br>![App bar blocking navigation](src/zen-web-heat2.png "App bar blocking navigation") | ![Scattered information and weak hierarchy](src/zen-web-old-list.png "Scattered information and weak hierarchy") | ![Existing hotel details experience](src/zen-web-old-details.png "Existing hotel details experience") | ![Checkout failures and dead ends](src/zen-web-failed.png "Checkout failures and dead ends") |
 
-## User Flow
+Checkout was where we were losing payments. It was also the most fragile part of the product and the place where focused changes had the best chance of producing a meaningful result.
 
-We started by breaking down the user flow and identifying the main friction points.
+So I recommended fixing it first.
 
-This included:
+## Fixing Checkout First
 
-- Monitoring user behavior
-- Finding the most useful features
-- Removing cluttered data presentations
-- Creating a clearer path to conversion
+The existing checkout was split into too many steps.
 
-The amount of data shown to users was a major challenge.
+Payment selection had its own separate page. Users had to make that decision before continuing, even though it belonged naturally with the guest and payment details.
 
-We solved this through:
+I moved payment selection to the end of the guest-details page. It became the action that moved the user forward, with a clearer hierarchy and fewer steps.
 
-- Better data categorization
-- More purposeful placement
-- Clearer visual cues
-- Icons that helped users scan faster
-- Stronger action points throughout the flow
+The larger problem was error handling.
 
-![User Flow](src/zen-web-flow.png "iso User Flow Study")
+Users could submit their card details, receive a payment error, and find themselves trapped. They could not return to correct the details. In some cases, they could not get back to the same room and try another payment method.
 
-## Wireframing
+I changed the flow so that:
 
-Wireframing helped us define the structure before jumping into detailed UI work.
+- Inputs were validated inline whenever possible
+- Errors appeared before submission instead of after it
+- Users could return and correct rejected payment details
+- Users could return to the property and try again
+- A failed payment no longer meant losing the entire booking path
 
-This step helped with:
+The goal was simple: an error should create a recovery path, not a dead end.
 
-- Categorizing information
-- Removing clutter
-- Placing elements more intentionally
-- Adding visual cues
-- Defining clear action points
+| Payment Method | Card Details | Verification | Error State |
+|---|---|---|---|
+| ![Payment Method](src/zen/zen-web-mobile-checkout.svg "Payment Method") | ![Card Details](src/zen/zen-web-mobile-card.svg "Card details") | ![Verification](src/zen/zen-web-mobile-verify.svg "Verificaiton") | ![Error State](src/zen/zen-web-mobile-failed.svg "Error State") |
 
-Wireframes also made stakeholder communication easier in the early stages.
+## Testing Phase 1: Checkout
 
-They helped everyone align on the direction without wasting time on polished designs too early.
+We implemented and tested checkout before expanding the redesign to the rest of the journey.
 
-| Results List | Hotel Details | Room Grouping |
+The A/B test showed improvements at each major conversion point:
+
+| Step | Outcome |
+|---|---:|
+| Payment-method selection | **6.08% uplift** |
+| Successful online payments | **16.55% uplift** |
+| Pay-at-hotel bookings | **20.14% uplift** |
+
+The results confirmed that the fundamental flow problems were worth fixing. We could then move upstream to search results and hotel details.
+
+## Improving Discovery and Navigation
+
+The next priority was helping users find a suitable hotel and move confidently toward room selection.
+
+On the search results page, I:
+
+- Added a map to show where the results were located
+- Made filters clearly visible
+- Reorganized the information on each hotel card
+- Grouped pricing information into one section
+- Grouped amenities into another section
+- Improved the hierarchy so the cards were easier to scan
+
+On the hotel details page, I applied the same approach.
+
+The most important information became easier to find, related content was grouped together, and room selection became the most prominent task on the page.
+
+The product contained a lot of information. Removing all of it was not an option. The design work was about organizing it around the user’s next decision.
+
+## Working Through the Structure
+
+I used wireframes to work through the hierarchy and flow before moving into detailed interface design.
+
+They helped me:
+
+- Group related information
+- Remove unnecessary clutter
+- Place actions where users needed them
+- Make navigation clearer
+- Communicate the proposed structure to the Product Manager and engineers
+
+| Search results | Hotel details | Room grouping |
 |---:|---:|---:|
-| ![Results List](src/zen-web-wireframe1.png "Results List") | ![Hotel Details](src/zen-web-wireframe2.png "Hotel Details") | ![Room Grouping](src/zen-web-wireframe3.png "Room Grouping") |
+| ![Search results wireframe](src/zen-web-wireframe1.png "Search results wireframe") | ![Hotel details wireframe](src/zen-web-wireframe2.png "Hotel details wireframe") | ![Room grouping wireframe](src/zen-web-wireframe3.png "Room grouping wireframe") |
 
-## Design System
+The wireframes gave us something concrete to discuss before time was spent on polished screens.
 
-The next step was to define and develop a small design system.
+## Creating a Basic Design System
 
-This helped keep the product:
+There was no established visual language when I joined.
 
-- Scalable
-- Consistent
-- Easier to develop
-- Faster to iterate on
+Components were created as they were needed, often without clear design instructions. Developers sometimes had to decide how a component should look or behave during implementation.
 
-![Guidelines](src/zen-web-ds1.png "iso Guidelines helped with the communication and consistency")
+I created a basic design system on my own initiative.
 
-The design system also helped during handoff. It made it easier to communicate requirements, assets, and component behavior with the development team.
+It gave the team:
 
-![Components](src/zen-web-ds2.png "iso Components as one source of truth, throughout the project")
+- Shared interface patterns
+- More consistent components
+- Clearer states and behavior
+- Better handoff documentation
+- A common reference for design and engineering
 
-## User Interface Design
+![Interface guidelines](src/zen-web-ds1.png "iso Interface guidelines for design and engineering")
 
-After the design system was in place, the UI design process became much more straightforward.
+![Reusable components](src/zen-web-ds2.png "iso Reusable components used across the booking journey")
 
-Even a small design system gave us enough structure to move faster and keep the experience consistent across platforms.
+The system made handoffs easier and implementation faster. It also became the established visual language for the product after the redesign.
 
-[See Prototype](https://www.figma.com/proto/MuHXUj9hnZv79SRk3WCMO1/ZENRooms.com "See ZenRooms Prototype")
+## Designing Across Three Surfaces
 
-| Results List | Hotel Details | Checkout |
+The responsive experience had to work as a website and inside the mobile app’s web view.
+
+That meant designing for touch from the beginning rather than shrinking a desktop interface after the fact.
+
+The same structure and components had to remain understandable across mobile, desktop, and the app wrapper.
+
+[See Prototype](https://www.figma.com/proto/MuHXUj9hnZv79SRk3WCMO1/ZENRooms.com "See ZENRooms Prototype")
+
+| Search results | Hotel details | Checkout |
 |---:|---:|---:|
-| ![Results List](src/zen-web-mobile-list.png "Results List on Mobile") | ![Hotel Details](src/zen-web-mobile-details.png "Hotel Details on Mobile") | ![Checkout](src/zen-web-mobile-checkout.png "Checkout on Mobile") |
-| ![Results List](src/zen-web-desktop-list.png "Results List on Desktop") | ![Hotel Details](src/zen-web-desktop-details.png "Hotel Details on Desktop") | ![Room Grouping](src/zen-web-desktop-checkout.png "Checkout on Desktop") |
+| ![Search results on mobile](src/zen/zen-web-mobile-list.svg "Search results on mobile") | ![Hotel details on mobile](src/zen/zen-web-mobile-details.svg "Hotel details on mobile") | ![Checkout on mobile](src/zen/zen-web-mobile-success.svg "Checkout on mobile") |
+| ![Search results on desktop](src/zen-web-desktop-list.png "Search results on desktop") | ![Hotel details on desktop](src/zen-web-desktop-details.png "Hotel details on desktop") | ![Checkout on desktop](src/zen-web-desktop-checkout.png "Checkout on desktop") |
 
-## Testing
+## Testing Phase 2: Search and Hotel Details
 
-After implementation, we ran two major test phases to validate the new experience.
+After checkout had been tested, we introduced the redesigned search results and hotel details pages.
 
-### Phase 1: Checkout Process
-
-The first phase focused only on the checkout pages.
-
-This was one of the most important parts of the journey because we already knew users were struggling there.
-
-The A/B test showed strong improvements across three major flow points:
+The test showed:
 
 | Step | Outcome |
-|---:|---:|
-| payment method selection | **6.08% uplift**  |
-| successful online payments | **16.55% uplift** |
-| pay-at-hotel bookings | **20.14% uplift** |
+|---|---:|
+| Search results to hotel details | **15% uplift** |
+| Hotel details to checkout | **28% uplift** |
 
-### Phase 2: Hotel Details Page
-
-The next phase introduced the new search results and hotel details pages.
-
-These pages were important because many new users first engaged with the product there. The experience needed to build trust and move users toward checkout.
-
-The results showed:
+The improvement continued through the later stages of the tested journey:
 
 | Step | Outcome |
-|---:|---:|
-| search results page to hotel details page | **15% uplift** |
-| hotel details page to checkout page | **28% uplift** |
-
-This uplift also carried through the rest of the flow:
-
-| Step | Outcome |
-|---:|---:|
-| successful online payments | **38.32% uplift** |
-| pay-at-hotel booking conversion | **25.89% uplift** |
+|---|---:|
+| Successful online payments | **38.32% uplift** |
+| Pay-at-hotel booking conversion | **25.89% uplift** |
 
 ## Outcome
 
-The redesign improved conversion across the full booking journey.
+The concise headline for the project is a **16% conversion uplift across more than 10,000 tested sessions**.
 
-The strongest impact came from simplifying the flow, improving mobile usability, reducing clutter, and making key actions clearer.
+The detailed tests also showed improvements at specific points across checkout, search, hotel details, online payment, and pay-at-hotel booking.
 
-The project showed that fixing the fundamentals can create meaningful business impact without adding new features.
+The project did not depend on a major new feature. The gains came from fixing the fundamentals:
 
-## Next Steps
+- Fewer checkout steps
+- Recoverable payment errors
+- Clearer navigation
+- Better information hierarchy
+- More visible filters
+- A stronger path to room selection
+- Touch-friendly patterns
+- Consistent components across three surfaces
 
-- Work on secondary user flows
-- Continue observing user behavior
-- Keep testing and improving the experience
+The main lesson was straightforward. Before adding more to a struggling product, fix the parts that stop users from completing the task.
