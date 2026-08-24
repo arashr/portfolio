@@ -1,125 +1,208 @@
 ---
-description: A native app for a budget hotel booking service
+title: ZENRooms Native App
+description: Reimagining a hotel-booking web wrapper as a complete native product for iOS and Android
 role: Product Designer
 year: 2021
-
 ---
 
-# ZENRooms App
+# ZENRooms Native App
 
-![ZENRooms App](src/zen-app-hero.png)
+![ZENRooms Native App](src/zen-app-hero.png)
 
-ZENRooms was a full-service budget and mid-range hospitality group in Southeast Asia. It served thousands of guests across the region before shutting down operations.
+ZENRooms had a mobile app, but it was the mobile website running inside a web-view wrapper.
 
-| Native App Design | Solo Design Sprint | Mobile Platforms |
+I spent one month designing what the product could become as a proper native app for iOS and Android.
+
+| Native app design | Design timeline | Mobile platforms |
 |---:|---:|---:|
-| 0→1 | 1 Month | iOS, Android |
+| 0→1 | 1 month | iOS, Android |
 
+ZENRooms was a budget and mid-range hospitality company operating across Southeast Asia. It has since shut down operations.
 
-## Case Study 
+## My Role
 
-ZENRooms already had a web product that was doing well. The “app” at that point was just a web-view wrapper rendering the mobile website inside a shell.
+I was the solo product designer, working with the Product Manager and engineers who had React Native experience.
 
-As you can imagine, that came with a lot of baggage:
+I covered the complete experience:
 
-- No persistent login
-- No saved preferences
-- Slower load times
-- An experience that did not feel like a real app
+- Search and discovery
+- Map results
+- Hotel details
+- Room selection
+- Accounts
+- Checkout
+- Booking confirmation
 
-The goal was clear: turn this into a proper native product on iOS and Android.
+I involved engineers from the early wireframes through the functional prototype. We discussed feasibility and practical implementation constraints while the design was still flexible.
 
-Not a redesign for its own sake, but a real upgrade that used what the platform actually offered.
+The complete design was tested and handed off as the initial phase of the native product.
 
-At the same time, we had an existing user base that knew the brand, so familiarity mattered. We kept the design language intact and focused on making everything feel smoother and more personal.
+## The Problem with the Wrapper
 
-## The Opportunity
+The existing app was a mobile website inside a native shell.
 
-Moving away from a web wrapper was not just a technical change.
+Users could see and feel the limitations:
 
-It opened up things that were never possible before:
+- Pages had visible loading delays
+- Login did not persist properly
+- Search history and preferences were not retained
+- Guest and payment information had to be entered again
+- The experience did not behave like a real mobile app
 
-- Keeping users logged in
-- Storing search history and preferences on the device
-- Pre-filling checkout with saved information
-- Using native performance to make interactions feel instant
+The wrapper gave users little reason to open the app instead of using the website.
 
-For a hospitality product where returning guests are a core audience, these were not nice-to-haves.
+The opportunity was not simply to redraw the same screens. It was to reconsider the experience around what a native product could remember and do.
 
-A user who has to log in from scratch and re-enter their details every time has no reason to prefer the app over just opening a browser.
+## Starting with Existing Evidence
 
-Fixing that was the foundation everything else was built on.
+The native app did not start from scratch.
 
-## Design Approach
+It followed the earlier ZENRooms website redesign and conversion experiments. That work had already shown us where users struggled with discovery, navigation, information hierarchy, touch interactions, error recovery, and checkout.
 
-This was a 0→1 project.
+I carried those findings into the native app instead of reopening every decision.
 
-No prior native app existed, so there was no legacy to work around. Just a blank canvas with clear constraints.
+This gave me an educated starting point:
 
-I worked solo across the full month, covering the entire experience from search and browse to account and checkout.
+- Make hotel discovery easier to scan
+- Keep room selection prominent
+- Reduce checkout steps and repeated input
+- Prevent users from getting trapped after an error
+- Design for touch from the beginning
+- Keep the journey consistent from search to confirmation
 
-The two main principles were:
+The web experiments gave me evidence about the booking journey. The native prototype helped me test how those decisions worked in a mobile product with persistent login, saved information, and native behavior.
 
-- Keep it familiar for existing users
-- Use native properly
+## Design Principles
 
-That meant leaning into platform conventions, designing for touch from the start, and not just copying the web layout into smaller frames.
+I used two principles to guide the work.
 
-| Search Results | Results on Map | Hotel Details |
+### Keep It Familiar
+
+ZENRooms already had an existing customer base and visual identity. The app still needed to feel like the same service.
+
+I kept the established design language while reorganizing the experience around mobile use.
+
+### Use the Platform Properly
+
+The app should not feel like a smaller website.
+
+That meant designing for touch from the beginning, using familiar mobile behavior, preserving state, and removing the obvious loading experience of the web wrapper.
+
+The intended implementation used React Native. iOS and Android followed the same core product structure and interaction model rather than becoming two separate product designs.
+
+## Designing the Complete Journey
+
+The one-month timeline was for design.
+
+The goal was not to create a limited visual refresh. It was to reimagine the complete booking experience and explore capabilities the wrapper could not support.
+
+The scope covered the full journey:
+
+`Search → Results → Hotel details → Room selection → Checkout → Confirmation`
+
+It also included accounts, saved information, search history, preferences, and map-based discovery.
+
+| Search results | Results on map | Hotel details |
 |---:|---:|---:|
-| ![Search Results](./src/zen-app-list.png "Search Results") | ![Results on Map](./src/zen-app-map.png "Results on Map") | ![Hotel Details](./src/zen-app-details.png "Hotel Details") |
+| ![Search results](./src/zen-app-list.png "Search results") | ![Results on map](./src/zen-app-map.png "Results on map") | ![Hotel details](./src/zen-app-details.png "Hotel details") |
 
-<br>
+## Discovery That Felt Native
 
-Prototypes were tested on real devices through guerrilla testing to validate flows before anything went to handoff.
+The discovery experience was designed around quick scanning and touch.
 
-## Loyalty and Retention
+Users could move between a hotel list and map results, understand where properties were located, and continue into hotel details through one connected flow.
 
-One of the biggest gaps in the old experience was that there was no real reason to have an account.
+The design preserved the information users already needed while making the path through search, comparison, and room selection easier to follow.
 
-The web wrapper did not benefit from a logged-in state in any meaningful way.
+This was one of the areas I adjusted after testing. Some elements needed stronger visual hierarchy and clearer navigation to make the results easier to scan.
 
-In the native app, login became the foundation for everything.
+## Giving Accounts a Purpose
 
-Saved preferences, search history, and a personalized experience gave users a reason to come back and stay.
+The old wrapper did not make a logged-in state particularly useful.
 
-For returning guests especially, the app should feel like it already knows them, because it does.
+A native product created a reason to have an account:
 
-## Checkout Overhaul
+- Persistent login
+- Saved search history
+- Stored preferences
+- Remembered guest information
+- Saved payment information
+- A more personal experience for returning guests
 
-The checkout flow was the most important thing to get right.
+The app could remember enough context to make the next booking easier.
 
-On the web, it was one of the main points of drop-off.
+For returning users, that was the main advantage. The product did not need to ask the same questions every time.
 
-In the app, having the user logged in changed everything:
+## Reducing Checkout Work
 
-- We could pull stored user information
-- We could skip redundant steps
-- We could get users to confirmation faster
+Checkout was the most important flow to simplify.
 
-The result was a checkout that felt frictionless for returning guests.
+In the existing experience, users had to enter guest and payment information again when making another booking.
 
-| Room Options | Checkout | Success Screen |
+The native design supported securely saved guest and payment information that could be recalled for later use.
+
+Two of the three checkout stages could arrive prefilled:
+
+- Guest information
+- Payment information
+
+Users could review or change the details when needed instead of starting with an empty form.
+
+This reduced repeated input while keeping the information editable and under the user’s control.
+
+| Room options | Checkout | Booking confirmation |
 |---:|---:|---:|
-| ![Room Options](./src/zen-app-rooms.png "Room Options") | ![Checkout](./src/zen-app-checkout.png "Checkout") | ![Success Screen](./src/zen-app-success.png "Success Screen") |
+| ![Room options](./src/zen-app-rooms.png "Room options") | ![Checkout](./src/zen-app-checkout.png "Checkout") | ![Booking confirmation](./src/zen-app-success.png "Booking confirmation") |
 
-<br>
+Less typing. Fewer repeated decisions. A shorter path from choosing a room to confirming the booking.
 
-Less re-entering data. Fewer steps. A booking success state that actually felt like a moment worth having.
+## Testing on a Real Device
 
-## Outcome
+I built a functional Figma prototype and tested it on a mobile device through guerrilla testing at a coworking space.
 
-The app design was completed in one month as a solo designer and handed off as the initial phase of the native product.
+The participants worked at other companies and were not part of the ZENRooms team.
 
-The flows were validated through guerrilla testing on real devices and prototypes. This confirmed the new experience was meaningfully faster and easier than the web-view version it replaced.
+I tested whether they could:
 
-The related web redesign, done earlier and tested at scale, showed what fixing the funnel can do:
+- Understand the main tasks
+- Discover and compare hotels
+- Navigate between the list, map, and hotel details
+- Select a room
+- Move through checkout
+- Reach a completed booking state
 
-- **16% conversion uplift** across **10K+ sessions**
-- Individual flow points reached **20% to 38% uplift**
+The core journey worked without major structural problems.
 
-The native app was designed to go further by using what the web never could.
+Testing led to smaller adjustments in two areas:
 
-[See Prototype](https://www.figma.com/proto/FiUnKMcDthBbkRniiRosEL/ZEN-App "See ZenRooms App Prototype")
+- Improving how quickly users could scan important elements
+- Clarifying navigation during the discovery flow
 
-When you stop working around the platform and actually use it, everything gets better, for users and for the business.
+This was lightweight guerrilla testing, not a formal usability study. It was a practical way to test the complete journey on a real device before treating the design as finished.
+
+## Working with Engineering Early
+
+I involved the React Native engineers while the work was still at the wireframe stage.
+
+We reviewed the flows and later prototypes together to discuss whether the interactions were feasible and practical within the intended shared implementation.
+
+This kept the design grounded. The prototype explored what a native experience could offer, but it was not created in isolation from the people who would need to build it.
+
+## Design Outcome
+
+The complete native app design was finished in one month and handed off as the initial phase of the native product.
+
+The work covered the full booking journey for iOS and Android, including discovery, map results, hotel details, accounts, room selection, checkout, and booking confirmation.
+
+The functional prototype was:
+
+- Tested on a real device
+- Refined through guerrilla testing
+- Reviewed with React Native engineers
+- Designed around persistent state and saved information
+- Informed by findings from the earlier web conversion experiments
+- Handed off as a complete native product direction
+
+[See Prototype](https://www.figma.com/proto/FiUnKMcDthBbkRniiRosEL/ZEN-App "See ZENRooms App Prototype")
+
+The outcome was a complete view of what the ZENRooms app could become when it stopped behaving like a website inside a shell.
