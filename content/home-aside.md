@@ -1,19 +1,15 @@
-# Homepage aside
+## I Look Past the Screen
 
-Edit `##` sections below. Each heading is a block title; the paragraph under it is the description.
+I like the messy part of product design: understanding how the system works, what users actually need, and which complexity should disappear. I think about how one decision affects other flows, states, products, brands, and the people who have to build and maintain it.
 
-## I Design Systems, Not Just Screens
+## I Want to Know What Changed
 
-I think beyond the single layout. Every component has to scale across products, brands, states, devices, and edge cases. Good design should make the product easier to use, but also easier to build, maintain, and improve.
+A polished screen is not the outcome. I look for evidence in conversion, successful task completion, fewer errors, or faster delivery. When the data is limited, I say so and use the best evidence available.
 
-## I Design for Measurable Impact
+## I Bring Engineering In Early
 
-I don’t treat design as decoration. I connect design decisions to product goals like conversion, activation, clarity, and delivery speed. If a design looks good but does not improve the product, it is not finished.
+I started in development, and it still shapes how I design. I involve engineers while the work is still rough, when their input can actually change it. That leads to better trade-offs, clearer handoffs, and fewer surprises later.
 
-## I Work Close to Engineering
+## I Use AI, but Keep Judgment Human
 
-I’m not a developer anymore, but my development background still shapes how I design. I understand front-end and mobile constraints, so I can make better trade-offs and write clearer specs. This usually means fewer surprises during implementation.
-
-## I Use AI Where It Actually Helps
-
-I use AI to speed up the parts of design that are repetitive or heavy: prototyping, research synthesis, documentation, design QA, and design system audits. I don’t use it to replace judgment. I use it to get to better decisions faster.
+I use AI for prototyping, research synthesis, documentation, design QA, and design-system work. I do not hand it decisions that need context or accountability. It should handle the heavy and repetitive work, explain options, and leave the important calls with people.
