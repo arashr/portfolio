@@ -120,7 +120,7 @@ The result was not simply “remove the button.” It was a better understanding
 
 | Before | After |
 |---:|---:|
-| ![Old Design](./src/atolls-conv-old.png "Old Design") | ![New Design](./src/atolls-conv-new.png "New Design") |
+| ![Old Design](./src/atolls-conv-old-screen.svg "Old Design") | ![New Design](./src/atolls-conv-new-screen.svg "New Design") |
 
 ## Iteration and Personalization
 
