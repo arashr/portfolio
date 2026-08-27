@@ -34,6 +34,8 @@ title: Conversion Growth
 description: One short sentence for the homepage card.
 role: Lead Product Designer
 year: 2023
+ground: indigo
+symbol: /
 ---
 
 # Project name (case study hero — can differ from card title)
@@ -48,6 +50,15 @@ Readers see the full intro in the case study hero.
 
 …
 ```
+
+### Optional cover identity
+
+| Field | Effect |
+|--------|--------|
+| **`ground:`** | Sets the **first poster** ground color in the reader, and the matching card color on the homepage / “more cases” strip. Accepts `indigo` or `ground-indigo`. Unknown names are ignored. |
+| **`symbol:`** (alias **`patternSymbol:`**) | Forces the first reader poster’s glyph pattern character (skips hero glyphs and the random “none” chance). Digits-only values are ignored. Does **not** change homepage card glyphs. |
+
+Later posters still use the normal slug-based ground sequence (with recent-ground avoidance).
 
 The intro paragraph is optional if you set `description` in frontmatter. Headings (`###`), images, and lists before the first `##` are skipped when picking an automatic description.
 
@@ -67,11 +78,9 @@ Use the optional **title** on an image (the quoted string in markdown) to opt in
 
 | Title flag | Effect |
 |------------|--------|
-| `isometric` or `iso` | 3D isometric skew with solid black shadow and 1px border |
+| `isometric` or `iso` | 2D isometric skew with SVG extrusion (see `theme.graphics.imageIsometric`) |
 
-Tweak the skew and shadow in `config/gallery.config.json` under `theme.graphics.imageIsometric`.
-
-You can combine a flag with a real tooltip title using commas: `"isometric, Settings dropdown"`.
+Optional after `iso`: numeric `skewX,skewY` (e.g. `"iso,-10,7 Caption"`) and/or soft radius (`r8`, `rx:4`, `radius=12`). SVG sources soft-round automatically. Combine with caption text using commas/spaces: `"iso Settings dropdown"`.
 
 ## Site name on the homepage
 

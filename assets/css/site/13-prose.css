@@ -20,29 +20,81 @@
   object-fit: contain;
 }
 
-/* Isometric UI frame — opt in via image title: ![](path "isometric") */
+/* Skewed UI frame — opt in via image title: ![](path "iso") / "isometric"
+   2D rotate+skew + SVG hull underlay (solid extrusion, no corner gaps).
+   Config is right-facing; `.prose-img-iso__frame--face-left` mirrors horizontally. */
 .prose-img-iso {
   margin: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(2rem, 5vw, 3.25rem);
   max-width: min(var(--poster-width), 100%);
-  perspective: var(--config-iso-perspective, 1400px);
-  perspective-origin: var(--config-iso-perspective-origin, 50% 42%);
+  padding-right: var(--config-iso-depth-inset, var(--config-iso-depth-x, 10px));
+  padding-bottom: var(--config-iso-depth-y, 10px);
+}
+
+.prose-img-iso:has(.prose-img-iso__frame--face-left) {
+  padding-right: 0;
+  padding-left: var(--config-iso-depth-inset, 10px);
 }
 
 .prose-img-iso__frame {
   position: relative;
   display: block;
   width: 100%;
-  transform: rotateX(var(--config-iso-rotate-x, 7deg)) rotateY(var(--config-iso-rotate-y, -16deg))
-    rotateZ(var(--config-iso-rotate-z, -1.5deg));
+  transform: rotate(var(--config-iso-rotate, 6deg)) skewX(var(--config-iso-skew-x, -10deg))
+    skewY(var(--config-iso-skew-y, 2deg));
   transform-origin: center center;
-  border: var(--chrome-stroke-width) solid var(--config-iso-stroke, #000);
-  background: var(--paper);
-  box-shadow:
-    var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
-      var(--config-iso-stroke, #000),
-    0 var(--config-iso-soft-shadow-y, 28px) var(--config-iso-soft-shadow-blur, 52px)
-      var(--config-iso-soft-shadow-spread, -16px) var(--config-iso-soft-shadow-color, rgba(0, 0, 0, 0.24));
+  border: var(--config-iso-border-width, 1px) solid var(--config-iso-color, #1a27e51a);
+  background: var(--config-iso-face, #fff);
+  background-clip: padding-box;
+  box-shadow: none;
+  filter: none;
   transition: transform var(--chrome-ink-duration) var(--chrome-ink-ease);
+  isolation: isolate;
+}
+
+/* Horizontal mirror of authored config when the image sits on the left.
+   Skew-locked frames keep per-image title overrides absolute (no mirror). */
+.prose-img-iso__frame--face-left:not(.prose-img-iso__frame--skew-locked) {
+  --config-iso-rotate: calc(var(--config-iso-rotate-base, 6deg) * -1);
+  --config-iso-skew-x: calc(var(--config-iso-skew-x-base, -10deg) * -1);
+  --config-iso-skew-y: calc(var(--config-iso-skew-y-base, 2deg) * -1);
+  --config-iso-depth-x: calc(var(--config-iso-depth-x-base, 10px) * -1);
+}
+
+.prose-img-iso__frame--face-left.prose-img-iso__frame--skew-locked {
+  --config-iso-depth-x: calc(var(--config-iso-depth-x-base, 10px) * -1);
+}
+
+/* Soft corners for SVG / transparent assets — radius scales with display size.
+   Outer radius includes the stroke; inner matches the artwork face. */
+.prose-img-iso__frame--soft {
+  border-radius: var(--config-iso-radius-display, var(--config-iso-radius, 8px));
+  background: transparent;
+}
+
+.prose-img-iso__frame--soft img {
+  border-radius: var(
+    --config-iso-radius-inner,
+    var(--config-iso-radius-display, var(--config-iso-radius, 8px))
+  );
+}
+
+/* Solid extrusion — path painted in JS; geometry pinned to border box in syncIsoExtrusion */
+.prose-img-iso__extrusion {
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--config-iso-border-width, 1px));
+  left: calc(-1 * var(--config-iso-border-width, 1px));
+  width: calc(100% + 2 * var(--config-iso-border-width, 1px));
+  height: calc(100% + 2 * var(--config-iso-border-width, 1px));
+  overflow: visible;
+  pointer-events: none;
+  shape-rendering: geometricPrecision;
+}
+
+.prose-img-iso__extrusion-path {
+  fill: var(--config-iso-color, #1a27e51a);
+  fill-rule: evenodd;
+  stroke: none;
 }
 
 .prose-img-iso__frame img {
@@ -51,23 +103,27 @@
   max-width: 100%;
   height: auto;
   vertical-align: top;
+  position: relative;
+  z-index: 0;
 }
 
 .prose-img-iso__caption {
   position: absolute;
-  top: calc(var(--chrome-stroke-width, 1px) * -0.5);
-  left: var(--config-iso-solid-shadow-x, 10px);
-  max-width: calc(100% - 2 * var(--config-iso-solid-shadow-x, 10px));
+  bottom: calc(var(--config-iso-border-width, 1px) * -0.5);
+  left: var(--config-iso-depth-inset, var(--config-iso-solid-shadow-x, 10px));
+  right: auto;
+  width: fit-content;
+  max-width: calc(100% - 2 * var(--config-iso-depth-inset, var(--config-iso-solid-shadow-x, 10px)));
   box-sizing: border-box;
   display: inline-block;
   z-index: 2;
   margin: 0;
   padding: 0.25rem 0.5rem;
   color: #fff;
-  background: var(--config-iso-stroke, #000);
+  background: var(--on-ground-edge, #000);
   leading-trim: both;
   text-edge: cap;
-  transform: translateY(-50%);
+  transform: translateY(50%);
   pointer-events: none;
 }
 
@@ -76,15 +132,17 @@
   color: #fff;
 }
 
-.post-card[class*='ground-'] .prose-img-iso__frame {
-  background: var(--surface);
-  border: var(--chrome-stroke-width) solid var(--on-ground-edge);
-  box-shadow:
-    var(--config-iso-solid-shadow-x, 10px) var(--config-iso-solid-shadow-y, 14px) 0 0
-      var(--on-ground-edge),
-    0 var(--config-iso-soft-shadow-y, 28px) var(--config-iso-soft-shadow-blur, 52px)
-      var(--config-iso-soft-shadow-spread, -16px)
-      color-mix(in oklch, var(--on-ground-edge) 24%, transparent);
+.post-card[class*='ground-'] .prose-img-iso__frame,
+.poster[class*='ground-'] .prose-img-iso__frame,
+.mini-poster[class*='ground-'] .prose-img-iso__frame {
+  background: var(--config-iso-face, var(--surface));
+  border-color: var(--on-ground-edge);
+}
+
+.post-card[class*='ground-'] .prose-img-iso__extrusion-path,
+.poster[class*='ground-'] .prose-img-iso__extrusion-path,
+.mini-poster[class*='ground-'] .prose-img-iso__extrusion-path {
+  fill: var(--on-ground-edge);
 }
 
 .collection-hero .prose-img-iso {

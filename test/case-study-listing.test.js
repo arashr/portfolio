@@ -84,3 +84,28 @@ role: Product Designer
   assert.equal(subtext, 'Modern on-brand design');
   assert.equal(credit, 'Product Designer – 2024');
 });
+
+test('peekCaseStudyListing exposes coverGroundKey from frontmatter ground only', () => {
+  const md = `---
+title: Cover
+ground: indigo
+symbol: /
+---
+# Cover
+
+Intro.
+`;
+  const { coverGroundKey } = peekCaseStudyListing(md, 'cover.md');
+  assert.equal(coverGroundKey, 'indigo');
+});
+
+test('peekCaseStudyListing ignores unknown cover grounds', () => {
+  const md = `---
+title: Cover
+ground: neon
+---
+# Cover
+`;
+  const { coverGroundKey } = peekCaseStudyListing(md, 'cover.md');
+  assert.equal(coverGroundKey, null);
+});

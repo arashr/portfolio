@@ -27,3 +27,17 @@ test('renderReaderMoreCases emits aligned wrap and mini-poster picks', () => {
   assert.match(html, /data-md-path="content\/02-other.md"/);
   assert.match(html, /landing-pick-more/);
 });
+
+test('renderReaderMoreCases applies coverGroundKey color only', () => {
+  const html = renderReaderMoreCases([
+    {
+      path: 'content/02-other.md',
+      title: 'Other Study',
+      index: 1,
+      coverGroundKey: 'butter'
+    }
+  ]);
+  assert.match(html, /post-card-wrap ground-butter/);
+  assert.match(html, /mini-poster ground-butter/);
+  assert.doesNotMatch(html, /data-glyph-symbol/);
+});

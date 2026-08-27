@@ -58,3 +58,22 @@ test('renderLandingMosaic continues ground chain into aside sections', () => {
     assert.notEqual(grounds[i - 1], grounds[i], `adjacent posters ${i - 1} and ${i} share ${grounds[i]}`);
   }
 });
+
+test('renderLandingMosaic applies coverGroundKey color without glyph symbol attrs', () => {
+  const html = renderLandingMosaic({
+    site: { title: 'Portfolio' },
+    items: [
+      {
+        path: '01-figlets-mcp.md',
+        title: 'Figlets MCP',
+        index: 0,
+        coverGroundKey: 'carmine'
+      }
+    ],
+    aside: { sections: [] }
+  });
+
+  assert.match(html, /post-card-wrap ground-carmine landing-pick-wrap/);
+  assert.match(html, /post-card ground-carmine title-face-/);
+  assert.doesNotMatch(html, /data-glyph-symbol/);
+});

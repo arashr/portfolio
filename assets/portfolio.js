@@ -28,6 +28,7 @@ import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
+import { applyIsoFacing } from '../lib/image-iso-config.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
 import { ICONS } from './icons.js';
@@ -277,6 +278,7 @@ import { ICONS } from './icons.js';
       void mainReader.offsetHeight;
       fitPosterTitles(posterEls, getGalleryConfig());
       renderGlyphs();
+      applyIsoFacing(mainReader);
       updateTocLayout();
     });
   }
@@ -439,13 +441,15 @@ import { ICONS } from './icons.js';
     caseStudyItems = items;
     landingGalleryGrid.innerHTML = renderLandingMosaic({
       site: siteConfig,
-      items: items.map(({ path, title, index, subtext, stats, credit }) => ({
+      // A5-COVER-GROUND: keep coverGroundKey for homepage card colors.
+      items: items.map(({ path, title, index, subtext, stats, credit, coverGroundKey }) => ({
         path,
         title,
         index,
         subtext: subtext || path.split('/').pop() || path,
         stats: stats || [],
-        credit: credit || ''
+        credit: credit || '',
+        coverGroundKey
       })),
       aside
     });
@@ -509,6 +513,7 @@ import { ICONS } from './icons.js';
     setupImageLightbox(mainReader, {
       icons: { zoomIn: ICONS.zoomIn, zoomOut: ICONS.zoomOut, xmark: ICONS.xmark }
     });
+    requestAnimationFrame(() => applyIsoFacing(mainReader));
   }
 
   function openMarkdown(text, relativePath, { updateHistory = true } = {}) {

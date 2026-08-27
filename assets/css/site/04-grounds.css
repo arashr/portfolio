@@ -3,6 +3,7 @@
 [class*='ground-'] {
   --on-ground-edge-1: var(--on-ground-display);
   --on-ground-edge: var(--on-ground-display);
+  --config-iso-color: var(--on-ground-edge);
   --poster-ink-shadow: 4px 4px 0 0 var(--on-ground-edge);
   --glyph-pattern-color: var(--on-ground-glyph-pattern-color, var(--on-ground-display));
   --glyph-pattern-opacity: var(--on-ground-glyph-pattern-opacity, var(--glyph-pattern-opacity, 0.07));
