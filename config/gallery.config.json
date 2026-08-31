@@ -117,6 +117,12 @@
         }
       }
     },
+    "gridOverlay": {
+      "enabled": false,
+      "columns": true,
+      "rows": true,
+      "bounds": true
+    },
     "code": {
       "blockSteps": 1,
       "blockStepMix": 0.02,

@@ -58,6 +58,19 @@ Dark mode semantics are applied in `assets/css/reader/07-theme-dark.css`.
 | `pad` | Horizontal page padding |
 | `scrollOffset` | Scroll-padding for sticky header |
 
+### `theme.gridOverlay`
+
+Debug Swiss grid on reader/landing posters. Disabled by default; excluded from print.
+
+| Key | Role |
+|-----|------|
+| `enabled` | Master toggle (`false` by default) |
+| `columns` | Show 12-column track bands |
+| `rows` | Show horizontal module lines every `2 × --layout-gap` |
+| `bounds` | Outline title (red), copy (green), and future media (indigo) |
+
+When enabled, sets `html[data-portfolio-grid-overlay]` to `columns`, `rows`, or `both`.
+
 ### `theme.hero`
 
 Collection hero (top of document) — values can be **semantic** or hex:
