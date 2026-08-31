@@ -116,7 +116,8 @@
 }
 
 /* Title→body spacing uses post-card row-gap, not header margin. */
-:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header {
+:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header,
+.page-landing #landing-name > .post-card.landing-name-card > .post-header {
   margin-block: 0;
 }
 
@@ -148,13 +149,25 @@
     align-content: start;
   }
 
-  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .post-header {
+  .page-landing #landing-name > .post-card.landing-name-card {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    column-gap: var(--layout-gap);
+    row-gap: var(--layout-gap);
+    align-content: start;
+    justify-content: unset;
+  }
+
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .post-header,
+  .page-landing #landing-name > .post-card.landing-name-card .post-header {
     grid-column: var(--poster-title-columns);
     grid-row: 1;
     align-self: end;
   }
 
-  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .prose {
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .prose,
+  .page-landing #landing-name > .post-card.landing-name-card .prose {
     grid-column: var(--poster-copy-columns);
     grid-row: 2;
     align-self: start;
@@ -238,7 +251,8 @@
   :is(#posters, #landing-posters)
     > .post-card-wrap:not(.reader-more-cases-wrap)
     > .post-card.is-row-snapped
-    :is(.post-header, .prose) {
+    :is(.post-header, .prose),
+  .page-landing #landing-name > .post-card.landing-name-card.is-row-snapped :is(.post-header, .prose) {
     align-self: start;
   }
 }

@@ -73,7 +73,7 @@ When enabled, sets `html[data-portfolio-grid-overlay]` to `columns`, `rows`, or 
 
 ### `theme.rowSnap`
 
-Snaps title/body packs onto the modular row field (text-only posters, 900px+ grid). Off by default.
+Snaps title/body packs onto the modular row field (text-only posters, 900px+ grid). Applies to reader `#posters` and landing `#landing-posters` + `#landing-name`. Off by default.
 
 | Key | Role |
 |-----|------|

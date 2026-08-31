@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
+  posterGridRhythm,
   snapPackStart,
   snapStackGap,
   snapToRowLine,
@@ -27,5 +28,15 @@ describe('poster-row-snap', () => {
     const gap = snapStackGap(100, 48, 24, 48);
     assert.ok(gap >= 24);
     assert.equal((48 + 100 + gap) % 48, 0);
+  });
+
+  it('recognizes landing name band as rhythm 1', () => {
+    const card = {
+      closest(selector) {
+        if (selector !== '.post-card-wrap') return null;
+        return { id: 'landing-name', classList: { contains: () => false } };
+      }
+    };
+    assert.equal(posterGridRhythm(card), 1);
   });
 });

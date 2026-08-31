@@ -314,13 +314,18 @@ import { ICONS } from './icons.js';
   function scheduleLandingMiniGlyphs() {
     requestAnimationFrame(() => {
       const cards = landingGlyphEls();
-      fitPosterTitles(cards, getGalleryConfig());
-      renderPosterGlyphPatterns(cards, getGalleryConfig());
+      const cfg = getGalleryConfig();
+      fitPosterTitles(cards, cfg);
+      applyPosterTitlePlay(cards, cfg);
+      snapPosterRows(cards, resolveRowSnap(cfg));
+      renderPosterGlyphPatterns(cards, cfg);
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
           const readyCards = landingGlyphEls();
-          fitPosterTitles(readyCards, getGalleryConfig());
-          renderPosterGlyphPatterns(readyCards, getGalleryConfig());
+          fitPosterTitles(readyCards, cfg);
+          applyPosterTitlePlay(readyCards, cfg);
+          snapPosterRows(readyCards, resolveRowSnap(cfg));
+          renderPosterGlyphPatterns(readyCards, cfg);
         });
       }
     });
