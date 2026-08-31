@@ -27,6 +27,7 @@ html[data-portfolio-grid-overlay='both'] .page-landing #landing-name > .post-car
   --swiss-row-module: var(--layout-gap);
   --swiss-row-period: calc(var(--layout-gap) * 2);
   --swiss-col-fill: color-mix(in oklch, #2c2781 14%, transparent);
+  --swiss-row-fill: color-mix(in oklch, #0c0e10 10%, transparent);
   --swiss-row-line: color-mix(in oklch, #0c0e10 22%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in oklch, #2c2781 35%, transparent);
   top: var(--poster-pad-top);
@@ -51,7 +52,7 @@ html[data-portfolio-grid-overlay='columns'] .page-landing #landing-name > .post-
   );
 }
 
-/* Rows only — horizontal module lines (brick + gutter) */
+/* Rows only — horizontal module bands (brick + gutter, same period as columns) */
 html[data-portfolio-grid-overlay='rows']
   :is(.page-reader, .page-landing)
   :is(#posters, #landing-posters)
@@ -60,14 +61,14 @@ html[data-portfolio-grid-overlay='rows']
 html[data-portfolio-grid-overlay='rows'] .page-landing #landing-name > .post-card.landing-name-card::before {
   background-image: repeating-linear-gradient(
     to bottom,
-    transparent 0,
-    transparent calc(var(--swiss-row-period) - 1px),
-    var(--swiss-row-line) calc(var(--swiss-row-period) - 1px),
-    var(--swiss-row-line) var(--swiss-row-period)
+    var(--swiss-row-fill) 0,
+    var(--swiss-row-fill) var(--layout-gap),
+    transparent var(--layout-gap),
+    transparent var(--swiss-row-period)
   );
 }
 
-/* Both — column bands + row module lines */
+/* Both — column bands + row module bands */
 html[data-portfolio-grid-overlay='both']
   :is(.page-reader, .page-landing)
   :is(#posters, #landing-posters)
@@ -77,10 +78,10 @@ html[data-portfolio-grid-overlay='both'] .page-landing #landing-name > .post-car
   background-image:
     repeating-linear-gradient(
       to bottom,
-      transparent 0,
-      transparent calc(var(--swiss-row-period) - 1px),
-      var(--swiss-row-line) calc(var(--swiss-row-period) - 1px),
-      var(--swiss-row-line) var(--swiss-row-period)
+      var(--swiss-row-fill) 0,
+      var(--swiss-row-fill) var(--layout-gap),
+      transparent var(--layout-gap),
+      transparent var(--swiss-row-period)
     ),
     repeating-linear-gradient(
       to right,

@@ -123,6 +123,17 @@
       "rows": true,
       "bounds": true
     },
+    "rowSnap": {
+      "enabled": true,
+      "packAlign": "vary"
+    },
+    "titlePlay": {
+      "enabled": true,
+      "fillSafeZone": false,
+      "maxScale": 1.35,
+      "shortTitleChars": 22,
+      "shortTitleBoost": 1.15
+    },
     "code": {
       "blockSteps": 1,
       "blockStepMix": 0.02,

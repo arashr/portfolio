@@ -115,6 +115,11 @@
   z-index: 1;
 }
 
+/* Title→body spacing uses post-card row-gap, not header margin. */
+:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header {
+  margin-block: 0;
+}
+
 @media (min-width: 900px) {
   :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card,
   .page-landing #landing-name > .post-card.landing-name-card {
@@ -134,12 +139,34 @@
     grid-column: 1 / -1;
   }
 
+  :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    column-gap: var(--layout-gap);
+    row-gap: var(--layout-gap);
+    align-content: start;
+  }
+
   :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .post-header {
     grid-column: var(--poster-title-columns);
+    grid-row: 1;
+    align-self: end;
   }
 
   :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .prose {
     grid-column: var(--poster-copy-columns);
+    grid-row: 2;
+    align-self: start;
+    margin-top: 0;
+  }
+
+  /* Roomy cards push copy down in flex mode — reset on the reader grid. */
+  :is(#posters, #landing-posters)
+    > .post-card-wrap:not(.reader-more-cases-wrap)
+    > .post-card.post-card--roomy
+    > .prose.post-body {
+    margin-top: 0;
   }
 
   /* Inner content positions — 6-poster cycle (title + prose slot variables) */
@@ -181,6 +208,7 @@
     --poster-title-columns: 1 / span 5;
     --poster-copy-columns: 6 / span 7;
     --poster-media-columns: 6 / 13;
+    grid-template-rows: auto;
   }
 
   :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap):nth-child(6n + 4) .post-header {
@@ -205,6 +233,13 @@
     --poster-title-columns: 2 / span 6;
     --poster-copy-columns: 4 / span 6;
     --poster-media-columns: 10 / 13;
+  }
+
+  :is(#posters, #landing-posters)
+    > .post-card-wrap:not(.reader-more-cases-wrap)
+    > .post-card.is-row-snapped
+    :is(.post-header, .prose) {
+    align-self: start;
   }
 }
 

@@ -71,6 +71,29 @@ Debug Swiss grid on reader/landing posters. Disabled by default; excluded from p
 
 When enabled, sets `html[data-portfolio-grid-overlay]` to `columns`, `rows`, or `both`.
 
+### `theme.rowSnap`
+
+Snaps title/body packs onto the modular row field (text-only posters, 900px+ grid). Off by default.
+
+| Key | Role |
+|-----|------|
+| `enabled` | Run after title fit (`false` by default) |
+| `packAlign` | `start`, `center`, or `vary` (six-rhythm beat table) |
+
+Use with `gridOverlay` to verify: title top and body top should land on row band edges.
+
+### `theme.titlePlay`
+
+Column- and length-aware title sizing for reader posters (runs after base fit + row snap).
+
+| Key | Role |
+|-----|------|
+| `enabled` | Boost short titles in wide column spans (`true` by default) |
+| `fillSafeZone` | On `.post-card--roomy`, grow into leftover card height |
+| `maxScale` | Cap vs column-scaled size (`1`–`2`, default `1.35`) |
+| `shortTitleChars` | Titles at or below this length get `shortTitleBoost` |
+| `shortTitleBoost` | Extra multiplier for short titles (`1`–`1.6`) |
+
 ### `theme.hero`
 
 Collection hero (top of document) — values can be **semantic** or hex:

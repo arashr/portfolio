@@ -3,8 +3,8 @@ import { renderDocument, renderToc, setAssetDimensions, setImageVariants, setRen
 import { renderLandingMosaic } from '../lib/render-landing-mosaic.js';
 import { renderReaderMoreCases } from '../lib/render-reader-more-cases.js';
 import { posterStaggerCol } from '../lib/stagger.js';
-import { reloadGalleryConfig, getGalleryConfig } from '../lib/gallery-config.js';
-import { fitMiniPosterTitles, fitPosterTitles } from '../lib/fit-poster-title.js';
+import { reloadGalleryConfig, getGalleryConfig, resolveRowSnap } from '../lib/gallery-config.js';
+import { fitMiniPosterTitles, fitPosterTitles, applyPosterTitlePlay } from '../lib/fit-poster-title.js';
 import {
   isExternalHref,
   isLocalMarkdownHref,
@@ -29,6 +29,7 @@ import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
 import { applyIsoFacing } from '../lib/image-iso-config.js';
+import { snapPosterRows } from '../lib/poster-row-snap.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
 import { ICONS } from './icons.js';
@@ -276,7 +277,10 @@ import { ICONS } from './icons.js';
     cancelAnimationFrame(titleScaleFrame);
     titleScaleFrame = requestAnimationFrame(() => {
       void mainReader.offsetHeight;
-      fitPosterTitles(posterEls, getGalleryConfig());
+      const cfg = getGalleryConfig();
+      fitPosterTitles(posterEls, cfg);
+      applyPosterTitlePlay(posterEls, cfg);
+      snapPosterRows(posterEls, resolveRowSnap(cfg));
       renderGlyphs();
       applyIsoFacing(mainReader);
       updateTocLayout();
