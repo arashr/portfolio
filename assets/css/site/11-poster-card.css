@@ -68,6 +68,10 @@
   opacity: 1;
 }
 
+.post-card__glyph-layer--hero[data-glyph-empty-space='1'] {
+  overflow: visible;
+}
+
 .post-card > *:not(.post-card__glyph-layer) {
   position: relative;
   z-index: 1;

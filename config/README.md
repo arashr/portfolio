@@ -177,7 +177,7 @@ Random alternative to mini `typePattern` on a poster. Defaults in `lib/poster-he
 | **`opacityMin` / `opacityMax`** | `0`–`1` | Hero glyph strength after blend (fallback when a mode has no entry in `blendModes`) |
 | **`blendModes`** | `{ "<mode>": { "min", "max" }, ... }` | Mode pool + per-mode opacity ranges. Keys are the allowed modes |
 | **`text`** | `lengthMin` / `lengthMax` | Glyph string length only |
-| **`layout`** | `sizeRatio`, `offsetXRatioMin` / `offsetXRatioMax` | Width fraction; random horizontal shift (clipping OK) |
+| **`layout`** | `sizeRatio`, `minVisibleRatio`, `offsetXRatioMin` / `offsetXRatioMax` | Width fraction; minimum visible ink area (`0`–`1`); random horizontal shift |
 | **`accessibility`** | `excludeTitleFaces`, `respectReducedTransparency`, `respectHighContrast` | Face blocklist; OS preference gates |
 
 Symbol source uses **`typePattern.symbol`** (not hero). Blend uses **`heroGlyph.blendModes`** (not pattern).
@@ -202,7 +202,8 @@ One `renderTypePattern` per poster empty region (`lib/type-pattern-poster.js`, `
 | **`blendModes`** | `{ "<mode>": { "min", "max" }, ... }` | Pattern composite pool + per-mode opacity. Keys are the allowed modes |
 | **`shape`** | `patternTypes`, `fillSpace`, `opticalTight`, `followPath`, `flipReadable`, `flipAlternateVertical`, `flipAlternateHorizontal` | Pattern geometry + letter behavior |
 | **`geometry`** | `*Min` / `*Max` ranges | `repeats`, `padding`, `tightTracking`, `lineAngle`, `startAngleDeg`, `arcSweepDeg`, `spiralTurns`, `waveAmplitude`, `waveCycles`, `gridColumns`, `gridStaggerProbability`, `fillAngle`, `fillRowGap`, optional `fontSizeMin` / `fontSizeMax` |
-| **`placement`** | `regionPreference`, `emptySpaceMinPx`, `emptySpaceMinRatio`, `regionInsetPx`, `alignToCardEdge`, `fallbackBandWidth`, `sideBandWidthRatio`, `fallbackSide`, `edgeOverflowPx` | Where on the card |
+| **`placement`** | `regionPreference`, `preferEmptySpace`, `emptySpaceMinPx`, `emptySpaceMinRatio`, `regionInsetPx`, `alignToCardEdge`, `fallbackBandWidth`, `sideBandWidthRatio`, `fallbackSide`, `edgeOverflowPx` | Where on the card |
+| | `preferEmptySpace` | When `true`, measures title/copy boxes and picks the largest empty band. **Patterns** use any band; **hero glyphs** prefer side/between gaps (not bottom padding on tall cards) and shift toward that band’s center. |
 | **`appearance`** | `opacityMin`, `opacityMax` | Pattern strength after blend (`0`–`1`). Omit both to inherit `glyph.opacity`. Blend applies to the **whole pattern layer** once (letters overlap without stacking blend). |
 
 **Blend modes allowed:** `difference`, `exclusion`, `multiply`, `screen`, `overlay`, `darken`, `lighten`, `color-dodge`, `color-burn`, `hard-light`, `soft-light`.

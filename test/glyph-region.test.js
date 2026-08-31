@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   computePosterGlyphRegionFromLayout,
+  GLYPH_PLACEMENT_DEFAULTS,
   regionKeyForSlug
 } from '../lib/glyph-region.js';
 
@@ -123,4 +124,117 @@ test('side fallback when only side bands are eligible', () => {
   );
   assert.equal(region.slot, 'side');
   assert.ok(region.x < baseLayout.contentLeft || region.x >= baseLayout.contentRight - 88);
+});
+
+test('preferEmptySpace picks the largest empty band', () => {
+  const layout = {
+    ...baseLayout,
+    cardWidth: 960,
+    cardHeight: 600,
+    contentLeft: 48,
+    contentTop: 48,
+    contentRight: 912,
+    contentBottom: 552,
+    contentWidth: 864,
+    contentHeight: 504,
+    headerTop: 48,
+    headerBottom: 220,
+    bodyTop: 300,
+    bodyBottom: 540,
+    contentExtents: {
+      left: 48,
+      right: 520,
+      top: 48,
+      bottom: 400
+    }
+  };
+  const region = computePosterGlyphRegionFromLayout(
+    layout,
+    {
+      ...GLYPH_PLACEMENT_DEFAULTS,
+      preferEmptySpace: true,
+      alignToCardEdge: true,
+      emptySpaceMinPx: 56,
+      emptySpaceMinRatio: 0.1,
+      regionPreference: ['bottom', 'between', 'top', 'right', 'left']
+    },
+    { slug: 'wide-gap' }
+  );
+  assert.equal(region.regionKey, 'side-right');
+  assert.ok(region.width > 300);
+});
+
+test('slug preference applies when preferEmptySpace is false', () => {
+  const layout = {
+    ...baseLayout,
+    cardWidth: 960,
+    cardHeight: 600,
+    contentLeft: 48,
+    contentTop: 48,
+    contentRight: 912,
+    contentBottom: 552,
+    headerTop: 48,
+    headerBottom: 220,
+    bodyTop: 300,
+    bodyBottom: 420,
+    contentExtents: {
+      left: 48,
+      right: 520,
+      top: 48,
+      bottom: 420
+    }
+  };
+  const region = computePosterGlyphRegionFromLayout(
+    layout,
+    {
+      ...GLYPH_PLACEMENT_DEFAULTS,
+      preferEmptySpace: false,
+      alignToCardEdge: true,
+      regionPreference: ['bottom', 'between', 'top', 'side-right']
+    },
+    { slug: 'wide-gap' }
+  );
+  assert.notEqual(region.regionKey, 'side-right');
+});
+
+test('hero empty region prefers side gaps over bottom padding on tall cards', () => {
+  const layout = {
+    ...baseLayout,
+    cardWidth: 960,
+    cardHeight: 900,
+    contentLeft: 48,
+    contentTop: 48,
+    contentRight: 912,
+    contentBottom: 852,
+    headerTop: 48,
+    headerBottom: 220,
+    bodyTop: 280,
+    bodyBottom: 420,
+    contentExtents: {
+      left: 48,
+      right: 520,
+      top: 48,
+      bottom: 420
+    }
+  };
+  const cfg = {
+    ...GLYPH_PLACEMENT_DEFAULTS,
+    preferEmptySpace: true,
+    alignToCardEdge: true,
+    emptySpaceMinPx: 56,
+    emptySpaceMinRatio: 0.1,
+    regionPreference: ['bottom', 'between', 'top', 'right', 'left']
+  };
+  const patternRegion = computePosterGlyphRegionFromLayout(layout, cfg, { slug: 'tall' });
+  const heroRegion = computePosterGlyphRegionFromLayout(
+    layout,
+    {
+      ...cfg,
+      regionPreference: ['right', 'left', 'between']
+    },
+    { slug: 'tall' }
+  );
+  assert.equal(patternRegion.regionKey, 'bottom');
+  assert.equal(heroRegion.regionKey, 'side-right');
+  assert.ok(heroRegion.width > 300);
 });

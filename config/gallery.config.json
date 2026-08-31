@@ -39,6 +39,7 @@
         },
         "layout": {
           "sizeRatio": 1.2,
+          "minVisibleRatio": 0.8,
           "offsetXRatioMin": -0.35,
           "offsetXRatioMax": 0.35
         },
@@ -100,6 +101,7 @@
           "fillRowGapMax": 2.4
         },
         "placement": {
+          "preferEmptySpace": true,
           "emptySpaceMinPx": 84,
           "emptySpaceMinRatio": 0.18,
           "regionInsetPx": 12,
@@ -118,7 +120,7 @@
       }
     },
     "gridOverlay": {
-      "enabled": false,
+      "enabled": true,
       "columns": true,
       "rows": true,
       "bounds": true
