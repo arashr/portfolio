@@ -103,7 +103,9 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: stretch;
-  min-height: 66vh;
+  min-height: var(--landing-header-min-height, 66vh);
+  --poster-title-columns: var(--landing-header-title-columns, 1 / span 9);
+  --poster-copy-columns: var(--landing-header-copy-columns, 1 / span 5);
 }
 
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card > .post-header,
@@ -157,6 +159,8 @@
     row-gap: var(--layout-gap);
     align-content: start;
     justify-content: unset;
+    --poster-title-columns: var(--landing-header-title-columns, 1 / span 9);
+    --poster-copy-columns: var(--landing-header-copy-columns, 1 / span 5);
   }
 
   :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) .post-header,
@@ -295,7 +299,7 @@
   }
 
   .page-landing #landing-name > .post-card.landing-name-card {
-    min-height: 66vh;
+    min-height: var(--landing-header-min-height, 66vh);
     justify-content: flex-end;
   }
 

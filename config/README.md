@@ -280,9 +280,35 @@ DOM title fitting (`lib/fit-poster-title.js`):
 
 Binary search picks the largest `--poster-title-size` up to the width-derived cap, within `maxLines` (measured via block height ÷ line-height). Config reload refits open posters (refocus tab). Re-open a file after code changes so `data-title-chars` is present. No CSS height clip on the title box.
 
-### `fonts.landingNameTitleScale`
+### `landing.header`
 
-Flat fit scale for the landing hero name (`#landing-name`). No `tiers` — set `minPx`, `maxPx`, `maxWidthRatio`, `maxLines`, and optional `maxPxRatio`. Typography still comes from the title face on that card. `theme.titlePlay` does not apply.
+Homepage name band (`#landing-name`) — independent from reader posters.
+
+| Field | Role |
+|-------|------|
+| `ground` | Ground token (`indigo`, `carmine`, …) — uses existing `grounds.*` palette |
+| `titleFace` | `fonts.titleFaces[].id` for the hero name |
+| `titleScale` | Flat fit scale (`minPx`, `maxPx`, `maxWidthRatio`, `maxLines`, `maxPxRatio`) — no length tiers |
+| `layout.titleColumnSpan` | Grid span (1–12) for the title column on desktop |
+| `layout.copyColumnSpan` | Grid span for tagline / copy row |
+| `layout.minHeight` | Band height (e.g. `66vh`) |
+| `glyph` | Pattern overrides — same groups as `theme.graphics.typePattern` (`symbol`, `shape`, `geometry`, `placement`, `appearance` / opacity / blend). Merged on top of the chosen ground |
+
+#### `landing.header.glyph` — fill pattern knobs
+
+When `patternTypes` includes `"fill"` (or is locked to `["fill"]`), these keys matter most:
+
+| Group | Keys | Role |
+|-------|------|------|
+| **symbol** | `symbolPool`, `symbolProbability` | Characters drawn; `1` = always pool, never title letter |
+| **appearance** | `opacityMin`, `opacityMax`, `blendModes` | Ink strength / blend |
+| **shape** | `fillSpace`, `opticalTight`, `followPath`, `flipReadable`, `flipAlternateVertical`, `flipAlternateHorizontal` | Dense pack vs path fill; letter flips |
+| **geometry** | `repeatsMin/Max`, `fontSizeMin/Max`, `paddingMin/Max`, `tightTrackingMin/Max`, `gridColumnsMin/Max`, `gridStaggerProbability`, `fillAngleMin/Max`, `fillRowGapMin/Max` | Count, size, columns, brick stagger, tilt, row spacing |
+| **placement** | `regionPreference`, `preferEmptySpace`, `alignToCardEdge`, … | Where the band sits (e.g. top) |
+
+Injected as CSS vars (`--landing-header-*`) and `--glyph-pattern-color` on the name card. Set `data-lab-glyph="pattern"` so the band always draws a type pattern (not hero/none).
+
+**Recovery:** If header glyph settings get lost, copy `landing.header` from `config/landing-header.preset.json`.
 
 ---
 

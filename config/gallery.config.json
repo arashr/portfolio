@@ -696,13 +696,6 @@
         }
       }
     ],
-    "landingNameTitleScale": {
-      "minPx": 120,
-      "maxPx": 240,
-      "maxWidthRatio": 0.6,
-      "maxLines": 2,
-      "maxPxRatio": 0.7
-    },
     "titleScale": {
       "minPx": 64,
       "maxPx": 280,
@@ -729,6 +722,65 @@
           "floorPx": 14
         }
       ]
+    }
+  },
+  "landing": {
+    "header": {
+      "ground": "indigo",
+      "titleFace": "bricolage-grotesque",
+      "titleScale": {
+        "minPx": 160,
+        "maxPx": 240,
+        "maxWidthRatio": 0.92,
+        "maxLines": 2,
+        "maxPxRatio": 0.85
+      },
+      "layout": {
+        "titleColumnSpan": 12,
+        "copyColumnSpan": 12,
+        "minHeight": "66vh"
+      },
+      "glyph": {
+        "color": "red",
+        "symbolPool": "/",
+        "symbolProbability": 1,
+        "patternTypes": ["fill"],
+        "opacityMin": 1,
+        "opacityMax": 1,
+        "blendModes": {
+          "screen": { "min": 1, "max": 1 }
+        },
+        "shape": {
+          "fillSpace": false,
+          "opticalTight": true,
+          "followPath": false,
+          "flipReadable": false,
+          "flipAlternateVertical": true,
+          "flipAlternateHorizontal": false
+        },
+        "geometry": {
+          "repeatsMin": 100,
+          "repeatsMax": 190,
+          "fontSizeMin": 160,
+          "fontSizeMax": 200,
+          "paddingMin": 0,
+          "paddingMax": 0,
+          "tightTrackingMin": 1,
+          "tightTrackingMax": 1,
+          "gridColumnsMin": 3,
+          "gridColumnsMax": 25,
+          "gridStaggerProbability": 1,
+          "fillAngleMin": -25,
+          "fillAngleMax": 7,
+          "fillRowGapMin": 1,
+          "fillRowGapMax": 8
+        },
+        "placement": {
+          "regionPreference": ["top"],
+          "preferEmptySpace": false,
+          "alignToCardEdge": true
+        }
+      }
     }
   },
   "reader": {
