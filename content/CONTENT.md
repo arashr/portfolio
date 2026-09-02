@@ -78,9 +78,9 @@ Use the optional **title** on an image (the quoted string in markdown) to opt in
 
 | Title flag | Effect |
 |------------|--------|
-| `isometric` or `iso` | 2D isometric skew with SVG extrusion (see `theme.graphics.imageIsometric`) |
+| `isometric` or `iso` | Bordered frame with ink shadow (same look as image-grid tables) |
 
-Optional after `iso`: numeric `skewX,skewY` (e.g. `"iso,-10,7 Caption"`) and/or soft radius (`r8`, `rx:4`, `radius=12`). SVG sources soft-round automatically. Combine with caption text using commas/spaces: `"iso Settings dropdown"`.
+Combine with caption text using commas/spaces: `"iso Settings dropdown"`.
 
 ## Site name on the homepage
 

@@ -120,7 +120,6 @@ Poster graphics are grouped by feature. **`lib/resolve-graphics-config.js`** fla
 ```
 theme.graphics
 ├── glyph              … shared pattern ink (CSS tokens)
-├── imageIsometric     … isometric prose image frame (opt-in in markdown)
 ├── heroGlyph          … mega background glyph (one per poster roll)
 │   ├── roll
 │   ├── text
@@ -145,26 +144,6 @@ theme.graphics
 | `opacity` | `0.07` | Default pattern strength when a ground omits `glyph.opacity`; also used when `typePattern.appearance` omits `opacityMin`/`opacityMax` |
 
 Per-ground overrides live on each entry in `grounds` (see below). Legacy flat keys `glyphPatternColor` / `glyphPatternOpacity` still merge into the global default.
-
-#### `imageIsometric` — isometric prose images
-
-Opt in per image via markdown title: `![](path "isometric")`. Defaults in `lib/image-iso-config.js`.
-
-Uses **2D rotate/skew** plus an SVG extrusion underlay (not CSS 3D perspective). Legacy 3D keys (`rotateX`/`rotateY`/`rotateZ`, `solidShadowX`/`Y`, `stroke`) are accepted as weak fallbacks while configs migrate.
-
-| Key | Default | Role |
-|-----|---------|------|
-| `rotate` | `6` | 2D clockwise rotation (deg) |
-| `skewX` | `-10` | CSS skewX (deg) |
-| `skewY` | `2` | CSS skewY (deg) |
-| `depthX` | `10` | Extrusion offset X (px), right-facing |
-| `depthY` | `10` | Extrusion offset Y (px) |
-| `color` | `"#1A27E51A"` | Face border + extrusion fill |
-| `face` | `"#ffffff"` | Opaque face fill behind the image |
-| `radius` | `8` | Soft-frame corner radius (px, native image space); `0` = sharp |
-| `borderWidth` | `1` | Face border width (px) |
-
-Authored values are the **right-facing** base. Left-facing frames mirror horizontal components at runtime.
 
 #### `heroGlyph` — mega background glyph
 

@@ -8,17 +8,6 @@
       "posterWidth": "42rem"
     },
     "graphics": {
-      "imageIsometric": {
-        "rotate": 0,
-        "skewX": 0,
-        "skewY": 0,
-        "depthX": 8,
-        "depthY": 8,
-        "borderWidth": 1,
-        "color": "#000000",
-        "face": "#ffffff",
-        "radius": 8
-      },
       "heroGlyph": {
         "roll": {
           "probability": 0.4

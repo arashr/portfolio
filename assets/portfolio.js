@@ -28,7 +28,6 @@ import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupImageLightbox } from '../lib/image-lightbox.js';
-import { applyIsoFacing } from '../lib/image-iso-config.js';
 import { snapPosterRows } from '../lib/poster-row-snap.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
@@ -282,7 +281,6 @@ import { ICONS } from './icons.js';
       applyPosterTitlePlay(posterEls, cfg);
       snapPosterRows(posterEls, resolveRowSnap(cfg));
       renderGlyphs();
-      applyIsoFacing(mainReader);
       updateTocLayout();
     });
   }
@@ -522,7 +520,6 @@ import { ICONS } from './icons.js';
     setupImageLightbox(mainReader, {
       icons: { zoomIn: ICONS.zoomIn, zoomOut: ICONS.zoomOut, xmark: ICONS.xmark }
     });
-    requestAnimationFrame(() => applyIsoFacing(mainReader));
   }
 
   function openMarkdown(text, relativePath, { updateHistory = true } = {}) {
