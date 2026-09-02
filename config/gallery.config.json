@@ -10,8 +10,8 @@
     "graphics": {
       "imageIsometric": {
         "rotate": 0,
-        "skewX": -4,
-        "skewY": 2,
+        "skewX": 0,
+        "skewY": 0,
         "depthX": 8,
         "depthY": 8,
         "borderWidth": 1,
@@ -120,7 +120,7 @@
       }
     },
     "gridOverlay": {
-      "enabled": true,
+      "enabled": false,
       "columns": true,
       "rows": true,
       "bounds": true
@@ -146,13 +146,13 @@
   "grounds": {
     "pink": {
       "glyph": {
-        "color": "white",
         "opacity": 0.5,
         "opacityMin": 0.3,
         "opacityMax": 0.6,
         "blendModes": {
-          "screen": { "min": 0.4, "max": 0.6 },
-          "exclusion": { "min": 0.3, "max": 0.5 }
+          "multiply": { "min": 0.2, "max": 0.3 },
+          "overlay": { "min": 0.4, "max": 0.6 },
+          "color-dodge": { "min": 0.5, "max": 0.9 }
         }
       }
     },
@@ -261,20 +261,28 @@
       }
     },
     "mint": {
+      "enabled": false,
       "glyph": {
+        "color": "blue",
         "opacity": 0.2,
         "opacityMin": 0.1,
         "opacityMax": 0.3,
         "blendModes": {
-          "exclusion": { "min": 0.6, "max": 0.9 },
-          "overlay": { "min": 0.5, "max": 0.8 }
+          "overlay": { "min": 0.2, "max": 0.4 },
+          "color-dodge": { "min": 0.5, "max": 0.9 },
+          "screen": { "min": 0.5, "max": 0.9 },
+          "multiply": { "min": 0.2, "max": 0.3 }
         }
       },
       "heroGlyph": {
+        "color": "blue",
         "opacityMin": 0.2,
         "opacityMax": 0.4,
         "blendModes": {
-          "exclusion": { "min": 0.6, "max": 0.9 }
+          "overlay": { "min": 0.2, "max": 0.4 },
+          "color-dodge": { "min": 0.5, "max": 0.9 },
+          "screen": { "min": 0.5, "max": 0.9 },
+          "multiply": { "min": 0.2, "max": 0.3 }
         }
       }
     },
@@ -320,8 +328,8 @@
         "opacityMin": 0.15,
         "opacityMax": 0.35,
         "blendModes": {
-          "screen": { "min": 0.7, "max": 0.9 },
-          "overlay": { "min": 0.5, "max": 0.8 }
+          "screen": { "min": 0.3, "max": 0.5 },
+          "overlay": { "min": 0.2, "max": 0.4 }
         }
       },
       "heroGlyph": {
@@ -361,7 +369,23 @@
           "maxWidthRatio": 0.6,
           "floorPx": 14,
           "slackMinPx": 56,
-          "bAspect": 1.412
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 80,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            }
+          ]
         }
       },
       {
@@ -371,18 +395,24 @@
         "letterSpacing": "-0.03em",
         "titleScale": {
           "minPx": 64,
-          "maxPx": 100,
+          "maxPx": 72,
           "maxWidthRatio": 0.5,
           "floorPx": 14,
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18 },
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 72,
+              "maxPx": 96,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
             { "maxChars": 42,
               "maxWidthRatio": 0.50,
               "minPx": 32,
-              "maxPx": 80,
-              "maxLines": 3,
+              "maxPx": 72,
+              "maxLines": 2,
               "maxPxRatio": 0.6
             },
             { "maxChars": null,
@@ -399,32 +429,27 @@
         "id": "bricolage-grotesque",
         "google": "Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800",
         "lineHeight": "0.87",
-        "letterSpacing": "-0.04em"
-      },
-      {
-        "id": "chakra-petch",
-        "google": "Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400",
-        "lineHeight": "0.96",
-        "letterSpacing": "-0.06em"
-      },
-      { "id": "ultra",
-        "google": "Ultra",
-        "lineHeight": "1.02",
-        "letterSpacing": "-0.01em",
+        "letterSpacing": "-0.04em",
         "titleScale": {
-          "minPx": 64,
-          "maxPx": 100,
+          "minPx": 32,
+          "maxPx": 120,
           "maxWidthRatio": 0.5,
           "floorPx": 14,
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18 },
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 72,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
             { "maxChars": 42,
               "maxWidthRatio": 0.50,
               "minPx": 32,
               "maxPx": 80,
-              "maxLines": 3,
+              "maxLines": 2,
               "maxPxRatio": 0.6
             },
             { "maxChars": null,
@@ -433,6 +458,72 @@
               "maxPx": 64,
               "maxLines": 2,
               "maxPxRatio": 0.6
+            }
+          ]
+        }
+      },
+      {
+        "id": "chakra-petch",
+        "google": "Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400",
+        "lineHeight": "0.96",
+        "letterSpacing": "-0.06em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 64,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
+      },
+      { "id": "ultra",
+        "google": "Ultra",
+        "lineHeight": "1.02",
+        "letterSpacing": "-0.01em",
+        "titleScale": {
+          "minPx": 48,
+          "maxPx": 72,
+          "maxWidthRatio": 0.45,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.45,
+              "minPx": 48,
+              "maxPx": 72,
+              "maxLines": 1,
+              "maxPxRatio": 0.55
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.45,
+              "minPx": 28,
+              "maxPx": 48,
+              "maxLines": 2,
+              "maxPxRatio": 0.55
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 16,
+              "maxPx": 40,
+              "maxLines": 2,
+              "maxPxRatio": 0.55
             }
           ]
         }
@@ -450,7 +541,13 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18 },
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 64,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
             { "maxChars": 42,
               "maxWidthRatio": 0.50,
               "minPx": 32,
@@ -472,22 +569,151 @@
         "id": "unbounded",
         "google": "Unbounded:wght@400;700",
         "lineHeight": "1",
-        "letterSpacing": "-0.05em"
+        "letterSpacing": "-0.05em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 64,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 18,
+              "maxPx": 64,
+              "maxLines": 2,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
       },
       {
         "id": "oswald",
         "google": "Oswald:wght@400;500;700",
         "lineHeight": "1.05",
-        "letterSpacing": "-0.02em"
+        "letterSpacing": "-0.02em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 64,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
       },
       {
         "id": "ibm-plex-mono",
         "google": "IBM+Plex+Mono:wght@400;500;700",
         "lineHeight": "1",
-        "letterSpacing": "-0.08em"
+        "letterSpacing": "-0.08em",
+        "titleScale": {
+          "minPx": 48,
+          "maxPx": 80,
+          "maxWidthRatio": 0.45,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.45,
+              "minPx": 48,
+              "maxPx": 80,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.34,
+              "minPx": 24,
+              "maxPx": 56,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 16,
+              "maxPx": 48,
+              "maxLines": 2,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
       },
-      { "id": "anton", "google": "Anton", "lineHeight": "1", "letterSpacing": "-0.01em" }
+      {
+        "id": "anton",
+        "google": "Anton",
+        "lineHeight": "1",
+        "letterSpacing": "-0.01em",
+        "titleScale": {
+          "minPx": 64,
+          "maxPx": 100,
+          "maxWidthRatio": 0.5,
+          "floorPx": 14,
+          "slackMinPx": 56,
+          "bAspect": 1.412,
+          "tiers": [
+            { "maxChars": 18,
+              "maxWidthRatio": 0.50,
+              "minPx": 64,
+              "maxPx": 120,
+              "maxLines": 1,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": 42,
+              "maxWidthRatio": 0.50,
+              "minPx": 32,
+              "maxPx": 80,
+              "maxLines": 3,
+              "maxPxRatio": 0.6
+            },
+            { "maxChars": null,
+              "maxWidthRatio": 0.22,
+              "minPx": 18,
+              "maxPx": 64,
+              "maxLines": 2,
+              "maxPxRatio": 0.6
+            }
+          ]
+        }
+      }
     ],
+    "landingNameTitleScale": {
+      "minPx": 120,
+      "maxPx": 240,
+      "maxWidthRatio": 0.6,
+      "maxLines": 2,
+      "maxPxRatio": 0.7
+    },
     "titleScale": {
       "minPx": 64,
       "maxPx": 280,

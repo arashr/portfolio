@@ -25,6 +25,21 @@ test('title play boosts short titles in wide columns', () => {
   assert.equal(resolveTitlePlayMaxPx(100, { enabled: false }), 100);
 });
 
+test('title play respects tier maxPx cap', () => {
+  const tierMaxPx = 72;
+  const boosted = resolveTitlePlayMaxPx(72, {
+    enabled: true,
+    maxScale: 1.35,
+    shortTitleChars: 22,
+    shortTitleBoost: 1.15,
+    titleChars: 12,
+    columnRatio: 0.9
+  });
+  assert.ok(boosted > 72);
+  const capped = Math.min(tierMaxPx, boosted);
+  assert.equal(capped, tierMaxPx);
+});
+
 test('resolveTitlePlay clamps config values', () => {
   const cfg = resolveTitlePlay({
     theme: {
