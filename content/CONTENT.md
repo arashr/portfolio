@@ -55,7 +55,7 @@ Readers see the full intro in the case study hero.
 
 | Field | Effect |
 |--------|--------|
-| **`ground:`** | Sets the **first poster** ground color in the reader, and the matching card color on the homepage / “more cases” strip. Accepts `indigo` or `ground-indigo`. Unknown names are ignored. |
+| **`ground:`** | Sets the **first poster** ground color in the reader. On the homepage / “more cases” strip it is used when it does **not** repeat one of the last two card grounds (recent-ground avoidance still wins). Accepts `indigo` or `ground-indigo`. Unknown names are ignored. |
 | **`symbol:`** (alias **`patternSymbol:`**) | Forces the first reader poster’s glyph pattern character (skips hero glyphs and the random “none” chance). Digits-only values are ignored. Does **not** change homepage card glyphs. |
 
 Later posters still use the normal slug-based ground sequence (with recent-ground avoidance).

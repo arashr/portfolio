@@ -77,3 +77,29 @@ test('renderLandingMosaic applies coverGroundKey color without glyph symbol attr
   assert.match(html, /post-card ground-carmine title-face-/);
   assert.doesNotMatch(html, /data-glyph-symbol/);
 });
+
+test('renderLandingMosaic does not let coverGroundKey repeat the previous card ground', () => {
+  const html = renderLandingMosaic({
+    site: { title: 'Portfolio' },
+    items: [
+      {
+        path: 'content/06-zenrooms-hotel-rms.md',
+        title: 'Hotel Revenue Management System',
+        index: 0
+      },
+      {
+        path: 'content/05-zenrooms-app.md',
+        title: 'ZENRooms Native App',
+        index: 1,
+        coverGroundKey: 'carmine'
+      }
+    ],
+    aside: { sections: [] }
+  });
+
+  const pickGrounds = [...html.matchAll(/class="post-card-wrap (ground-[\w-]+) landing-pick-wrap/g)].map(
+    (m) => m[1]
+  );
+  assert.equal(pickGrounds.length, 2);
+  assert.notEqual(pickGrounds[0], pickGrounds[1]);
+});

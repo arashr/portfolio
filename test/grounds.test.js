@@ -6,7 +6,8 @@ import {
   getGrounds,
   groundClassFromToken,
   groundForSlug,
-  normalizeGroundKey
+  normalizeGroundKey,
+  resolveSequencedGround
 } from '../lib/grounds.js';
 
 test('disabled grounds remain configured but leave the active palette', () => {
@@ -63,4 +64,18 @@ test('groundForSlug still avoids recent grounds when some grounds are disabled',
   assert.notEqual(next, preferred);
   assert.notEqual(next, 'ground-pink');
   assert.notEqual(next, 'ground-white');
+});
+
+test('resolveSequencedGround uses cover when it does not collide', () => {
+  const ground = resolveSequencedGround('any-slug', 'ground-pink', ['ground-lime', 'ground-pink'], 'indigo');
+  assert.equal(ground, 'ground-indigo');
+});
+
+test('resolveSequencedGround skips cover that repeats a recent ground', () => {
+  const slug = 'content-06-zenrooms-hotel-rms';
+  const previous = 'ground-carmine';
+  const recent = ['ground-butter', 'ground-carmine'];
+  const ground = resolveSequencedGround(slug, previous, recent, 'carmine');
+  assert.notEqual(ground, 'ground-carmine');
+  assert.equal(ground, groundForSlug(slug, previous, recent));
 });
