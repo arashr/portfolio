@@ -27,7 +27,7 @@ import {
 import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
-import { setupImageLightbox } from '../lib/image-lightbox.js';
+import { setupPortfolioImageExpand } from '../lib/portfolio-image-expand.js';
 import { snapPosterRows } from '../lib/poster-row-snap.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
@@ -517,9 +517,7 @@ import { ICONS } from './icons.js';
     enhanceCodeBlocks(mainReader, { copyIcon: ICONS.copy });
     injectIcons();
     applyImageTableLayouts(mainReader);
-    setupImageLightbox(mainReader, {
-      icons: { zoomIn: ICONS.zoomIn, zoomOut: ICONS.zoomOut, xmark: ICONS.xmark }
-    });
+    setupPortfolioImageExpand(mainReader);
   }
 
   function openMarkdown(text, relativePath, { updateHistory = true } = {}) {

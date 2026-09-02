@@ -111,21 +111,29 @@ test('resolveCursorState returns default on reader posters', () => {
 
 test('resolveCursorState returns plus on prose images', () => {
   assert.equal(
-    stateAt('<div class="prose"><img class="prose-img--zoomable" src="a.png" alt=""></div>', 'img'),
+    stateAt('<div class="prose"><img class="prose-img--expandable" src="a.png" alt=""></div>', 'img'),
     'plus'
   );
 });
 
-test('resolveCursorState returns close on lightbox backdrop only', () => {
+test('resolveCursorState returns close on expand scrim only', () => {
   const dom = new JSDOM(`
-    <dialog id="image-lightbox" class="image-lightbox" open>
-      <div class="image-lightbox__shell"><img class="image-lightbox__img" src="a.png" alt=""></div>
-    </dialog>
+    <html class="is-portfolio-image-expanded">
+      <body>
+        <div class="portfolio-image-expand is-open">
+          <div class="portfolio-image-expand__scrim"></div>
+          <div class="portfolio-image-expand__frame">
+            <img class="portfolio-image-expand__img" src="a.png" alt="">
+          </div>
+        </div>
+      </body>
+    </html>
   `);
-  const dialog = dom.window.document.getElementById('image-lightbox');
-  const img = dom.window.document.querySelector('.image-lightbox__img');
-  assert.equal(resolveCursorState(img), 'default');
-  assert.equal(resolveCursorState(dialog), 'close');
+  const doc = dom.window.document;
+  const frame = doc.querySelector('.portfolio-image-expand__frame');
+  const scrim = doc.querySelector('.portfolio-image-expand__scrim');
+  assert.equal(resolveCursorState(frame), 'default');
+  assert.equal(resolveCursorState(scrim), 'close');
 });
 
 test('ctaKeyForTarget reads data-md-path from landing picks', () => {

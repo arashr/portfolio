@@ -1,0 +1,217 @@
+/* Portfolio image expand — FLIP into reader margins, dim active poster */
+
+:root {
+  --portfolio-expand-close-reserve: 0px;
+}
+
+@media not ((pointer: fine) and (hover: hover)) {
+  :root {
+    /* Half the 32px close control + gap so the badge clears the header. */
+    --portfolio-expand-close-reserve: calc(16px + var(--layout-gap, 24px) * 0.5);
+  }
+}
+
+.portfolio-image-expand {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+}
+
+.portfolio-image-expand.is-open {
+  pointer-events: auto;
+}
+
+.portfolio-image-expand__scrim {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  cursor: zoom-out;
+}
+
+.portfolio-image-expand__frame {
+  position: fixed;
+  z-index: 1;
+  /* Content-box so width/height match the image aspect (no letterbox strip inside the border). */
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+  pointer-events: auto;
+}
+
+.portfolio-image-expand__frame--iso {
+  border: var(--chrome-stroke-width) solid var(--hair);
+  background: var(--paper);
+  box-shadow: var(--chrome-ink-shadow);
+  isolation: isolate;
+}
+
+.portfolio-image-expand__frame--iso[class*='ground-'] {
+  border-color: var(--on-ground-edge);
+  background: var(--surface);
+  box-shadow: var(--poster-ink-shadow);
+}
+
+.portfolio-image-expand__frame.is-animating {
+  transition:
+    left var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-expand-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+    top var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-expand-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+    width var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-expand-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+    height var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-expand-ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+/* Collapse home: ease-in-out so motion continues through the final frames. */
+.portfolio-image-expand__frame.is-animating.is-collapsing {
+  transition:
+    left var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-collapse-ease, cubic-bezier(0.42, 0, 0.58, 1)),
+    top var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-collapse-ease, cubic-bezier(0.42, 0, 0.58, 1)),
+    width var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-collapse-ease, cubic-bezier(0.42, 0, 0.58, 1)),
+    height var(--portfolio-image-expand-ms, 320ms)
+      var(--portfolio-image-collapse-ease, cubic-bezier(0.42, 0, 0.58, 1));
+}
+
+.portfolio-image-expand__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center;
+  vertical-align: top;
+  pointer-events: none;
+}
+
+.portfolio-image-expand__frame--iso .prose-img-iso__caption {
+  /* Outside `.prose` — inherit the same line box as inline captions. */
+  line-height: var(--prose-line-height, 1.55);
+}
+
+.portfolio-image-expand__close {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--on-ground-edge, #000);
+  line-height: var(--prose-line-height, 1.55);
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.portfolio-image-expand__close span {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.portfolio-image-expand__frame--iso .portfolio-image-expand__close {
+  top: calc(var(--chrome-stroke-width) * -0.5);
+  transform: translateY(-50%);
+}
+
+.portfolio-image-expand__frame--iso[class*='ground-'] .portfolio-image-expand__close {
+  background: var(--on-ground-edge);
+  color: #fff;
+}
+
+.portfolio-image-expand__close:focus-visible {
+  outline: 3px solid var(--red-bright);
+  outline-offset: 3px;
+}
+
+/* `display: inline-flex` beats UA [hidden]; force immediate hide on dismiss. */
+.portfolio-image-expand__close[hidden],
+.portfolio-image-expand__close.is-dismissed,
+.portfolio-image-expand.is-collapsing .portfolio-image-expand__close {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (pointer: fine) and (hover: hover) {
+  .portfolio-image-expand__close {
+    display: none;
+  }
+}
+
+.prose-img-iso__caption[hidden] {
+  display: none !important;
+}
+
+.portfolio-image-expand__frame--iso[class*='ground-'] .prose-img-iso__caption {
+  background: var(--on-ground-edge);
+  color: #fff;
+}
+
+html.is-portfolio-image-expanded {
+  overflow: hidden;
+}
+
+.page-reader .prose-img-iso__frame.is-expand-source,
+.page-reader img.prose-img--expandable.is-expand-source {
+  visibility: hidden;
+}
+
+.page-reader .post-card-wrap.is-expand-active > .post-card__title-bleed,
+.page-reader .post-card-wrap.is-expand-active > .post-card > .post-header,
+.page-reader .post-card-wrap.is-expand-active > .post-card > .prose {
+  transition: opacity var(--portfolio-image-expand-ms, 320ms)
+    var(--portfolio-image-expand-ease, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+html.is-portfolio-image-expand-dim
+  .page-reader
+  .post-card-wrap.is-expand-active
+  > .post-card__title-bleed,
+html.is-portfolio-image-expand-dim
+  .page-reader
+  .post-card-wrap.is-expand-active
+  > .post-card
+  > .post-header,
+html.is-portfolio-image-expand-dim
+  .page-reader
+  .post-card-wrap.is-expand-active
+  > .post-card
+  > .prose {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-reader .prose-img--expandable,
+.page-reader .prose-img--expandable-wrap {
+  cursor: zoom-in;
+}
+
+.page-reader .prose-img--expandable-wrap:focus-visible {
+  outline: 3px solid var(--red-bright);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-image-expand__frame.is-animating,
+  .page-reader .post-card-wrap.is-expand-active > .post-card__title-bleed,
+  .page-reader .post-card-wrap.is-expand-active > .post-card > .post-header,
+  .page-reader .post-card-wrap.is-expand-active > .post-card > .prose {
+    transition: none;
+  }
+}
