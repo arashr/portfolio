@@ -84,7 +84,7 @@ Combine with caption text using commas/spaces: `"iso Settings dropdown"`.
 
 ## Site name on the homepage
 
-Edit `content/site.json` for the header title and tagline (not the per-case grid).
+Edit `content/site.json` for the header title and tagline (not the per-case grid). Also set `url` (canonical / Open Graph base, e.g. `https://arash.design/`) and optional `ogTitle` for link-preview titles (falls back to `title`).
 
 ## Homepage aside panel
 
