@@ -57,7 +57,7 @@
   width: var(--glyph-w, 100%);
   height: var(--glyph-h, 100%);
   display: block;
-  opacity: var(--glyph-pattern-opacity, 0.07);
+  opacity: var(--glyph-pattern-opacity, 1);
 }
 
 .post-card__glyph-layer--hero .post-card__glyph-canvas {

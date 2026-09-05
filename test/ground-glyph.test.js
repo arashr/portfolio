@@ -12,58 +12,54 @@ import {
   mergeGroundHeroGlyphIntoConfig
 } from '../lib/resolve-ground-graphics.js';
 import {
-  normalizeGraphicBlendConfig,
+  normalizeGraphicColorConfig,
   resolveTypePatternConfig
 } from '../lib/resolve-graphics-config.js';
 import { resolveHeroGlyphConfig } from '../lib/poster-hero-glyph.js';
 
-test('hero glyph defaults to ground glyph color semantic', () => {
-  assert.equal(HERO_GLYPH_DEFAULTS.color, 'glyph');
+test('hero glyph defaults to a solid color pool', () => {
+  assert.deepEqual(HERO_GLYPH_DEFAULTS.colors, ['#c8102e']);
 });
 
-test('normalizeGraphicBlendConfig expands object blendModes', () => {
-  const flat = normalizeGraphicBlendConfig({
-    blendModes: {
-      overlay: { min: 0.5, max: 0.8 },
-      screen: { min: 0.4, max: 0.6 }
-    }
+test('normalizeGraphicColorConfig expands colors arrays', () => {
+  const flat = normalizeGraphicColorConfig({
+    colors: ['#da93aa', '#eda4c9']
   });
-
-  assert.deepEqual(flat.blendModes, ['overlay', 'screen']);
-  assert.equal(flat.blendOpacity.overlay.min, 0.5);
-  assert.equal(flat.blendOpacity.screen.max, 0.6);
-  assert.equal(flat._blendModesFromMap, true);
+  assert.deepEqual(flat.colors, ['#da93aa', '#eda4c9']);
+  assert.equal(flat.color, '#da93aa');
 });
 
-test('normalizeGraphicBlendConfig unifies color aliases', () => {
-  const flat = normalizeGraphicBlendConfig({ glyphColor: 'display' });
+test('normalizeGraphicColorConfig unifies color aliases into colors[]', () => {
+  const flat = normalizeGraphicColorConfig({ glyphColor: 'display' });
   assert.equal(flat.color, 'display');
+  assert.deepEqual(flat.colors, ['display']);
   assert.equal(flat.glyphColor, undefined);
 });
 
-test('resolveGroundGlyphTokens uses per-ground glyph.color', () => {
+test('resolveGroundGlyphTokens uses per-ground glyph.colors', () => {
   const cfg = setGalleryConfig({
-    theme: { graphics: { glyph: { color: '#C8102E', opacity: 0.07 } } },
+    theme: { graphics: { typePattern: { colors: ['#C8102E'] } } },
     grounds: {
       mint: {
         surface: '#a7dbce',
         foreground: { display: '#004535', body: 'ink' },
-        glyph: { color: '#004535', opacity: 0.12 }
+        glyph: { colors: ['#004535', '#116655'] }
       }
     }
   });
 
   const def = cfg.grounds.mint;
-  const globalGlyph = { color: '#C8102E', opacity: 0.07 };
+  const globalGlyph = { color: '#C8102E', colors: ['#C8102E'], opacity: 1 };
   const tokens = resolveGroundGlyphTokens(def, cfg, globalGlyph);
 
   assert.equal(tokens.color, '#004535');
-  assert.equal(tokens.opacity, 0.12);
+  assert.deepEqual(tokens.colors, ['#004535', '#116655']);
+  assert.equal(tokens.opacity, 1);
 });
 
 test('resolveGroundGlyphTokens falls back to global glyph defaults', () => {
   const cfg = setGalleryConfig({
-    theme: { graphics: { glyph: { color: '#C8102E', opacity: 0.07 } } },
+    theme: { graphics: { typePattern: { colors: ['#C8102E'] } } },
     grounds: {
       lime: {
         surface: '#cfec74',
@@ -74,11 +70,12 @@ test('resolveGroundGlyphTokens falls back to global glyph defaults', () => {
 
   const tokens = resolveGroundGlyphTokens(cfg.grounds.lime, cfg, {
     color: '#C8102E',
-    opacity: 0.07
+    colors: ['#C8102E'],
+    opacity: 1
   });
 
   assert.equal(tokens.color, '#C8102E');
-  assert.equal(tokens.opacity, 0.07);
+  assert.equal(tokens.opacity, 1);
 });
 
 test('normalizeGround hoists glyph from foreground for convenience', () => {
@@ -88,62 +85,40 @@ test('normalizeGround hoists glyph from foreground for convenience', () => {
         surface: '#cfec74',
         foreground: {
           display: '#0c0e10',
-          glyph: { color: '#6E99FF', opacity: 0.09 }
+          glyph: { colors: ['#6E99FF'] }
         }
       }
     }
   });
 
   const lime = getGroundDefs(cfg).lime;
-  assert.equal(lime.glyph.color, '#6E99FF');
+  assert.deepEqual(lime.glyph.colors, ['#6E99FF']);
   assert.equal(lime.foreground.glyph, undefined);
 });
 
 test('buildGroundStylesheet emits per-ground glyph tokens', () => {
   const cfg = setGalleryConfig({
-    theme: { graphics: { glyph: { color: '#C8102E', opacity: 0.07 } } },
+    theme: { graphics: { typePattern: { colors: ['#C8102E'] } } },
     grounds: {
       pink: {
         surface: '#e6c0d6',
         foreground: { display: '#0d0a4f', body: 'ink' },
-        glyph: { color: 'ground-pink-accent' }
+        glyph: { colors: ['#da93aa', '#eda4c9'] }
       }
     }
   });
 
   const css = buildGroundStylesheet(cfg);
-  assert.match(css, /--on-ground-glyph-pattern-color:#5c1028/i);
+  assert.match(css, /--on-ground-glyph-pattern-color:#da93aa/i);
+  assert.match(css, /--on-ground-glyph-pattern-opacity:1/);
 });
 
-test('resolveGroundGlyphTokens uses opacity range midpoint for CSS', () => {
-  const cfg = setGalleryConfig({
-    theme: { graphics: { glyph: { color: '#C8102E', opacity: 0.07 } } },
-    grounds: {
-      white: {
-        surface: '#e7e7eb',
-        foreground: { display: '#2C2781', body: 'ink' },
-        glyph: { opacityMin: 0.2, opacityMax: 0.6 }
-      }
-    }
-  });
-
-  const tokens = resolveGroundGlyphTokens(cfg.grounds.white, cfg, {
-    color: '#C8102E',
-    opacity: 0.07
-  });
-
-  assert.equal(tokens.opacity, 0.4);
-});
-
-test('mergeGroundGlyphIntoPatternConfig overrides blendModes map', () => {
+test('mergeGroundGlyphIntoPatternConfig overrides colors pool', () => {
   const cfg = setGalleryConfig({
     theme: {
       graphics: {
         typePattern: {
-          appearance: { opacityMin: 0.1, opacityMax: 0.2 },
-          blendModes: {
-            multiply: { min: 0.05, max: 0.1 }
-          }
+          colors: ['#c8102e']
         }
       }
     },
@@ -152,12 +127,7 @@ test('mergeGroundGlyphIntoPatternConfig overrides blendModes map', () => {
         surface: '#e7e7eb',
         foreground: { display: '#2C2781', body: 'ink' },
         glyph: {
-          opacityMin: 0.3,
-          opacityMax: 0.5,
-          blendModes: {
-            exclusion: { min: 0.4, max: 0.6 },
-            screen: { min: 0.45, max: 0.55 }
-          }
+          colors: ['#f3f3f5', '#eeeeee']
         }
       }
     }
@@ -166,23 +136,16 @@ test('mergeGroundGlyphIntoPatternConfig overrides blendModes map', () => {
   const base = resolveTypePatternConfig(cfg);
   const merged = mergeGroundGlyphIntoPatternConfig(base, cfg.grounds.white, cfg);
 
-  assert.deepEqual(merged.blendModes, ['exclusion', 'screen']);
-  assert.equal(merged.opacityMin, 0.3);
-  assert.equal(merged.opacityMax, 0.5);
-  assert.equal(merged.blendOpacity.exclusion.min, 0.4);
-  assert.equal(merged.blendOpacity.exclusion.max, 0.6);
-  assert.equal(merged.blendModes.includes('multiply'), false);
+  assert.deepEqual(merged.colors, ['#f3f3f5', '#eeeeee']);
+  assert.equal(merged.color, '#f3f3f5');
 });
 
-test('mergeGroundGlyphIntoPatternConfig keeps global pool when ground has no blendModes', () => {
+test('mergeGroundGlyphIntoPatternConfig keeps global colors when ground has no colors', () => {
   const cfg = setGalleryConfig({
     theme: {
       graphics: {
         typePattern: {
-          blendModes: {
-            multiply: { min: 0.05, max: 0.1 },
-            overlay: { min: 0.5, max: 0.8 }
-          }
+          colors: ['#aa0000', '#00aa00']
         }
       }
     },
@@ -190,7 +153,7 @@ test('mergeGroundGlyphIntoPatternConfig keeps global pool when ground has no ble
       lime: {
         surface: '#cfec74',
         foreground: { display: '#0c0e10', body: 'ink' },
-        glyph: { opacity: 0.09 }
+        glyph: {}
       }
     }
   });
@@ -198,22 +161,15 @@ test('mergeGroundGlyphIntoPatternConfig keeps global pool when ground has no ble
   const base = resolveTypePatternConfig(cfg);
   const merged = mergeGroundGlyphIntoPatternConfig(base, cfg.grounds.lime, cfg);
 
-  assert.deepEqual(merged.blendModes, ['multiply', 'overlay']);
-  assert.equal(merged.blendOpacity.multiply.min, 0.05);
-  assert.equal(merged.blendOpacity.overlay.max, 0.8);
+  assert.deepEqual(merged.colors, ['#aa0000', '#00aa00']);
 });
 
-test('mergeGroundHeroGlyphIntoConfig overrides color and blendModes map', () => {
+test('mergeGroundHeroGlyphIntoConfig overrides colors pool', () => {
   const cfg = setGalleryConfig({
     theme: {
       graphics: {
         heroGlyph: {
-          color: 'glyph',
-          opacityMin: 0.15,
-          opacityMax: 0.25,
-          blendModes: {
-            difference: { min: 0.2, max: 0.4 }
-          }
+          colors: ['#c8102e']
         }
       }
     },
@@ -222,12 +178,7 @@ test('mergeGroundHeroGlyphIntoConfig overrides color and blendModes map', () => 
         surface: '#e7e7eb',
         foreground: { display: '#2C2781', body: 'ink' },
         heroGlyph: {
-          color: 'display',
-          opacityMin: 0.5,
-          opacityMax: 0.7,
-          blendModes: {
-            overlay: { min: 0.6, max: 0.8 }
-          }
+          colors: ['#f3f3f5']
         }
       }
     }
@@ -236,12 +187,8 @@ test('mergeGroundHeroGlyphIntoConfig overrides color and blendModes map', () => 
   const base = resolveHeroGlyphConfig(cfg);
   const merged = mergeGroundHeroGlyphIntoConfig(base, cfg.grounds.white);
 
-  assert.equal(merged.color, 'display');
-  assert.equal(merged.opacityMin, 0.5);
-  assert.equal(merged.opacityMax, 0.7);
-  assert.deepEqual(merged.blendModes, ['overlay']);
-  assert.equal(merged.blendOpacity.overlay.min, 0.6);
-  assert.equal(merged.blendModes.includes('difference'), false);
+  assert.deepEqual(merged.colors, ['#f3f3f5']);
+  assert.equal(merged.color, '#f3f3f5');
 });
 
 test('normalizeGround hoists heroGlyph from foreground for convenience', () => {
@@ -251,13 +198,13 @@ test('normalizeGround hoists heroGlyph from foreground for convenience', () => {
         surface: '#e7e7eb',
         foreground: {
           display: '#2C2781',
-          heroGlyph: { color: 'accent' }
+          heroGlyph: { colors: ['#abcdef'] }
         }
       }
     }
   });
 
   const white = getGroundDefs(cfg).white;
-  assert.equal(white.heroGlyph.color, 'accent');
+  assert.deepEqual(white.heroGlyph.colors, ['#abcdef']);
   assert.equal(white.foreground.heroGlyph, undefined);
 });

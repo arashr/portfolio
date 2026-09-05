@@ -206,7 +206,7 @@
 
   /* ── Graphics ──────────────────────────────────────────────────── */
   --glyph-pattern-color: var(--red);
-  --glyph-pattern-opacity: 0.07;
+  --glyph-pattern-opacity: 1;
 
   /* ── Chrome & elevation ────────────────────────────────────────── */
   --chrome-stroke: var(--ink);

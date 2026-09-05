@@ -12,16 +12,9 @@
         "roll": {
           "probability": 0.4
         },
-        "color": "glyph",
-        "opacityMin": 0.15,
-        "opacityMax": 0.25,
-        "blendModes": {
-          "difference": { "min": 0.2, "max": 0.4 },
-          "exclusion": { "min": 0.2, "max": 0.4 },
-          "screen": { "min": 0.4, "max": 0.6 },
-          "overlay": { "min": 0.5, "max": 0.8 },
-          "color-dodge": { "min": 0.5, "max": 0.7 }
-        },
+        "colors": [
+          "#c8102e"
+        ],
         "text": {
           "lengthMin": 1,
           "lengthMax": 1
@@ -33,7 +26,10 @@
           "offsetXRatioMax": 0.35
         },
         "accessibility": {
-          "excludeTitleFaces": ["ibm-plex-mono", "anton"]
+          "excludeTitleFaces": [
+            "ibm-plex-mono",
+            "anton"
+          ]
         }
       },
       "typePattern": {
@@ -44,15 +40,15 @@
           "pool": "+*-´`=/|#.°^<>",
           "probability": 0.7
         },
-        "blendModes": {
-          "exclusion": { "min": 0.4, "max": 0.6 },
-          "screen": { "min": 0.4, "max": 0.6 },
-          "multiply": { "min": 0.01, "max": 0.08 },
-          "overlay": { "min": 0.3, "max": 0.6 },
-          "color-dodge": { "min": 0.5, "max": 0.99 }
-        },
+        "colors": [
+          "#c8102e"
+        ],
         "shape": {
-          "patternTypes": ["wave", "grid", "fill"],
+          "patternTypes": [
+            "wave",
+            "grid",
+            "fill"
+          ],
           "fillSpace": false,
           "opticalTight": false,
           "followPath": true,
@@ -95,16 +91,18 @@
           "emptySpaceMinRatio": 0.18,
           "regionInsetPx": 12,
           "alignToCardEdge": true,
-          "regionPreference": ["bottom", "between", "top", "right","left"],
+          "regionPreference": [
+            "bottom",
+            "between",
+            "top",
+            "right",
+            "left"
+          ],
           "bottomBandHeightRatio": 2.5,
           "fallbackBandWidth": 88,
           "fallbackSide": "right",
           "sideBandWidthRatio": 2,
           "edgeOverflowPx": 40
-        },
-        "appearance": {
-          "opacityMin": 0.1,
-          "opacityMax": 0.2
         }
       }
     },
@@ -135,207 +133,161 @@
   "grounds": {
     "pink": {
       "glyph": {
-        "opacity": 0.5,
-        "opacityMin": 0.3,
-        "opacityMax": 0.6,
-        "blendModes": {
-          "multiply": { "min": 0.2, "max": 0.3 },
-          "overlay": { "min": 0.4, "max": 0.6 },
-          "color-dodge": { "min": 0.5, "max": 0.9 }
-        }
+        "colors": [
+          "#da93aa",
+          "#eda4c9",
+          "#f8c9f3"
+        ]
+      },
+      "heroGlyph": {
+        "colors": [
+          "#aabbc8",
+          "#c6bed0",
+          "#EEABCE",
+          "#ef9cc5",
+          "#f5c8ef"
+        ]
       }
     },
     "white": {
       "glyph": {
-        "color": "white",
-        "opacity": 0.5,
-        "opacityMin": 0.3,
-        "opacityMax": 0.6,
-        "blendModes": {
-          "screen": { "min": 0.4, "max": 0.6 }
-        }
+        "colors": [
+          "#f3f3f5",
+          "#D0CDFF",
+          "#FFD8EF"
+        ]
       },
       "heroGlyph": {
-        "color": "white",
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "screen": { "min": 0.4, "max": 0.6 }
-        }
+        "colors": [
+          "#f3f3f5",
+          "#D0CDFF",
+          "#FFDEF3"
+        ]
       }
     },
     "lime": {
       "glyph": {
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "exclusion": { "min": 0.4, "max": 0.7 },
-          "screen": { "min": 0.7, "max": 0.9 },
-          "saturation": { "min": 0.6, "max": 0.9 }
-        }
+        "colors": [
+          "#8ae576",
+          "#eded88",
+          "#cfec74"
+        ]
       },
       "heroGlyph": {
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "exclusion": { "min": 0.4, "max": 0.7 },
-          "screen": { "min": 0.7, "max": 0.9 },
-          "saturation": { "min": 0.6, "max": 0.9 }
-        }
+        "colors": [
+          "#8ae576",
+          "#eded88",
+          "#cfec74"
+        ]
       }
     },
     "tangerine": {
       "glyph": {
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "soft-light": { "min": 0.6, "max": 0.8 },
-          "exclusion": { "min": 0.2, "max": 0.4 },
-          "normal": { "min": 0.1, "max": 0.3 },
-          "multiply": { "min": 0.1, "max": 0.3 },
-          "overlay": { "min": 0.3, "max": 0.6 }
-        }
+        "colors": [
+          "#ffae37",
+          "#c3c555",
+          "#f4a349",
+          "#ef903c"
+        ]
       },
       "heroGlyph": {
-        "opacityMin": 0.2,
-        "opacityMax": 0.2,
-        "blendModes": {
-          "soft-light": { "min": 0.6, "max": 0.8 },
-          "normal": { "min": 0.1, "max": 0.3 },
-          "multiply": { "min": 0.1, "max": 0.2 },
-          "overlay": { "min": 0.3, "max": 0.6 }
-        }
+        "colors": [
+          "#ffae37",
+          "#f4a349"
+        ]
       }
     },
     "lilac": {
       "glyph": {
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "screen": { "min": 0.8, "max": 1 },
-          "overlay": { "min": 0.5, "max": 0.8 }
-        }
+        "colors": [
+          "#f3d3f2",
+          "#e5b5e8"
+        ]
       },
       "heroGlyph": {
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "saturation": { "min": 0.6, "max": 0.9 },
-          "screen": { "min": 0.4, "max": 0.8 },
-          "overlay": { "min": 0.5, "max": 0.8 }
-        }
+        "colors": [
+          "#d5d0ef",
+          "#ECB7EF",
+          "#e5b5e8"
+        ]
       }
     },
     "butter": {
       "glyph": {
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-
-          "overlay": { "min": 0.5, "max": 0.8 },
-          "color-dodge": { "min": 0.5, "max": 0.9 }
-        }
+        "colors": [
+          "#fcd52e",
+          "#feef5b"
+        ]
       },
       "heroGlyph": {
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "overlay": { "min": 0.5, "max": 0.8 },
-          "color-dodge": { "min": 0.5, "max": 0.9 }
-        }
+        "colors": [
+          "#fcd52e",
+          "#feef5b"
+        ]
       }
     },
     "mint": {
       "enabled": false,
       "glyph": {
-        "color": "blue",
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "overlay": { "min": 0.2, "max": 0.4 },
-          "color-dodge": { "min": 0.5, "max": 0.9 },
-          "screen": { "min": 0.5, "max": 0.9 },
-          "multiply": { "min": 0.2, "max": 0.3 }
-        }
+        "colors": [
+          "#8dd0dd",
+          "#a7dbf0",
+          "#7da4ce"
+        ]
       },
       "heroGlyph": {
-        "color": "blue",
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "overlay": { "min": 0.2, "max": 0.4 },
-          "color-dodge": { "min": 0.5, "max": 0.9 },
-          "screen": { "min": 0.5, "max": 0.9 },
-          "multiply": { "min": 0.2, "max": 0.3 }
-        }
+        "colors": [
+          "#8dd0dd",
+          "#a7dbf0",
+          "#7da4ce"
+        ]
       }
     },
     "carmine": {
       "glyph": {
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "multiply": { "min": 0.4, "max": 0.6 },
-          "color-dodge": { "min": 0.2, "max": 0.5 }
-        }
+        "colors": [
+          "#a11526",
+          "#cf2945"
+        ]
       },
       "heroGlyph": {
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "multiply": { "min": 0.4, "max": 0.6 },
-          "color-dodge": { "min": 0.2, "max": 0.5 },
-          "screen": { "min": 0.2, "max": 0.4 }
-        }
+        "colors": [
+          "#a11526",
+          "#cf2945"
+        ]
       }
     },
     "green": {
       "glyph": {
-        "color": "yellow",
-        "opacity": 0.2,
-        "opacityMin": 0.1,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "screen": { "min": 0.2, "max": 0.4 },
-          "soft-light": { "min": 0.7, "max": 0.9 },
-          "overlay": { "min": 0.3, "max": 0.5 }
-        }
+        "colors": [
+          "#53cb57",
+          "#3ac457",
+          "#6bd357",
+          "#1cd029",
+          "#0ccb3d"
+        ]
       },
       "heroGlyph": {
-        "color": "yellow",
-        "opacityMin": 0.2,
-        "opacityMax": 0.4,
-        "blendModes": {
-          "screen": { "min": 0.1, "max": 0.4 },
-          "overlay": { "min": 0.1, "max": 0.3 }
-        }
+        "colors": [
+          "#47c857",
+          "#2ED167",
+          "#6bd357",
+          "#0bc446"
+        ]
       }
     },
     "indigo": {
       "glyph": {
-        "color": "red",
-        "opacity": 0.25,
-        "opacityMin": 0.15,
-        "opacityMax": 0.35,
-        "blendModes": {
-          "screen": { "min": 0.3, "max": 0.5 },
-          "overlay": { "min": 0.2, "max": 0.4 }
-        }
+        "colors": [
+          "#73169B",
+          "#341d69"
+        ]
       },
       "heroGlyph": {
-        "color": "red",
-        "opacityMin": 0.15,
-        "opacityMax": 0.3,
-        "blendModes": {
-          "screen": { "min": 0.2, "max": 0.3 },
-          "overlay": { "min": 0.1, "max": 0.2 }
-        }
+        "colors": [
+          "#552a87",
+          "#24156D"
+        ]
       }
     }
   },
@@ -367,15 +319,17 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 80,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 3,
@@ -397,21 +351,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 72,
               "maxPx": 96,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 72,
               "maxLines": 2,
               "maxPxRatio": 0.6
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 18,
               "maxPx": 64,
@@ -434,21 +391,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 72,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 2,
               "maxPxRatio": 0.6
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 18,
               "maxPx": 64,
@@ -471,15 +431,17 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 64,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 3,
@@ -488,7 +450,8 @@
           ]
         }
       },
-      { "id": "ultra",
+      {
+        "id": "ultra",
         "google": "Ultra",
         "lineHeight": "1.02",
         "letterSpacing": "-0.01em",
@@ -500,21 +463,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
+            {
+              "maxChars": 18,
               "maxWidthRatio": 0.45,
               "minPx": 48,
               "maxPx": 72,
               "maxLines": 1,
               "maxPxRatio": 0.55
             },
-            { "maxChars": 42,
+            {
+              "maxChars": 42,
               "maxWidthRatio": 0.45,
               "minPx": 28,
               "maxPx": 48,
               "maxLines": 2,
               "maxPxRatio": 0.55
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 16,
               "maxPx": 40,
@@ -537,21 +503,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 64,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 3,
               "maxPxRatio": 0.6
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 18,
               "maxPx": 64,
@@ -574,21 +543,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 64,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 3,
               "maxPxRatio": 0.6
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 18,
               "maxPx": 64,
@@ -611,15 +583,17 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 64,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 3,
@@ -641,21 +615,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
+            {
+              "maxChars": 18,
               "maxWidthRatio": 0.45,
               "minPx": 48,
               "maxPx": 80,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
+            {
+              "maxChars": 42,
               "maxWidthRatio": 0.34,
               "minPx": 24,
               "maxPx": 56,
               "maxLines": 3,
               "maxPxRatio": 0.6
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 16,
               "maxPx": 48,
@@ -678,21 +655,24 @@
           "slackMinPx": 56,
           "bAspect": 1.412,
           "tiers": [
-            { "maxChars": 18,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 18,
+              "maxWidthRatio": 0.5,
               "minPx": 64,
               "maxPx": 120,
               "maxLines": 1,
               "maxPxRatio": 0.6
             },
-            { "maxChars": 42,
-              "maxWidthRatio": 0.50,
+            {
+              "maxChars": 42,
+              "maxWidthRatio": 0.5,
               "minPx": 32,
               "maxPx": 80,
               "maxLines": 3,
               "maxPxRatio": 0.6
             },
-            { "maxChars": null,
+            {
+              "maxChars": null,
               "maxWidthRatio": 0.22,
               "minPx": 18,
               "maxPx": 64,
@@ -711,7 +691,9 @@
       "slackMinPx": 56,
       "bAspect": 1.412,
       "tiers": [
-        { "maxChars": 18 },
+        {
+          "maxChars": 18
+        },
         {
           "maxChars": 42,
           "maxWidthRatio": 0.34,
@@ -748,15 +730,14 @@
         "minHeight": "66vh"
       },
       "glyph": {
-        "color": "red",
+        "colors": [
+          "#FF008E"
+        ],
         "symbolPool": "/",
         "symbolProbability": 1,
-        "patternTypes": ["fill"],
-        "opacityMin": 1,
-        "opacityMax": 1,
-        "blendModes": {
-          "screen": { "min": 1, "max": 1 }
-        },
+        "patternTypes": [
+          "fill"
+        ],
         "shape": {
           "fillSpace": false,
           "opticalTight": true,
@@ -783,7 +764,9 @@
           "fillRowGapMax": 8
         },
         "placement": {
-          "regionPreference": ["top"],
+          "regionPreference": [
+            "top"
+          ],
           "preferEmptySpace": false,
           "alignToCardEdge": true
         }

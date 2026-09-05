@@ -15,12 +15,12 @@ Single source of truth for poster grounds, layout, motion, graphics, fonts, and 
 
 | Change | What you should see |
 |--------|---------------------|
-| `theme.graphics.glyph.opacity` → `0.2` | Much stronger background letters |
+| `theme.graphics.typePattern.colors` → `["#ff0000"]` | Pattern letters use that solid ink |
 | `theme.graphics.typePattern.roll.noneProbability` → `0` | Every poster gets a pattern (none were skipped before) |
 | `theme.graphics.typePattern.shape.patternTypes` → `["line"]` only | Only straight-line letter paths |
 | `theme.graphics.typePattern.geometry.repeatsMin` / `Max` → `4` / `4` | Fewer, larger gaps between letters |
 | `assets/css/site/01-tokens.css` `--color-ground-*` | Poster surface + foreground palette (edit primaries here) |
-| `grounds.*.glyph` / `heroGlyph` | Per-ground glyph overrides only |
+| `grounds.*.glyph.colors` / `heroGlyph.colors` | Per-ground solid ink pools (random pick per poster) |
 
 If nothing changes: hard-refresh the page (Cmd+Shift+R), re-drop your `.md` file, and confirm the JSON is valid (a parse error keeps the previous config).
 
@@ -119,55 +119,41 @@ Poster graphics are grouped by feature. **`lib/resolve-graphics-config.js`** fla
 
 ```
 theme.graphics
-├── glyph              … shared pattern ink (CSS tokens)
 ├── heroGlyph          … mega background glyph (one per poster roll)
 │   ├── roll
+│   ├── colors[]       … solid fill pool (slug-seeded pick)
 │   ├── text
 │   ├── layout
-│   ├── appearance
 │   └── accessibility
 └── typePattern        … mini canvas patterns
     ├── roll
     ├── symbol
-    ├── blend
+    ├── colors[]       … solid fill pool (slug-seeded pick)
     ├── shape
     ├── geometry
-    ├── placement
-    └── appearance
+    └── placement
 ```
-
-#### `glyph` — shared pattern ink
-
-| Key | Default | Role |
-|-----|---------|------|
-| `color` | `"display"` | Default pattern letter color when a ground omits `glyph.color` |
-| `opacity` | `0.07` | Default pattern strength when a ground omits `glyph.opacity`; also used when `typePattern.appearance` omits `opacityMin`/`opacityMax` |
-
-Per-ground overrides live on each entry in `grounds` (see below). Legacy flat keys `glyphPatternColor` / `glyphPatternOpacity` still merge into the global default.
 
 #### `heroGlyph` — mega background glyph
 
-Random alternative to mini `typePattern` on a poster. Defaults in `lib/poster-hero-glyph.js`. Uses **`typePattern.symbol`** + **`typePattern.blend`**.
+Random alternative to mini `typePattern` on a poster. Defaults in `lib/poster-hero-glyph.js`. Uses **`typePattern.symbol`** for characters.
 
 | Group | Keys | Role |
 |-------|------|------|
 | **`roll`** | `probability` (`0.22`) | Chance per poster (`0`–`1`) |
-| **`color`** | semantic or hex | Fill before blend. `"glyph"` (default) follows each ground’s `glyph.color`; `"display"`, `"accent"`, or hex for overrides |
-| **`opacityMin` / `opacityMax`** | `0`–`1` | Hero glyph strength after blend (fallback when a mode has no entry in `blendModes`) |
-| **`blendModes`** | `{ "<mode>": { "min", "max" }, ... }` | Mode pool + per-mode opacity ranges. Keys are the allowed modes |
+| **`colors`** | hex array | Solid fill pool; one color picked per poster (slug-seeded). Ground `heroGlyph.colors` replaces this pool |
 | **`text`** | `lengthMin` / `lengthMax` | Glyph string length only |
 | **`layout`** | `sizeRatio`, `minVisibleRatio`, `offsetXRatioMin` / `offsetXRatioMax` | Width fraction; minimum visible ink area (`0`–`1`); random horizontal shift |
 | **`accessibility`** | `excludeTitleFaces`, `respectReducedTransparency`, `respectHighContrast` | Face blocklist; OS preference gates |
 
-Symbol source uses **`typePattern.symbol`** (not hero). Blend uses **`heroGlyph.blendModes`** (not pattern).
+Symbol source uses **`typePattern.symbol`** (not hero).
 
 **Quick checks**
 
 | Change | What you should see |
 |--------|---------------------|
 | `heroGlyph.roll.probability` → `1` | Every eligible poster uses a mega-glyph |
-| `heroGlyph.blendModes` → `{ "exclusion": {...}, "overlay": {...} }` | Hero composite pool only |
-| `typePattern.blendModes` → `{ "multiply": {...}, "screen": {...} }` | Mini-pattern composite pool only |
+| `heroGlyph.colors` → `["#ff00aa", "#00ffaa"]` | Heroes alternate between those solids |
 | `heroGlyph.roll.probability` → `0` | Only mini patterns / none |
 
 #### `typePattern` — mini canvas patterns
@@ -178,18 +164,15 @@ One `renderTypePattern` per poster empty region (`lib/type-pattern-poster.js`, `
 |-------|------|------|
 | **`roll`** | `noneProbability` (`0.18`) | Skip pattern entirely on this poster |
 | **`symbol`** | `pool`, `probability` | Character source (`pool` → `symbolPool`). Digits ignored. |
-| **`blendModes`** | `{ "<mode>": { "min", "max" }, ... }` | Pattern composite pool + per-mode opacity. Keys are the allowed modes |
+| **`colors`** | hex array | Solid ink pool for pattern letters; ground `glyph.colors` replaces this pool |
 | **`shape`** | `patternTypes`, `fillSpace`, `opticalTight`, `followPath`, `flipReadable`, `flipAlternateVertical`, `flipAlternateHorizontal` | Pattern geometry + letter behavior |
 | **`geometry`** | `*Min` / `*Max` ranges | `repeats`, `padding`, `tightTracking`, `lineAngle`, `startAngleDeg`, `arcSweepDeg`, `spiralTurns`, `waveAmplitude`, `waveCycles`, `gridColumns`, `gridStaggerProbability`, `fillAngle`, `fillRowGap`, optional `fontSizeMin` / `fontSizeMax` |
 | **`placement`** | `regionPreference`, `preferEmptySpace`, `emptySpaceMinPx`, `emptySpaceMinRatio`, `regionInsetPx`, `alignToCardEdge`, `fallbackBandWidth`, `sideBandWidthRatio`, `fallbackSide`, `edgeOverflowPx` | Where on the card |
 | | `preferEmptySpace` | When `true`, measures title/copy boxes and picks the largest empty band. **Patterns** use any band; **hero glyphs** prefer side/between gaps (not bottom padding on tall cards) and shift toward that band’s center. |
-| **`appearance`** | `opacityMin`, `opacityMax` | Pattern strength after blend (`0`–`1`). Omit both to inherit `glyph.opacity`. Blend applies to the **whole pattern layer** once (letters overlap without stacking blend). |
 
-**Blend modes allowed:** `difference`, `exclusion`, `multiply`, `screen`, `overlay`, `darken`, `lighten`, `color-dodge`, `color-burn`, `hard-light`, `soft-light`.
+Patterns draw at full opacity with solid fills (no canvas blend modes). Re-measure after poster title fitting so bands track the final title height.
 
-Patterns re-measure after poster title fitting so bands track the final title height.
-
-**Legacy flat keys** (e.g. `symbolPool`, `blend.modes` + `blend.opacity`, `patternTypes` at the top level of `typePattern`) still merge; grouped keys win on conflict.
+**Legacy flat keys** (e.g. `symbolPool`, `patternTypes` at the top level of `typePattern`) still merge; grouped keys win on conflict.
 
 ### `theme.code`
 
@@ -224,32 +207,22 @@ To temporarily remove a ground from random/slug selection without deleting its t
 ```json
 "mint": {
   "glyph": {
-    "color": "ground-mint-glyph",
-    "opacity": 0.09
+    "colors": ["#8dd0dd", "#a7dbf0", "#7da4ce"]
   },
   "heroGlyph": {
-    "opacityMin": 0.12,
-    "opacityMax": 0.22,
-    "blendModes": {
-      "exclusion": { "min": 0.2, "max": 0.35 }
-    }
+    "colors": ["#8dd0dd", "#a7dbf0"]
   }
 }
 ```
 
 | Field | Role |
 |-------|------|
-| `glyph.color` | Pattern letter color — `"display"`, `"red"`, `ground-mint-glyph`, or hex; falls back to `theme.graphics.glyph.color` |
-| `glyph.opacity` | CSS pattern strength (`0`–`1`); falls back to global glyph opacity |
-| `glyph.opacityMin` / `glyph.opacityMax` | Canvas blend opacity fallback for type patterns on this ground |
-| `glyph.blendModes` | Restricts type-pattern rolls to these modes on this ground; per-mode `{ min, max }` overrides global opacity for that mode |
-| `heroGlyph.color` | Hero glyph color — semantic (`"glyph"`, `"display"`, `"accent"`) or hex; falls back to global `heroGlyph.color` |
-| `heroGlyph.opacityMin` / `opacityMax` | Hero glyph canvas opacity fallback on this ground |
-| `heroGlyph.blendModes` | Restricts hero-glyph rolls to these modes on this ground; per-mode opacity overrides global |
+| `glyph.colors` | Solid ink pool for type patterns on this ground (slug-seeded pick). Replaces global `typePattern.colors` |
+| `heroGlyph.colors` | Solid ink pool for mega-glyphs on this ground. Replaces global `heroGlyph.colors` |
 | `foreground.*` | Optional overrides (token slugs like `ground-pink-display`); defaults from `lib/ground-tokens.js` |
 | `surface` | Optional override (token slug like `ground-pink`); defaults to ground key name |
 
-Token slugs resolve via `resolveColor()` — same pattern as `ink`, `red`, `paper`.
+Token slugs resolve via `resolveColor()` — same pattern as `ink`, `red`, `paper`. First color in each pool is also written to CSS `--on-ground-glyph-pattern-color` (layer opacity is always `1`).
 
 ---
 
@@ -292,7 +265,7 @@ Homepage name band (`#landing-name`) — independent from reader posters.
 | `layout.titleColumnSpan` | Grid span (1–12) for the title column on desktop |
 | `layout.copyColumnSpan` | Grid span for tagline / copy row |
 | `layout.minHeight` | Band height (e.g. `66vh`) |
-| `glyph` | Pattern overrides — same groups as `theme.graphics.typePattern` (`symbol`, `shape`, `geometry`, `placement`, `appearance` / opacity / blend). Merged on top of the chosen ground |
+| `glyph` | Pattern overrides — same groups as `theme.graphics.typePattern` (`colors`, `symbol`, `shape`, `geometry`, `placement`). Merged on top of the chosen ground |
 
 #### `landing.header.glyph` — fill pattern knobs
 
@@ -300,8 +273,8 @@ When `patternTypes` includes `"fill"` (or is locked to `["fill"]`), these keys m
 
 | Group | Keys | Role |
 |-------|------|------|
+| **colors** | `colors[]` | Solid ink pool for the header pattern |
 | **symbol** | `symbolPool`, `symbolProbability` | Characters drawn; `1` = always pool, never title letter |
-| **appearance** | `opacityMin`, `opacityMax`, `blendModes` | Ink strength / blend |
 | **shape** | `fillSpace`, `opticalTight`, `followPath`, `flipReadable`, `flipAlternateVertical`, `flipAlternateHorizontal` | Dense pack vs path fill; letter flips |
 | **geometry** | `repeatsMin/Max`, `fontSizeMin/Max`, `paddingMin/Max`, `tightTrackingMin/Max`, `gridColumnsMin/Max`, `gridStaggerProbability`, `fillAngleMin/Max`, `fillRowGapMin/Max` | Count, size, columns, brick stagger, tilt, row spacing |
 | **placement** | `regionPreference`, `preferEmptySpace`, `alignToCardEdge`, … | Where the band sits (e.g. top) |
