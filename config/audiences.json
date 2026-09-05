@@ -2,13 +2,13 @@
   "defaultAudience": "default",
   "audiences": {
     "default": {
-      "label": "All case studies",
+      "label": "Product design",
       "cases": [
         "03-atolls-conversion-growth",
-        "02-atolls-design-system-case-study",
-        "01-figlets-mcp",
         "06-zenrooms-hotel-rms",
+        "01-figlets-mcp",
         "05-zenrooms-app",
+        "02-atolls-design-system-case-study",
         "04-zenrooms-conversion-boost"
       ]
     },
@@ -19,7 +19,8 @@
         "06-zenrooms-hotel-rms",
         "01-figlets-mcp",
         "05-zenrooms-app",
-        "02-atolls-design-system-case-study"
+        "02-atolls-design-system-case-study",
+        "04-zenrooms-conversion-boost"
       ]
     },
     "systems": {

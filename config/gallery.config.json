@@ -281,32 +281,39 @@
         "opacityMin": 0.1,
         "opacityMax": 0.3,
         "blendModes": {
-          "multiply": { "min": 0.5, "max": 0.9 },
-          "overlay": { "min": 0.5, "max": 0.8 },
-          "color-dodge": { "min": 0.5, "max": 0.9 }
+          "multiply": { "min": 0.4, "max": 0.6 },
+          "color-dodge": { "min": 0.2, "max": 0.5 }
+        }
+      },
+      "heroGlyph": {
+        "opacityMin": 0.2,
+        "opacityMax": 0.4,
+        "blendModes": {
+          "multiply": { "min": 0.4, "max": 0.6 },
+          "color-dodge": { "min": 0.2, "max": 0.5 },
+          "screen": { "min": 0.2, "max": 0.4 }
         }
       }
     },
     "green": {
       "glyph": {
-        "color": "white",
+        "color": "yellow",
         "opacity": 0.2,
         "opacityMin": 0.1,
         "opacityMax": 0.3,
         "blendModes": {
-          "exclusion": { "min": 0.1, "max": 0.2 },
-          "exclusion": { "min": 0.9, "max": 1 },
+          "screen": { "min": 0.2, "max": 0.4 },
           "soft-light": { "min": 0.7, "max": 0.9 },
-          "overlay": { "min": 0.1, "max": 0.3 }
+          "overlay": { "min": 0.3, "max": 0.5 }
         }
       },
       "heroGlyph": {
-        "color": "white",
+        "color": "yellow",
         "opacityMin": 0.2,
         "opacityMax": 0.4,
         "blendModes": {
-          "exclusion": { "min": 0.05, "max": 0.2 },
-          "overlay": { "min": 0.4, "max": 0.6 }
+          "screen": { "min": 0.1, "max": 0.4 },
+          "overlay": { "min": 0.1, "max": 0.3 }
         }
       }
     },
