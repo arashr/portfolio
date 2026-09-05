@@ -10,7 +10,7 @@
     "graphics": {
       "heroGlyph": {
         "roll": {
-          "probability": 0.4
+          "probability": 0.2
         },
         "colors": [
           "#c8102e"
@@ -154,14 +154,16 @@
         "colors": [
           "#f3f3f5",
           "#D0CDFF",
-          "#FFD8EF"
+          "#FFD8EF",
+          "#F8D1FC"
         ]
       },
       "heroGlyph": {
         "colors": [
           "#f3f3f5",
           "#D0CDFF",
-          "#FFDEF3"
+          "#FFDEF3",
+          "#F8D1FC"
         ]
       }
     },
