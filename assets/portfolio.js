@@ -24,7 +24,6 @@ import {
   fetchAudiencesConfig,
   filterCatalogForLocation
 } from '../lib/portfolio-audiences.js';
-import { copyCodeFromButton, enhanceCodeBlocks } from '../lib/code-blocks.js';
 import { renderPosterGlyphPatterns } from '../lib/poster-glyph-render.js';
 import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupPortfolioImageExpand } from '../lib/portfolio-image-expand.js';
@@ -514,7 +513,6 @@ import { ICONS } from './icons.js';
   }
 
   function enhanceReaderContent() {
-    enhanceCodeBlocks(mainReader, { copyIcon: ICONS.copy });
     injectIcons();
     applyImageTableLayouts(mainReader);
     setupPortfolioImageExpand(mainReader);
@@ -669,21 +667,6 @@ import { ICONS } from './icons.js';
           alert('Could not open this case study.');
         });
       }
-      return;
-    }
-
-    const copyBtn = e.target.closest('.code-block__copy');
-    if (copyBtn) {
-      e.preventDefault();
-      void copyCodeFromButton(copyBtn).then((ok) => {
-        if (!ok) return;
-        copyBtn.classList.add('is-copied');
-        copyBtn.setAttribute('aria-label', 'Copied');
-        window.setTimeout(() => {
-          copyBtn.classList.remove('is-copied');
-          copyBtn.setAttribute('aria-label', 'Copy code');
-        }, 2000);
-      });
       return;
     }
 
