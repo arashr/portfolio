@@ -31,14 +31,18 @@
 }
 
 /*
- * Only the bleed strip stacks above previous copy — never the whole next card
- * (that painted the yellow ground over the previous poster’s prose).
- * Keep overflow-y:hidden on the bleed so the crop window stays a thin band.
+ * Bleed lives on the NEXT wrap. While it exits upward, drop that wrap under the
+ * previous section (z-index 1) so the ghost never covers previous copy — but keep
+ * the bleed above its own card so it still paints over the next section’s top.
  */
+:is(#landing-posters, #posters) > .post-card-wrap.is-bleed-parallax-active {
+  z-index: 0;
+}
+
 :is(#landing-posters, #posters)
   > .post-card-wrap.is-bleed-parallax-active
   > .post-card__title-bleed {
-  z-index: 3;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce) {

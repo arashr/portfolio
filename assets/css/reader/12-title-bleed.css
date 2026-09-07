@@ -1,9 +1,9 @@
 /* Previous poster title ghost — partial-line bleed at section boundary */
 
-/* Keep wrap as positioning context only — do not overflow-x:clip here.
-   CSS pairs overflow axes, so x:clip would force y:clip and slice parallax’d prose. */
+/* Keep wrap as positioning context; baseline z so a later bleed wrap can tuck under. */
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) {
   position: relative;
+  z-index: 1;
 }
 
 .post-card__title-bleed {
@@ -12,7 +12,8 @@
   top: 0;
   left: var(--pad);
   right: var(--pad);
-  z-index: 1;
+  /* Above this section’s card; previous section still wins via wrap z-index. */
+  z-index: 2;
   pointer-events: none;
   user-select: none;
   margin: 0;
