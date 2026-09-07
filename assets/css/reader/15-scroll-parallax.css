@@ -7,7 +7,7 @@
 
 /*
  * Glyphs stay inside the section: the layer box is fixed + overflow hidden;
- * only the canvas inside receives --scroll-parallax-y.
+ * canvas is oversized (full ink + parallax travel) and receives --scroll-parallax-y.
  * Do NOT overflow:clip the whole .post-card — that clips parallax’d copy and causes jumps.
  */
 :is(#landing-name, #landing-posters, #posters) .post-card__glyph-layer,

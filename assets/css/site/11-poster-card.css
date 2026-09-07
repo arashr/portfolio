@@ -61,15 +61,12 @@
 }
 
 .post-card__glyph-layer--hero .post-card__glyph-canvas {
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  /* Overscan box via --glyph-* (full ink); layer overflow clips to the section */
+  left: var(--glyph-x, 0);
+  top: var(--glyph-y, 0);
+  width: var(--glyph-w, 100%);
+  height: var(--glyph-h, 100%);
   opacity: 1;
-}
-
-.post-card__glyph-layer--hero[data-glyph-empty-space='1'] {
-  overflow: visible;
 }
 
 .post-card > *:not(.post-card__glyph-layer) {
