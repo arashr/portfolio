@@ -119,7 +119,13 @@
 
 @media (max-width: 899px) {
   .post-card__title-bleed {
-    font-size: clamp(2.75rem, 14vw, 6rem);
+    /*
+     * Desktop can run ~8–12rem; the same 0.23 reveal there is a thick strip.
+     * On narrow viewports the type is ~3–4rem, so 0.23 ≈ 12px and the ghost
+     * reads as a hairline. Show more of the letter and size up slightly.
+     */
+    --title-bleed-reveal: 0.42;
+    font-size: clamp(3.25rem, 16vw, 7rem);
   }
 }
 
