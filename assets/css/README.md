@@ -46,6 +46,7 @@ Each entry file only `@import`s modules under this directory.
 | `12-title-bleed.css` | Title bleed rhythm between posters |
 | `13-scroll-linked-header.css` | Scroll-linked reader header |
 | `14-grid-overlay.css` | Optional Swiss grid debug overlay (`theme.gridOverlay`) |
+| `15-scroll-parallax.css` | Continuous scroll layer + bleed parallax |
 
 ## portfolio/
 

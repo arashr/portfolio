@@ -1,12 +1,9 @@
 /* Previous poster title ghost — partial-line bleed at section boundary */
 
+/* Keep wrap as positioning context only — do not overflow-x:clip here.
+   CSS pairs overflow axes, so x:clip would force y:clip and slice parallax’d prose. */
 :is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) {
   position: relative;
-  overflow-x: clip;
-}
-
-:is(#posters, #landing-posters) > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
-  overflow-x: clip;
 }
 
 .post-card__title-bleed {

@@ -264,10 +264,10 @@ test('bundled config white ground solid color pools', () => {
   assert.equal(tokens.opacity, 1);
 
   const merged = mergeGroundGlyphIntoPatternConfig(base, defs.white, cfg);
-  assert.deepEqual(merged.colors, ['#f3f3f5']);
+  assert.deepEqual(merged.colors, ['#f3f3f5', '#D0CDFF', '#FFD8EF', '#F8D1FC']);
 
   const hero = mergeGroundHeroGlyphIntoConfig(resolveHeroGlyphConfig(cfg), defs.white);
-  assert.deepEqual(hero.colors, ['#f3f3f5']);
+  assert.deepEqual(hero.colors, ['#f3f3f5', '#D0CDFF', '#FFDEF3', '#F8D1FC']);
 });
 
 test('bundled config pink ground glyph color pools', () => {

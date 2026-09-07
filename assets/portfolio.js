@@ -29,6 +29,7 @@ import { applyImageTableLayouts } from '../lib/image-table-layout.js';
 import { setupPortfolioImageExpand } from '../lib/portfolio-image-expand.js';
 import { snapPosterRows } from '../lib/poster-row-snap.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
+import { initScrollParallax } from '../lib/scroll-parallax.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
 import { ICONS } from './icons.js';
 
@@ -83,6 +84,7 @@ import { ICONS } from './icons.js';
   let currentRelativePath = '';
   /** @type {(() => void) | null} */
   let scrollLinkedHeaderTeardown = null;
+  let scrollParallax = null;
 
   function historyUrl(hash) {
     return appUrlForAudience(audiencesConfig, hash);
@@ -178,6 +180,21 @@ import { ICONS } from './icons.js';
   function teardownScrollLinkedHeader() {
     scrollLinkedHeaderTeardown?.();
     scrollLinkedHeaderTeardown = null;
+  }
+
+  function ensureScrollParallax() {
+    if (!scrollParallax) {
+      scrollParallax = initScrollParallax({
+        getConfig: () => getGalleryConfig().theme?.scrollParallax,
+        prefersReducedMotion
+      });
+    }
+    scrollParallax.start();
+  }
+
+  function refreshScrollParallax() {
+    ensureScrollParallax();
+    scrollParallax?.refresh();
   }
 
   function readAnchorOffsetPx() {
@@ -280,6 +297,7 @@ import { ICONS } from './icons.js';
       applyPosterTitlePlay(posterEls, cfg);
       snapPosterRows(posterEls, resolveRowSnap(cfg));
       renderGlyphs();
+      refreshScrollParallax();
       updateTocLayout();
     });
   }
@@ -316,6 +334,7 @@ import { ICONS } from './icons.js';
       applyPosterTitlePlay(cards, cfg);
       snapPosterRows(cards, resolveRowSnap(cfg));
       renderPosterGlyphPatterns(cards, cfg);
+      refreshScrollParallax();
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
           const readyCards = landingGlyphEls();
@@ -323,6 +342,7 @@ import { ICONS } from './icons.js';
           applyPosterTitlePlay(readyCards, cfg);
           snapPosterRows(readyCards, resolveRowSnap(cfg));
           renderPosterGlyphPatterns(readyCards, cfg);
+          refreshScrollParallax();
         });
       }
     });
@@ -567,6 +587,7 @@ import { ICONS } from './icons.js';
     cancelScrollAnchorAdjustments();
     window.scrollTo({ top: 0, behavior: 'auto' });
     setupScrollLinkedHeader();
+    refreshScrollParallax();
   }
 
   async function openCaseStudy(relativePath, { updateHistory = true } = {}) {

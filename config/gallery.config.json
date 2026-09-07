@@ -3,6 +3,16 @@
     "customCursor": {
       "enabled": true
     },
+    "scrollParallax": {
+      "enabled": true,
+      "titleRatio": 0.08,
+      "contentRatio": 0.02,
+      "glyphRatio": 0.2,
+      "bleedRatio": 0.2,
+      "bleedMaxVh": 0.1,
+      "easing": "easeOut",
+      "bleedEasing": "easeIn"
+    },
     "layout": {
       "measure": "65ch",
       "posterWidth": "42rem"

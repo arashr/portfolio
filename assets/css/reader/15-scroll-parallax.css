@@ -1,0 +1,49 @@
+/* Continuous scroll parallax — layer drift + title-bleed handoff */
+
+:is(#landing-name, #landing-posters, #posters) [data-scroll-parallax] {
+  will-change: transform;
+  transform: translate3d(0, var(--scroll-parallax-y, 0px), 0);
+}
+
+/*
+ * Glyphs stay inside the section: the layer box is fixed + overflow hidden;
+ * only the canvas inside receives --scroll-parallax-y.
+ * Do NOT overflow:clip the whole .post-card — that clips parallax’d copy and causes jumps.
+ */
+:is(#landing-name, #landing-posters, #posters) .post-card__glyph-layer,
+:is(#landing-name, #landing-posters, #posters) .post-card__glyph-layer--hero,
+:is(#landing-name, #landing-posters, #posters)
+  .post-card__glyph-layer--hero[data-glyph-empty-space='1'] {
+  overflow: hidden;
+}
+
+/* Bleed already uses translateY for the crop reveal — stack parallax on top */
+:is(#landing-posters, #posters) > .post-card-wrap > .post-card__title-bleed[data-scroll-parallax='bleed'] {
+  transform: translate3d(0, var(--scroll-parallax-y, 0px), 0);
+}
+
+:is(#landing-posters, #posters)
+  > .post-card-wrap
+  > .post-card__title-bleed[data-scroll-parallax='bleed']
+  .post-card__title-bleed-text {
+  /* keep the existing crop reveal; parent moves the window */
+  transform: translateY(calc(-100% * (1 - var(--title-bleed-reveal, 0.3))));
+}
+
+/*
+ * Only the bleed strip stacks above previous copy — never the whole next card
+ * (that painted the yellow ground over the previous poster’s prose).
+ * Keep overflow-y:hidden on the bleed so the crop window stays a thin band.
+ */
+:is(#landing-posters, #posters)
+  > .post-card-wrap.is-bleed-parallax-active
+  > .post-card__title-bleed {
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(#landing-name, #landing-posters, #posters) [data-scroll-parallax] {
+    transform: none !important;
+    will-change: auto;
+  }
+}
