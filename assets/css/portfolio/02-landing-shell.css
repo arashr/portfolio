@@ -348,6 +348,11 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
   margin: 0;
 }
 
+.landing-foot__note {
+  margin: 0.45rem 0 0;
+  max-width: 42rem;
+}
+
 .landing-foot code {
   font-family: inherit;
   font-size: inherit;
