@@ -70,8 +70,21 @@ cp .env.example .env
 
 ## Enable in production CI
 
+GitHub Pages builds via `.github/workflows/pages.yml`. Add repository secrets:
+
+| Secret | Value |
+|--------|--------|
+| `POSTHOG_PROJECT_TOKEN` | your `phc_…` project token |
+| `POSTHOG_ENABLED` | `true` |
+
+Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
+
+Then push to `main` (or run **Deploy GitHub Pages** manually). The build writes the token into `dist/config/analytics.json` only — it is never committed.
+
 ```bash
+# Local prod smoke-test (uses analytics.local.json and/or .env)
 POSTHOG_PROJECT_TOKEN=phc_… POSTHOG_ENABLED=true npm run build:production
+npm run preview:prod
 ```
 
 ## Options (`config/analytics.json`)

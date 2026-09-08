@@ -35,6 +35,9 @@ jobs:
         run: npm ci
 
       - name: Build production bundle
+        env:
+          POSTHOG_PROJECT_TOKEN: ${{ secrets.POSTHOG_PROJECT_TOKEN }}
+          POSTHOG_ENABLED: ${{ secrets.POSTHOG_ENABLED }}
         run: npm run build:production
 
       # Re-runs can leave a stale artifact on this workflow run; see upload-pages-artifact#97
