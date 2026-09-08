@@ -514,6 +514,7 @@ import { ICONS } from './icons.js';
   function goHome() {
     endCaseReadingSession({ reason: 'home' });
     showLanding();
+    startCaseReadingSession('landing');
     history.pushState({ view: 'home', audience: activeAudienceId(audiencesConfig) }, '', historyUrl('#'));
     trackPageview('/', { view: 'home' });
     track('case_study_home', {
@@ -568,6 +569,7 @@ import { ICONS } from './icons.js';
     }
     const items = await resolveCaseStudyItems({ cases: paths }, undefined, { cacheBust });
     renderHomeGallery(items, aside);
+    startCaseReadingSession('landing');
   }
 
   function enhanceReaderContent() {
@@ -577,9 +579,7 @@ import { ICONS } from './icons.js';
   }
 
   function openMarkdown(text, relativePath, { updateHistory = true, source = 'unknown' } = {}) {
-    if (currentRelativePath && currentRelativePath !== relativePath) {
-      endCaseReadingSession({ reason: 'navigate' });
-    }
+    endCaseReadingSession({ reason: 'navigate' });
     const filename = relativePath.split('/').pop() || relativePath;
     currentRelativePath = relativePath;
     setRenderContentPath(relativePath);
@@ -694,6 +694,41 @@ import { ICONS } from './icons.js';
     readerContentResize.observe(mainReader);
   }
 
+  function resolveExternalLinkPlacement(anchor) {
+    if (!(anchor instanceof Element)) return 'other';
+    if (anchor.closest('.landing-foot')) return 'footer';
+    if (anchor.closest('#reader-header-link, .reader-header__meta-aside')) return 'reader_header';
+    if (anchor.closest('.site-header')) return 'header';
+    if (anchor.closest('#main-reader, .prose')) return 'case_body';
+    if (anchor.closest('#landing')) return 'landing';
+    return 'other';
+  }
+
+  function trackExternalLinkClick(anchor) {
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+    const href = anchor.getAttribute('href');
+    if (!href || !isExternalHref(href) || /^javascript:/i.test(href.trim())) return;
+    track('external_link_click', {
+      href: anchor.href || href,
+      label: (anchor.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80),
+      placement: resolveExternalLinkPlacement(anchor),
+      case_path: currentRelativePath || undefined,
+      audience: document.documentElement.dataset.audience || undefined
+    });
+  }
+
+  // Capture so chrome links (header/footer) and reader intercepts are all counted.
+  document.addEventListener(
+    'click',
+    (e) => {
+      if (!(e.target instanceof Element)) return;
+      const a = e.target.closest('a[href]');
+      if (!a) return;
+      trackExternalLinkClick(a);
+    },
+    true
+  );
+
   landingGalleryGrid?.addEventListener('click', (e) => {
     const pick = e.target.closest('.landing-pick-card[data-md-path]');
     if (!pick) return;
@@ -709,13 +744,15 @@ import { ICONS } from './icons.js';
     const state = e.state || {};
     const view = state.view || (location.hash === '#read' ? 'read' : 'home');
     if (view === 'read' && state.file) {
-      void openCaseStudy(state.file, { updateHistory: false, source: 'history' }).catch(() =>
-        showLanding()
-      );
+      void openCaseStudy(state.file, { updateHistory: false, source: 'history' }).catch(() => {
+        showLanding();
+        startCaseReadingSession('landing');
+      });
       return;
     }
     endCaseReadingSession({ reason: 'history_home' });
     showLanding();
+    startCaseReadingSession('landing');
     trackPageview('/', { view: 'home', source: 'history' });
   });
 

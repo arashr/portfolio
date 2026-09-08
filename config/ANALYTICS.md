@@ -23,12 +23,14 @@ This is not legal advice. You still need a privacy notice if you process visitor
 | `$pageview` | Landing load + SPA navigations |
 | `landing_view` | Home gallery rendered (includes `audience`, case count) |
 | `case_study_open` | Case opened (`source`: `landing_card`, `more_cases`, `in_doc_link`, `history`) |
-| `case_study_leave` | Leave a case (duration + max scroll depth) |
 | `case_study_home` | Brand / home control back to landing |
-| `scroll_depth` | 25 / 50 / 75 / 100% while reading |
+| `scroll_depth` | 25 / 50 / 75 / 100% on landing (`page: landing`) and case studies (`case_path`) |
+| `page_leave` | Leave landing or a case (duration + max scroll depth) |
+| `case_study_leave` | Leave a case only (legacy; same stats as `page_leave` for cases) |
 | `section_view` | Active poster / hero section changes |
 | `toc_toggle` / `toc_navigate` | Contents panel |
 | `image_expand` / `image_collapse` | In-reader image expand |
+| `external_link_click` | Outbound links (`href`, `label`, `placement`: `footer`, `reader_header`, `case_body`, …) |
 | `back_to_top` | Back-to-top control |
 
 **Useful PostHog setup after data flows:** funnel `landing_view` → `case_study_open` → `scroll_depth` (50) → `image_expand`; breakdown case opens by `source` and `audience`.
