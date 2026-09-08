@@ -11,7 +11,7 @@
     "cookielessMode": "always",
     "personProfiles": "never",
     "persistence": "memory",
-    "respectDnt": true,
+    "respectDnt": false,
     "scrollDepthMarks": [25, 50, 75, 100]
   }
 }

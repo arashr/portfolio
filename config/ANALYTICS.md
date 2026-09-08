@@ -93,5 +93,5 @@ npm run preview:prod
 - `personProfiles` — `"never"` with cookieless (recommended)
 - `apiHost` / `uiHost` — EU defaults
 - `autocapture` / `sessionRecording` — off by default (session replay needs cookies + consent)
-- `respectDnt` — skips init when Do Not Track is on
+- `respectDnt` — default `false` (set `true` if you want to honor browser Do Not Track)
 - `scrollDepthMarks` — default `[25, 50, 75, 100]`
