@@ -4,6 +4,8 @@ Single source of truth for poster grounds, layout, motion, graphics, fonts, and 
 
 **Audience presets** (homepage order / soft-hide per role) live in a sibling file: [`audiences.json`](./audiences.json). See `content/CONTENT.md` → Audience presets. Loaded by `lib/portfolio-audiences.js` via `?for=`.
 
+**Analytics (PostHog EU):** [`analytics.json`](./analytics.json) + [`ANALYTICS.md`](./ANALYTICS.md). Disabled by default; never commit personal API keys.
+
 ## Applying edits
 
 1. Run the app with **`npm start`** and open **http://localhost:3000** (not `file://` — the config is loaded via `fetch`).

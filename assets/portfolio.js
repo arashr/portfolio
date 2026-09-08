@@ -30,6 +30,13 @@ import { setupPortfolioImageExpand } from '../lib/portfolio-image-expand.js';
 import { snapPosterRows } from '../lib/poster-row-snap.js';
 import { collectScrollSections, initScrollLinkedHeader } from '../lib/scroll-linked-header.js';
 import { initScrollParallax } from '../lib/scroll-parallax.js';
+import {
+  endCaseReadingSession,
+  initAnalytics,
+  startCaseReadingSession,
+  track,
+  trackPageview
+} from '../lib/analytics.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
 import { ICONS } from './icons.js';
 
@@ -150,6 +157,11 @@ import { ICONS } from './icons.js';
     const el = id && document.getElementById(id);
     if (el) scrollToEl(el);
     closeTocPanel();
+    track('toc_navigate', {
+      section_id: id || '',
+      case_path: currentRelativePath || undefined,
+      audience: document.documentElement.dataset.audience || undefined
+    });
   }
 
   function readCssLengthPx(token, fallback = 0) {
@@ -174,7 +186,24 @@ import { ICONS } from './icons.js';
     const header = readerHeaderEl();
     if (!header || reader.hidden) return;
     const sections = collectScrollSections(mainReader);
-    scrollLinkedHeaderTeardown = initScrollLinkedHeader({ header, sections, root: mainReader });
+    scrollLinkedHeaderTeardown = initScrollLinkedHeader({
+      header,
+      sections,
+      root: mainReader,
+      onSectionChange: (section, id) => {
+        if (!currentRelativePath) return;
+        const title =
+          section.querySelector('.post-title')?.textContent?.trim() ||
+          section.querySelector('.collection-hero')?.textContent?.trim() ||
+          id;
+        track('section_view', {
+          case_path: currentRelativePath,
+          section_id: id,
+          section_title: title.slice(0, 120),
+          audience: document.documentElement.dataset.audience || undefined
+        });
+      }
+    });
   }
 
   function teardownScrollLinkedHeader() {
@@ -483,8 +512,13 @@ import { ICONS } from './icons.js';
   }
 
   function goHome() {
+    endCaseReadingSession({ reason: 'home' });
     showLanding();
     history.pushState({ view: 'home', audience: activeAudienceId(audiencesConfig) }, '', historyUrl('#'));
+    trackPageview('/', { view: 'home' });
+    track('case_study_home', {
+      audience: activeAudienceId(audiencesConfig) || undefined
+    });
   }
 
   function applySiteConfig(site) {
@@ -524,6 +558,10 @@ import { ICONS } from './icons.js';
     }
     const { paths, audienceId } = filterCatalogForLocation(index.cases, audiencesConfig);
     document.documentElement.dataset.audience = audienceId;
+    track('landing_view', {
+      audience: audienceId,
+      case_count: paths.length
+    });
     if (!paths.length) {
       renderEmptyHome();
       return;
@@ -538,7 +576,10 @@ import { ICONS } from './icons.js';
     setupPortfolioImageExpand(mainReader);
   }
 
-  function openMarkdown(text, relativePath, { updateHistory = true } = {}) {
+  function openMarkdown(text, relativePath, { updateHistory = true, source = 'unknown' } = {}) {
+    if (currentRelativePath && currentRelativePath !== relativePath) {
+      endCaseReadingSession({ reason: 'navigate' });
+    }
     const filename = relativePath.split('/').pop() || relativePath;
     currentRelativePath = relativePath;
     setRenderContentPath(relativePath);
@@ -588,18 +629,27 @@ import { ICONS } from './icons.js';
     window.scrollTo({ top: 0, behavior: 'auto' });
     setupScrollLinkedHeader();
     refreshScrollParallax();
+    startCaseReadingSession(relativePath);
+    trackPageview('/#read', { view: 'read', case_path: relativePath });
+    track('case_study_open', {
+      case_path: relativePath,
+      case_title: doc.title || filename,
+      source,
+      audience: activeAudienceId(audiencesConfig) || undefined,
+      poster_count: posterEls.length
+    });
   }
 
-  async function openCaseStudy(relativePath, { updateHistory = true } = {}) {
+  async function openCaseStudy(relativePath, { updateHistory = true, source = 'unknown' } = {}) {
     const { text, relativePath: path } = await fetchBundledMarkdown(relativePath);
-    openMarkdown(text, path, { updateHistory });
+    openMarkdown(text, path, { updateHistory, source });
   }
 
   async function followLocalMarkdownLink(href) {
     const targetPath = resolveRelativeMarkdownPath(currentRelativePath, href);
     if (!targetPath) return;
     try {
-      await openCaseStudy(targetPath);
+      await openCaseStudy(targetPath, { source: 'in_doc_link' });
     } catch (err) {
       console.error(err);
       alert(`Could not open "${targetPath}".`);
@@ -607,6 +657,7 @@ import { ICONS } from './icons.js';
   }
 
   async function boot() {
+    await initAnalytics();
     await reloadGalleryConfig();
     injectIcons();
     setupCustomCursor();
@@ -648,7 +699,7 @@ import { ICONS } from './icons.js';
     if (!pick) return;
     const path = pick.getAttribute('data-md-path');
     if (!path) return;
-    void openCaseStudy(path).catch((err) => {
+    void openCaseStudy(path, { source: 'landing_card' }).catch((err) => {
       console.error(err);
       alert('Could not open this case study.');
     });
@@ -658,10 +709,18 @@ import { ICONS } from './icons.js';
     const state = e.state || {};
     const view = state.view || (location.hash === '#read' ? 'read' : 'home');
     if (view === 'read' && state.file) {
-      void openCaseStudy(state.file, { updateHistory: false }).catch(() => showLanding());
+      void openCaseStudy(state.file, { updateHistory: false, source: 'history' }).catch(() =>
+        showLanding()
+      );
       return;
     }
+    endCaseReadingSession({ reason: 'history_home' });
     showLanding();
+    trackPageview('/', { view: 'home', source: 'history' });
+  });
+
+  window.addEventListener('pagehide', () => {
+    endCaseReadingSession({ reason: 'pagehide' });
   });
 
   mainReader.addEventListener('touchstart', (e) => {
@@ -683,7 +742,7 @@ import { ICONS } from './icons.js';
     if (morePick) {
       const path = morePick.getAttribute('data-md-path');
       if (path) {
-        void openCaseStudy(path).catch((err) => {
+        void openCaseStudy(path, { source: 'more_cases' }).catch((err) => {
           console.error(err);
           alert('Could not open this case study.');
         });
@@ -729,6 +788,10 @@ import { ICONS } from './icons.js';
     const open = !tocPanel.classList.contains('is-open');
     tocPanel.classList.toggle('is-open', open);
     tocToggle.setAttribute('aria-expanded', String(open));
+    track('toc_toggle', {
+      open,
+      case_path: currentRelativePath || undefined
+    });
   });
 
   document.addEventListener('click', (e) => {
@@ -745,7 +808,10 @@ import { ICONS } from './icons.js';
     backToTop?.classList.toggle('visible', window.scrollY > 300);
   }, { passive: true });
 
-  backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  backToTop?.addEventListener('click', () => {
+    track('back_to_top', { case_path: currentRelativePath || undefined });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
   let resizeTimer;
   let configReloadTimer;

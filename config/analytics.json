@@ -1,0 +1,17 @@
+{
+  "posthog": {
+    "enabled": false,
+    "projectToken": "",
+    "apiHost": "https://eu.i.posthog.com",
+    "uiHost": "https://eu.posthog.com",
+    "capturePageviews": true,
+    "capturePageleaves": true,
+    "autocapture": false,
+    "sessionRecording": false,
+    "cookielessMode": "always",
+    "personProfiles": "never",
+    "persistence": "memory",
+    "respectDnt": true,
+    "scrollDepthMarks": [25, 50, 75, 100]
+  }
+}

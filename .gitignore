@@ -6,6 +6,9 @@ node_modules/
 .env.*
 !.env.example
 
+# Local analytics overrides (may contain a PostHog project token)
+config/analytics.local.json
+
 # Logs & debug
 *.log
 npm-debug.log*

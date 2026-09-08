@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
 import { buildImageVariants } from '../lib/image-variants-node.js';
 import { buildSocialMetaTags } from '../lib/social-meta.js';
+import { loadAnalyticsConfigForBuild } from '../lib/analytics-config-node.js';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distRoot = join(repoRoot, 'dist');
@@ -71,6 +72,19 @@ async function bundleAssets() {
 function copyStaticFiles() {
   cpSync(join(repoRoot, 'content'), join(distRoot, 'content'), { recursive: true });
   cpSync(join(repoRoot, 'config'), join(distRoot, 'config'), { recursive: true });
+  // Never ship local override files; write the resolved public analytics config instead.
+  rmSync(join(distRoot, 'config/analytics.local.json'), { force: true });
+  const analytics = loadAnalyticsConfigForBuild(repoRoot, process.env);
+  writeFileSync(
+    join(distRoot, 'config/analytics.json'),
+    `${JSON.stringify(analytics, null, 2)}\n`,
+    'utf8'
+  );
+  if (analytics.posthog.enabled) {
+    console.log('  Analytics: PostHog enabled (EU)');
+  } else {
+    console.log('  Analytics: PostHog disabled (set POSTHOG_PROJECT_TOKEN + POSTHOG_ENABLED, or config/analytics.local.json)');
+  }
 
   for (const file of [
     'robots.txt',
