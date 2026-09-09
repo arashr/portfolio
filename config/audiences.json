@@ -57,6 +57,17 @@
         "06-zenrooms-hotel-rms",
         "03-atolls-conversion-growth"
       ]
+    },
+    "workflows": {
+      "label": "B2B workflows & systems",
+      "cases": [
+        "06-zenrooms-hotel-rms",
+        "02-atolls-design-system-case-study",
+        "01-figlets-mcp",
+        "03-atolls-conversion-growth",
+        "05-zenrooms-app",
+        "04-zenrooms-conversion-boost"
+      ]
     }
   }
 }
