@@ -3,6 +3,7 @@ title: Hotel Revenue Management System
 description: Turning a complex hotel pricing algorithm into a B2B tool that hoteliers could use directly
 year: 2021
 role: Lead Product Designer
+ground: butter
 ---
 
 # Hotel Revenue Management System
