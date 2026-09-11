@@ -13,6 +13,12 @@
       "easing": "easeOut",
       "bleedEasing": "easeIn"
     },
+    "risograph": {
+      "enabled": true,
+      "grainAmount": 0.5,
+      "misregistration": 3.0,
+      "strength": 0.46
+    },
     "layout": {
       "measure": "65ch",
       "posterWidth": "42rem"

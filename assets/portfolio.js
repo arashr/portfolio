@@ -38,6 +38,7 @@ import {
   trackPageview
 } from '../lib/analytics.js';
 import { mountCustomCursor } from '../lib/custom-cursor.js';
+import { applyRisographEffects } from '../lib/risograph-effect.js';
 import { ICONS } from './icons.js';
 
 (function () {
@@ -314,7 +315,9 @@ import { ICONS } from './icons.js';
   }
 
   function renderGlyphs() {
-    renderPosterGlyphPatterns(posterEls, getGalleryConfig());
+    const cfg = getGalleryConfig();
+    renderPosterGlyphPatterns(posterEls, cfg);
+    applyRisographEffects(document, cfg);
   }
 
   function schedulePosterTitleFit() {
@@ -363,6 +366,7 @@ import { ICONS } from './icons.js';
       applyPosterTitlePlay(cards, cfg);
       snapPosterRows(cards, resolveRowSnap(cfg));
       renderPosterGlyphPatterns(cards, cfg);
+      applyRisographEffects(document, cfg);
       refreshScrollParallax();
       if (document.fonts?.ready) {
         document.fonts.ready.then(() => {
@@ -371,6 +375,7 @@ import { ICONS } from './icons.js';
           applyPosterTitlePlay(readyCards, cfg);
           snapPosterRows(readyCards, resolveRowSnap(cfg));
           renderPosterGlyphPatterns(readyCards, cfg);
+          applyRisographEffects(document, cfg);
           refreshScrollParallax();
         });
       }
@@ -384,8 +389,10 @@ import { ICONS } from './icons.js';
   function fitReaderMoreCases() {
     const miniPosters = readerMoreMiniPosterEls();
     if (!miniPosters.length) return;
-    fitMiniPosterTitles(miniPosters, getGalleryConfig());
-    renderPosterGlyphPatterns(miniPosters, getGalleryConfig());
+    const cfg = getGalleryConfig();
+    fitMiniPosterTitles(miniPosters, cfg);
+    renderPosterGlyphPatterns(miniPosters, cfg);
+    applyRisographEffects(document, cfg);
   }
 
   function quietReaderLayoutObservers() {

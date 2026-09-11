@@ -1,0 +1,39 @@
+/* Riso fringe on titles only; sparse canvas noise over the whole site */
+
+.post-card--riso-title > .post-header {
+  overflow: visible;
+}
+
+.post-card--riso-title > .post-header .poster__title {
+  filter: var(--riso-title-filter, none);
+}
+
+.riso-site-grain {
+  position: fixed;
+  inset: 0;
+  /* Above page content; below custom cursor (200000) */
+  z-index: 150000;
+  pointer-events: none;
+}
+
+.riso-site-grain__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: soft-light;
+  opacity: 0.85;
+}
+
+@media print {
+  .post-card--riso-title > .post-header {
+    overflow: hidden;
+  }
+
+  .post-card--riso-title > .post-header .poster__title {
+    filter: none;
+  }
+
+  .riso-site-grain {
+    display: none;
+  }
+}
