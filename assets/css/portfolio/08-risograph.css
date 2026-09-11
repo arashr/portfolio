@@ -1,17 +1,132 @@
-/* Riso fringe on titles only; sparse canvas noise over the whole site */
+/* Site grain + per-target riso fringes (titles / headings / chrome borders & shadows) */
 
-.post-card--riso-title > .post-header {
+.post-card--riso > .post-header {
   overflow: visible;
 }
 
-.post-card--riso-title > .post-header .poster__title {
-  filter: var(--riso-title-filter, none);
+.post-card--riso > .post-header .poster__title {
+  filter: var(--riso-filter-posterTitle, none);
+}
+
+.post-card--riso > .prose.post-body :is(h2, h3, h4) {
+  filter: var(--riso-filter-heading, none);
+}
+
+/* --- Iso frame: border + shadow on filtered pseudos; img stays clean --- */
+.post-card--riso .prose-img-iso__frame {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.post-card--riso .prose-img-iso__frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: var(--chrome-stroke-width) solid var(--on-ground-edge, var(--hair));
+  filter: var(--riso-filter-imageBorder, none);
+}
+
+.post-card--riso .prose-img-iso__frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: var(--poster-ink-shadow, var(--chrome-ink-shadow));
+  filter: var(--riso-filter-isoShadow, none);
+}
+
+.post-card--riso .prose-img-iso__frame > img {
+  position: relative;
+  z-index: 1;
+}
+
+/* Caption badge (label chrome, not the photo) */
+.post-card--riso .prose-img-iso__caption {
+  z-index: 3;
+  filter: var(--riso-filter-imageCaption, none);
+}
+
+/* --- Expanded iso: same border / shadow / caption filters (vars on html.has-riso) --- */
+html.has-riso .portfolio-image-expand__frame--iso {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+html.has-riso .portfolio-image-expand__frame--iso::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: var(--chrome-stroke-width) solid var(--on-ground-edge, var(--hair));
+  filter: var(--riso-filter-imageBorder, none);
+}
+
+html.has-riso .portfolio-image-expand__frame--iso::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: var(--poster-ink-shadow, var(--chrome-ink-shadow));
+  filter: var(--riso-filter-isoShadow, none);
+}
+
+html.has-riso .portfolio-image-expand__frame--iso > .portfolio-image-expand__img {
+  position: relative;
+  z-index: 1;
+}
+
+html.has-riso .portfolio-image-expand__frame--iso > .prose-img-iso__caption {
+  z-index: 3;
+  filter: var(--riso-filter-imageCaption, none);
+}
+
+html.has-riso .portfolio-image-expand__frame--iso > .portfolio-image-expand__close {
+  z-index: 4;
+}
+
+/* --- Table wrap: outer border + ink shadow only (cells/content unfiltered) --- */
+.post-card--riso .prose .table-wrap {
+  position: relative;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.post-card--riso .prose .table-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  pointer-events: none;
+  border: var(--chrome-stroke-width) solid var(--on-ground-edge, var(--hair));
+  filter: var(--riso-filter-tableBorder, none);
+}
+
+.post-card--riso .prose .table-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: var(--poster-ink-shadow, var(--chrome-ink-shadow));
+  filter: var(--riso-filter-isoShadow, none);
+}
+
+.post-card--riso .prose .table-wrap > table {
+  position: relative;
+  z-index: 1;
 }
 
 .riso-site-grain {
   position: fixed;
   inset: 0;
-  /* Above page content; below custom cursor (200000) */
   z-index: 150000;
   pointer-events: none;
 }
@@ -25,11 +140,38 @@
 }
 
 @media print {
-  .post-card--riso-title > .post-header {
+  .post-card--riso > .post-header {
     overflow: hidden;
   }
 
-  .post-card--riso-title > .post-header .poster__title {
+  .post-card--riso > .post-header .poster__title,
+  .post-card--riso > .prose.post-body :is(h2, h3, h4),
+  .post-card--riso .prose-img-iso__caption {
+    filter: none;
+  }
+
+  .post-card--riso .prose-img-iso__frame,
+  html.has-riso .portfolio-image-expand__frame--iso {
+    border-color: var(--on-ground-edge, var(--hair));
+    box-shadow: var(--poster-ink-shadow, var(--chrome-ink-shadow));
+  }
+
+  .post-card--riso .prose-img-iso__frame::before,
+  .post-card--riso .prose-img-iso__frame::after,
+  .post-card--riso .prose .table-wrap::before,
+  .post-card--riso .prose .table-wrap::after,
+  html.has-riso .portfolio-image-expand__frame--iso::before,
+  html.has-riso .portfolio-image-expand__frame--iso::after {
+    content: none;
+    display: none;
+  }
+
+  .post-card--riso .prose .table-wrap {
+    border-color: var(--on-ground-edge, var(--hair));
+    box-shadow: var(--poster-ink-shadow, var(--chrome-ink-shadow));
+  }
+
+  html.has-riso .portfolio-image-expand__frame--iso > .prose-img-iso__caption {
     filter: none;
   }
 
