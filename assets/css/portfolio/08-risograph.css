@@ -8,6 +8,10 @@
   filter: var(--riso-filter-posterTitle, none);
 }
 
+.post-card--riso.landing-name-card > .post-header .poster__title {
+  filter: var(--riso-filter-landingName, none);
+}
+
 .post-card--riso > .prose.post-body :is(h2, h3, h4) {
   filter: var(--riso-filter-heading, none);
 }
@@ -132,11 +136,36 @@ html.has-riso .portfolio-image-expand__frame--iso > .portfolio-image-expand__clo
 }
 
 .riso-site-grain__canvas {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  mix-blend-mode: soft-light;
-  opacity: 0.85;
+}
+
+/* Light flecks show on dark grounds; dark flecks on pale grounds */
+.riso-site-grain__canvas--light {
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
+
+.riso-site-grain__canvas--dark {
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+
+/* Cut grain over expanded photo; frame border + caption keep noise */
+.riso-site-grain--cutout {
+  -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  -webkit-mask-size: 100% 100%, var(--riso-cut-w, 0) var(--riso-cut-h, 0);
+  mask-size: 100% 100%, var(--riso-cut-w, 0) var(--riso-cut-h, 0);
+  -webkit-mask-position: 0 0, var(--riso-cut-x, 0) var(--riso-cut-y, 0);
+  mask-position: 0 0, var(--riso-cut-x, 0) var(--riso-cut-y, 0);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
 }
 
 @media print {
@@ -145,6 +174,7 @@ html.has-riso .portfolio-image-expand__frame--iso > .portfolio-image-expand__clo
   }
 
   .post-card--riso > .post-header .poster__title,
+  .post-card--riso.landing-name-card > .post-header .poster__title,
   .post-card--riso > .prose.post-body :is(h2, h3, h4),
   .post-card--riso .prose-img-iso__caption {
     filter: none;

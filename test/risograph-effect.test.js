@@ -12,6 +12,7 @@ test('resolveRisographConfig defaults include targets', () => {
   const cfg = resolveRisographConfig({});
   assert.equal(cfg.enabled, false);
   assert.equal(cfg.strength, RISOGRAPH_DEFAULTS.strength);
+  assert.equal(cfg.targets.landingName, RISOGRAPH_TARGET_DEFAULTS.landingName);
   assert.equal(cfg.targets.posterTitle, RISOGRAPH_TARGET_DEFAULTS.posterTitle);
   assert.equal(cfg.targets.heading, RISOGRAPH_TARGET_DEFAULTS.heading);
 });
@@ -19,10 +20,11 @@ test('resolveRisographConfig defaults include targets', () => {
 test('resolveRisographConfig merges target intensities', () => {
   const cfg = resolveRisographConfig({
     enabled: true,
-    targets: { heading: 0.2, isoShadow: 0.5 }
+    targets: { heading: 0.2, isoShadow: 0.5, landingName: 1.5 }
   });
   assert.equal(cfg.targets.heading, 0.2);
   assert.equal(cfg.targets.isoShadow, 0.5);
+  assert.equal(cfg.targets.landingName, 1.5);
   assert.equal(cfg.targets.posterTitle, RISOGRAPH_TARGET_DEFAULTS.posterTitle);
 });
 
@@ -36,6 +38,7 @@ test('resolveRisographConfig allows target intensity above 1', () => {
 
 test('applyRisographEffects sets per-target filters and site grain', () => {
   const dom = new JSDOM(`<!doctype html><body>
+    <div id="landing"><article class="post-card landing-name-card"><header class="post-header"><div class="post-title-bounds"><h1 class="poster__title">Name</h1></div></header></article></div>
     <div id="posters"><article class="post-card"><header class="post-header"><div class="post-title-bounds"><h1 class="poster__title">Hi</h1></div></header>
       <div class="prose post-body"><h2>Section</h2></div></article></div>
   </body>`);
@@ -57,6 +60,7 @@ test('applyRisographEffects sets per-target filters and site grain', () => {
         grainAmount: 0.4,
         misregistration: 2,
         targets: {
+          landingName: 0.3,
           posterTitle: 1,
           heading: 0.5,
           imageBorder: 0.2,
@@ -68,10 +72,13 @@ test('applyRisographEffects sets per-target filters and site grain', () => {
     }
   });
 
-  const card = document.querySelector('.post-card');
+  const card = document.querySelector('#posters .post-card');
+  const nameCard = document.querySelector('.landing-name-card');
   assert.ok(card.classList.contains('post-card--riso'));
+  assert.ok(nameCard.classList.contains('post-card--riso'));
   assert.ok(document.documentElement.classList.contains('has-riso'));
   assert.match(card.style.getPropertyValue('--riso-filter-posterTitle'), /url\(#md-riso-fringe-/);
+  assert.match(nameCard.style.getPropertyValue('--riso-filter-landingName'), /url\(#md-riso-fringe-/);
   assert.match(
     document.documentElement.style.getPropertyValue('--riso-filter-imageCaption'),
     /url\(#md-riso-fringe-/

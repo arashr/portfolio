@@ -19,11 +19,12 @@
       "misregistration": 3.0,
       "strength": 0.46,
       "targets": {
+        "landingName": 2,
         "posterTitle": 1,
         "heading": 0.75,
-        "imageBorder": 0.2,
+        "imageBorder": 1,
         "imageCaption": 0.85,
-        "tableBorder": 0.4,
+        "tableBorder": 0.6,
         "isoShadow": 1
       }
     },
