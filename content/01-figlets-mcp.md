@@ -116,13 +116,9 @@ Stopping and asking is part of the product. It is not a failure of automation.
 
 ## Agent Interface
 
-The first interface was scattered across prompts, adapter documentation, and tool descriptions.
+The first interface was scattered across prompts, adapter documentation, and tool descriptions. Testing showed that strong agents could fill in the gaps, while weaker agents dumped JSON, skipped steps, or wrote ad hoc scripts.
 
-Strong agents could fill in the gaps. Weaker agents could not. They dumped JSON, skipped steps, or wrote ad hoc scripts instead of following the intended workflow.
-
-That changed how I understood the interface. It was not only the chat box. It was the full contract between the designer, the agent, and the local tools.
-
-I turned that contract into an Agent Interface exposed through MCP:
+Those failures changed the product direction. The interface could not be only the chat box. It had to define the full contract between the designer, the agent, and the local tools. I encoded that contract as an Agent Interface exposed through MCP:
 
 - `figlets_start` introduces what Figlets can do.
 - `figlets_route_intent` maps a plain request to the right workflow.
@@ -172,6 +168,8 @@ The Figma bridge uses a development import flow because localhost access is not 
 
 I tested Figlets on real Figma files and weaker models on purpose. Strong models can hide bad product design. Weaker models expose it.
 
+External feedback also changed the product. Someone who found Figlets through LinkedIn asked how the documentation workflow handled nested components. That question exposed a gap, so I expanded the workflow, added more decision logic, and defined clearer boundaries in the agent contract.
+
 A few things changed through testing:
 
 - Health checks now include token-gap findings in the first audit.
@@ -185,7 +183,7 @@ More than one hundred automated tests now cover the workflows and their determin
 
 [Figlets MCP](https://github.com/arashr/figlets-mcp) is a working, public product.
 
-It supports more than six AI hosts, includes six core workflows, and has more than one hundred automated tests. Every Figma write is approval-gated.
+is a working, public product. The rebuild expanded it from a Claude-only set of skills to support for more than six AI hosts, with six core workflows and more than one hundred automated tests. Every Figma write remains approval-gated.
 
 Designers can audit a system, plan and approve repairs, build token showcases, document components, run binding QA, and export DESIGN.md through natural language.
 

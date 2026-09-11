@@ -36,7 +36,9 @@ The buttons in our design system were locked to the brand’s primary color. The
 
 The system was based on TokensStudio tokens, which didn’t play nicely with Figma variables. Adding tokens? Nightmare. Any change? Took weeks to reach the code. Applying a theme in Figma? Go make a coffee, or three.
 
-The new brand wasn’t just a visual refresh. It forced us to admit the system was done.
+Company leadership and the Brand team had created the new identity and asked Product Design to bring it into the products. I was one of the main design decision-makers raising that this could not be treated as a visual reskin. I pushed for a deeper rebuild of the system. 
+
+The existing system could not support multiple fonts, irregular surfaces, flexible component styling, accessibility, or timely changes. Even small requests could take weeks to reach code. Expanding the scope required alignment with Design and Product leadership, company executives, product teams, Brand, and the design-system engineers. The resulting direction brought accessibility into the foundations and treated scalability, token structure, and the component workflow as core requirements.
 
 ## The Challenge
 
@@ -59,19 +61,13 @@ The deadline was less than two months. So “build everything” was never an op
 
 We started with a workshop. All product designers in the room, figuring out: what do we actually need in two months, and what can wait?
 
-Example: no date pickers. We don’t even use them in our products.
+The first decision was what not to build. I led the product-design workshop and selected the first-release scope with Engineering. We assessed current product needs, patterns repeated during exploration, likely future reuse, and the engineering effort required. 
+
+The workshop also helped us separate similar-looking patterns with different purposes. Repeated page containers became an “island” component because their structural and interaction role differed from cards. Different teams needed different card layouts, so we created a shared parent structure with flexible sub-layouts and adopted a slot-based architecture before Figma supported component slots.
 
 ![Prioritization](./src/atolls-ds-plan.png "iso Prioritization")
 
-The first decision was what not to build.
-
-I ran a workshop with the product designers to map what our products actually used, which patterns repeated, and what could wait. Date pickers stayed out because none of our products needed them. Building one just to make the library look complete would have wasted time we did not have.
-
-We prioritized the foundations and components that were already appearing across the products: color, typography, grids, dimensions, icons, and the most common interaction patterns.
-
-In parallel, the design engineer and engineers explored how Figma variables would connect to code, and where AI and MCP could make the workflow faster.
-
-That gave us a realistic first release instead of an impressive-looking wishlist.
+Date pickers stayed out because no product needed them. Pagination remained with the single team that required it because there was not enough cross-product demand to justify spending design-system engineering capacity on it. In parallel, the engineers explored how Figma variables would connect to code and where AI and MCP could improve the workflow. This gave us a focused first release based on product evidence rather than library completeness.
 
 ## Proof of Concept
 
@@ -81,21 +77,21 @@ The point was not to make it polished. It was to test the direction immediately 
 
 ![Proof of Concept](./src/atolls-ds-poc.png "iso Proof of Concept")
 
-Initial component drafts were ready within a day or so. That let product designers test the new visual direction while the brand team adjusted the identity for product use and engineering worked on the connection to code.
+Initial component drafts were ready within a day or so, giving Product Design, Brand, and Engineering a shared artifact for making decisions. Brand needed the products to support new palettes, button and container shapes, page structures, and display fonts. The proof of concept exposed inaccessible color combinations and missing digital rules for links, interaction states, elevation, and surfaces.
 
-Instead of waiting for each track to finish, the proof of concept let all of them move together.
+It also made Engineering’s concerns concrete, particularly the cost of irregular shapes, shared component structures, and responsive grids. Together, we created accessible interaction palettes, simplified irregular shapes for the first release, and redefined layout rules for responsive products. The prototype also confirmed patterns such as the island component and helped settle the typography structure, allowing the three tracks to move forward together. 
 
 ## Iteration
 
-Once the direction held up, I moved into the foundations underneath it: color ramps, typography scales, grids, dimensions, accessibility, and the variable structure.
+Once the direction held up, I worked with the design engineer and other product designers to define the foundations through research, experimentation, and repeated architecture discussions. It was a joint decision rather than mine alone.
 
-The biggest architectural decision was separating raw values from brand choices and component meaning:
+Early concepts did not include a primitive layer, and we tested different ways to separate brand choices from semantic meaning. We chose a layered structure because the system needed to support more products and brands without forcing component-level rebuilds: 
 
 ```text
 Primaries → Brand Layer → Semantics → Patterns
 ```
 
-This meant a brand could change at the brand layer without every component needing to be rebuilt. It also kept the number of variables manageable as the system grew.
+The structure was more complex than teams were used to, but it made future brand changes and maintenance more manageable. Design and Engineering were aligned on this direction, so the evidence here is joint decision-making rather than resolving a conflict between them.
 
 With the structure in place, we built the components and gave important patterns their own tokens. States, behavior, and implementation expectations were documented for handoff instead of being left inside the Figma file.
 
@@ -109,7 +105,9 @@ The system supported four products and reached 75% adoption at the point documen
 
 ![Storybook](./src/atolls-ds-storybook.png "iso Storybook")
 
-Everything lived in one central, documented library. We also set up clear channels for feedback and updates because shipping the library was only the beginning. The system needed a way to keep growing without becoming another outdated file.
+Everything lived in one central, documented library, but adoption also required governance. We collected feedback through weekly Brand and Engineering meetings and dedicated Slack channels, and I ran onboarding sessions for front-end engineers. Designers could propose changes based on upcoming product needs, while engineers could raise implementation roadblocks.
+
+I co-led the design-system committee with an engineering manager, supported by the design engineer and design-system team, to review those proposals. We defined a contribution model in which product teams created patterns needed only by their product. When similar needs appeared across teams, ownership moved to the design-system team for system-wide adoption. The rules and ownership were documented in Storybook. This allowed more complex card and page layouts to enter the shared system as cross-product demand emerged.
 
 Updates that previously took weeks could now roll out in as little as one week. With the shared library, documentation, and AI and MCP workflow, developers were able to build features more than 50% faster.
 
