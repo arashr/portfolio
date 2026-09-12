@@ -48,7 +48,9 @@ A razor-thin window for conversion.
 
 ## The Challenge
 
-I led the product design work for a full visual overhaul.
+Senior leadership asked Product Design to modernize an experience that was looking outdated against competitors. I already owned this revenue-critical flow and had evidence from recent conversion experiments, so I proposed using the overhaul to improve the user experience and test long-standing assumptions rather than treating it as a visual reskin.
+
+Protecting conversion was already part of the brief because this was the company’s main revenue-generating flow. Given the scale and risk, preference from a limited group was not strong enough evidence for senior leadership. The Director of Design and other stakeholders approved moving the hypotheses into large-scale behavioral testing after we challenged them in workshops.
 
 The design needed to do three things at once:
 - Feel more modern and easier to scan
@@ -58,6 +60,8 @@ The design needed to do three things at once:
 Those goals did not always point in the same direction. A cleaner design could show fewer offers. A stronger publisher identity could reduce consistency across the platform. A more minimal card could remove the CTA users were already familiar with.
 
 Even a small conversion drop would have had a real revenue impact, so visual preference alone was never going to be enough.
+
+The project involved more than Design and Engineering. Product worked directly with us, while Data provided evidence about the existing flow. SEO needed to protect Google ranking because organic search generated most of the revenue, and other business stakeholders reviewed early prototypes before implementation. Testing competing directions instead of committing to an unproven redesign reduced concern, while the eventual results provided the evidence for the final direction. Product and tribe leadership approved the risk of testing changes to this revenue-critical flow.
 
 ## How We Tackled It
 
@@ -73,15 +77,15 @@ We could not ignore the practical constraints for long. Every card still needed 
 
 Research gave us a clearer hierarchy. Users cared most about the value of the offer and the terms that could make it useless to them, such as “new users only.”
 
-The more interesting questions came from the assumptions built into the old experience:
-- Did showing more deals above the fold really improve conversion?
-- Did an offer need a traditional CTA button to feel clickable?
+Two assumptions had repeatedly surfaced in Product and senior Design discussions: that showing more deals above the fold improved conversion, and that every offer needed a traditional CTA. Blue-sky exploration and internal and external preference tests gave us enough evidence to test alternatives. Competitor analysis and mobile interaction research also suggested that a card could communicate clickability without a button.
 
-We treated those as questions to test, not rules to design around. Some of our concepts removed the CTA entirely and relied on offer prominence, layout, hover feedback, and lighter interaction cues instead.
+These ideas still had to accommodate business constraints. The CTA was repeatedly requested during exploration, so we retained it as one experimental variant rather than accepting it as an untested rule. SEO required descriptions even though our initial interviews did not show that users found them useful. Terms and conditions were legally required in some regions, so the card needed to support them as an optional element.
+
+We also explored larger, less dense cards and different arrangements. Concern about reducing the number of offers above the fold kept some of those directions out of the finalists.
 
 ## Design Iterations and User Testing
 
-We narrowed the exploration down to three main directions. Each one tested how much interaction guidance the card really needed.
+After internal design critiques and discussions with Product and other stakeholders, I selected the three finalists with the Director of Design and senior product managers. We prioritized directions with the strongest qualitative signal, manageable implementation effort, and sufficient compatibility with the existing design system. Each one tested how much interaction guidance the card really needed.
 
 ### 1. Value-forward card
 
@@ -97,11 +101,13 @@ A traditional call-to-action button that kept the interaction pattern users alre
 
 ![Final Test Variants](./src/atolls-conv-variants.png "iso Final Test Variants")
 
-For the buttonless directions, we added hover feedback to make the full card feel interactive. We also tested a grid layout that could fit more offers above the fold without returning to the old visual density.
+Preference tests favored prominent offer values, recognizable labels for qualifying terms, and sometimes less busy layouts. The findings were directional rather than definitive, but they helped us select the finalists. Interviews showed that users struggled to find deal values, scan the cards, and identify relevant terms and conditions.
 
-Tags such as “App Only” and “Students” brought important restrictions forward instead of hiding them inside the description.
+We removed concepts with weak value prominence or unclear information hierarchy before the A/B test. I shaped which information stayed on the cards, brought qualifying terms such as “App Only” and “Students” into the first scan, and refined the hierarchy. I also considered design-system compatibility and used my front-end knowledge to assess implementation effort.
 
-Preference tests and user interviews helped us narrow the directions and catch comprehension issues. We then put the finalists into a large-scale A/B test to see what people actually did.
+For the buttonless directions, we added hover feedback to make the full card feel interactive. We also tested a grid that could fit more offers above the fold without returning to the old visual density.
+
+I designed the A/B test with my product manager. I helped select the variants, testing method, device segmentation, and metric approach. Business had already defined CTR as the gate metric, while the Product team selected E2V after discussions with me. E2V acted as a guardrail to check that additional clicks also produced value reflected in basket size. The product manager selected the markets and publishers, while I contributed to the device segmentation.
 
 ## What We Learned
 
@@ -124,11 +130,13 @@ The result was not simply “remove the button.” It was a better understanding
 
 ## Iteration and Personalization
 
-The overall winner did not need to become a rigid rule.
+The overall winner did not become a universal rule. I raised market-specific treatment with Product and discussed its technical feasibility with Engineering because this could not be a design-only decision. The Product team agreed to preserve the traditional CTA in Germany, where the evidence supported it.
 
-We designed the card structure so the interaction cue, layout, and visual treatment could be adapted for different publishers and markets. That meant we could preserve a traditional CTA where the evidence supported it, while using the lighter arrow treatment elsewhere.
+The results also changed the rollout plan. We adopted regional and gradual rollouts in untested markets rather than assuming the overall winner would work everywhere. The flexible card structure became the starting point for a broader design architecture and a baseline for more detailed experiments.
 
-The same structure also gave each publisher room to feel like itself without requiring a separate product design.
+Publishers did not participate directly in the design decisions. Before this project, the same card design was used across publishers and markets. The configurable architecture introduced the ability to adapt treatments for different contexts while preserving a shared structure.
+
+It also solved a separate product problem. Different use cases had previously required separately designed and implemented cards. They could now use the same parent card with different configurations, reducing repeated design and engineering work.
 
 ![Brand Customization](./src/atolls-conv-customization.png "iso Brand Customization")
 
