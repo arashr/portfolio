@@ -181,9 +181,7 @@ More than one hundred automated tests now cover the workflows and their determin
 
 ## Outcome
 
-[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working, public product.
-
-is a working, public product. The rebuild expanded it from a Claude-only set of skills to support for more than six AI hosts, with six core workflows and more than one hundred automated tests. Every Figma write remains approval-gated.
+[Figlets MCP](https://github.com/arashr/figlets-mcp) is a working, public product. The rebuild expanded it from a Claude-only set of skills to support for more than six AI hosts, with six core workflows and more than one hundred automated tests. Every Figma write remains approval-gated.
 
 Designers can audit a system, plan and approve repairs, build token showcases, document components, run binding QA, and export DESIGN.md through natural language.
 

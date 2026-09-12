@@ -36,7 +36,7 @@ The buttons in our design system were locked to the brand’s primary color. The
 
 The system was based on TokensStudio tokens, which didn’t play nicely with Figma variables. Adding tokens? Nightmare. Any change? Took weeks to reach the code. Applying a theme in Figma? Go make a coffee, or three.
 
-Company leadership and the Brand team had created the new identity and asked Product Design to bring it into the products. I was one of the main design decision-makers raising that this could not be treated as a visual reskin. I pushed for a deeper rebuild of the system. 
+Company leadership and the Brand team had created the new identity and asked Product Design to bring it into the products. I was one of the main design decision-makers who showed that this could not be treated as a visual reskin and pushed for a deeper rebuild of the system.
 
 The existing system could not support multiple fonts, irregular surfaces, flexible component styling, accessibility, or timely changes. Even small requests could take weeks to reach code. Expanding the scope required alignment with Design and Product leadership, company executives, product teams, Brand, and the design-system engineers. The resulting direction brought accessibility into the foundations and treated scalability, token structure, and the component workflow as core requirements.
 
@@ -91,7 +91,7 @@ Early concepts did not include a primitive layer, and we tested different ways t
 Primaries → Brand Layer → Semantics → Patterns
 ```
 
-The structure was more complex than teams were used to, but it made future brand changes and maintenance more manageable. Design and Engineering were aligned on this direction, so the evidence here is joint decision-making rather than resolving a conflict between them.
+The structure was more complex than teams were used to, but it made future brand changes and maintenance more manageable. Because Design and Engineering developed the direction together, the Figma and code models could follow the same logic.
 
 With the structure in place, we built the components and gave important patterns their own tokens. States, behavior, and implementation expectations were documented for handoff instead of being left inside the Figma file.
 

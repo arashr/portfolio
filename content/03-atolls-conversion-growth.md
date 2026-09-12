@@ -50,7 +50,7 @@ A razor-thin window for conversion.
 
 Senior leadership asked Product Design to modernize an experience that was looking outdated against competitors. I already owned this revenue-critical flow and had evidence from recent conversion experiments, so I proposed using the overhaul to improve the user experience and test long-standing assumptions rather than treating it as a visual reskin.
 
-Protecting conversion was already part of the brief because this was the company’s main revenue-generating flow. Given the scale and risk, preference from a limited group was not strong enough evidence for senior leadership. The Director of Design and other stakeholders approved moving the hypotheses into large-scale behavioral testing after we challenged them in workshops.
+Protecting conversion was already part of the brief because this was the company’s main revenue-generating flow. Given the scale and risk, limited-sample preference testing was not strong enough evidence for senior leadership. After we challenged the assumptions in workshops, the Director of Design and other stakeholders approved moving the hypotheses into large-scale behavioral testing.
 
 The design needed to do three things at once:
 - Feel more modern and easier to scan
@@ -115,7 +115,7 @@ Across more than 364,000 sessions, every new variant outperformed the old design
 
 The strongest overall result came from the grid layout with the arrow cue:
 - 8% CTR uplift on the primary metric
-- 10% E2V uplift on our internal order-value metric
+- 10% E2V uplift on the guardrail metric
 
 ![Grid Layout](./src/atolls-conv-grid.png "iso Grid Layout")
 
@@ -136,7 +136,7 @@ The results also changed the rollout plan. We adopted regional and gradual rollo
 
 Publishers did not participate directly in the design decisions. Before this project, the same card design was used across publishers and markets. The configurable architecture introduced the ability to adapt treatments for different contexts while preserving a shared structure.
 
-It also solved a separate product problem. Different use cases had previously required separately designed and implemented cards. They could now use the same parent card with different configurations, reducing repeated design and engineering work.
+It also solved a separate product problem. Different use cases had previously required separately designed and implemented cards. They could now use the same parent card with different configurations, reducing repeated design and engineering work. Other feature teams later adopted this architecture across additional flows and pages.
 
 ![Brand Customization](./src/atolls-conv-customization.png "iso Brand Customization")
 
