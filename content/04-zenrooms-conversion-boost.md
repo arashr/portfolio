@@ -13,9 +13,9 @@ ZENRooms was a budget and mid-range hospitality company operating across Southea
 
 The booking experience had grown inconsistent, difficult to use on touch devices, and full of friction. I redesigned the core journey without adding major new features.
 
-| Headline conversion uplift | Sessions tested | Platforms |
+| Online payment uplift | Sessions tested | Tested surfaces |
 |---:|---:|---:|
-| 16% | 10K+ | 3 |
+| 16% | 15K+ | 3 |
 
 <br>
 
@@ -27,7 +27,9 @@ This was my first major project at ZENRooms. I was the sole product designer, wo
 
 I handled discovery, analysis, design recommendations, user flows, wireframes, interface design, the basic design system, and developer handoff.
 
-The Product Manager owned the product direction and final decisions. My responsibility was to find the experience problems, propose solutions, and design the overhaul.
+The Product Manager owned the final product decisions. The original brief did not specify where the redesign should begin, so I brought my findings and recommendations into the planning. Together, we chose checkout as the first phase because it offered the highest expected impact for the lowest effort.
+
+My analysis shaped the design direction, test approach, project sequence and next steps.
 
 ## The Problem
 
@@ -59,6 +61,9 @@ I started with the evidence we already had:
 - Product analytics
 - Previous A/B test results
 - Competitive analysis
+- Customer-support tickets
+
+I had a direct line to Customer Support, and their tickets provided additional evidence of checkout failures. 
 
 The problems were visible across the journey.
 
@@ -72,19 +77,17 @@ The biggest problem was checkout.
 |---:|---:|---:|---:|
 | ![Unclickable elements looking like buttons](src/zen-web-heat1.png "Unclickable elements looking like buttons")<br>![App bar blocking navigation](src/zen-web-heat2.png "App bar blocking navigation") | ![Scattered information and weak hierarchy](src/zen-web-old-list.png "Scattered information and weak hierarchy") | ![Existing hotel details experience](src/zen-web-old-details.png "Existing hotel details experience") | ![Checkout failures and dead ends](src/zen-web-failed.png "Checkout failures and dead ends") |
 
-Checkout was where we were losing payments. It was also the most fragile part of the product and the place where focused changes had the best chance of producing a meaningful result.
+Analytics showed many checkout errors without explaining their cause, so I examined screen recordings and heatmaps. Funnel analysis showed substantial drop-off during card-details entry and suggested that users were not returning to search after failed bookings.
 
-So I recommended fixing it first.
+Recordings confirmed a critical recovery problem. Even a simple CVC error could send users to a failure page with no route back. Because checkout directly affected revenue and was comparatively contained to fix, it offered the best impact-to-effort ratio. I recommended fixing it first, and the Product Manager approved the revised sequence.
 
 ## Fixing Checkout First
 
-The existing checkout was split into too many steps.
+Screen recordings suggested that the number of checkout steps caused frustration, although the signal still needed large-scale testing. The standalone payment-selection page was already visually simple, so simplifying the page itself would not solve the problem. Supporting many payment options was also an unavoidable business requirement.
 
-Payment selection had its own separate page. Users had to make that decision before continuing, even though it belonged naturally with the guest and payment details.
+I moved payment selection to the end of the guest-details page. This followed a familiar ecommerce and booking pattern, signaled that data entry was nearly complete and prepared users for the payment-details step.
 
-I moved payment selection to the end of the guest-details page. It became the action that moved the user forward, with a clearer hierarchy and fewer steps.
-
-The larger problem was error handling.
+Error recovery was the highest-priority design problem, followed by clarity and ease of use. Inline card-detail validation was the most technically challenging part of the revised flow.
 
 Users could submit their card details, receive a payment error, and find themselves trapped. They could not return to correct the details. In some cases, they could not get back to the same room and try another payment method.
 
@@ -100,11 +103,13 @@ The goal was simple: an error should create a recovery path, not a dead end.
 
 | Payment Method | Card Details | Verification | Error State |
 |---|---|---|---|
-| ![Payment Method](src/zen/zen-web-mobile-checkout.svg "Payment Method") | ![Card Details](src/zen/zen-web-mobile-card.svg "Card details") | ![Verification](src/zen/zen-web-mobile-verify.svg "Verificaiton") | ![Error State](src/zen/zen-web-mobile-failed.svg "Error State") |
+| ![Payment Method](src/zen/zen-web-mobile-checkout.svg "Payment Method") | ![Card Details](src/zen/zen-web-mobile-card.svg "Card details") | ![Verification](src/zen/zen-web-mobile-verify.svg "Verification") | ![Error State](src/zen/zen-web-mobile-failed.svg "Error State") |
 
 ## Testing Phase 1: Checkout
 
-We implemented and tested checkout before expanding the redesign to the rest of the journey.
+I designed the A/B test after working with the Product Manager to understand the key business metrics and propose the test scope. The Product Manager raised the difficulty of testing too many simultaneous changes, so we separated checkout from the upstream journey. 
+
+Exploration of search results and hotel details continued without waiting for a Phase 1 threshold. We ran Phase 2 afterward so the two tests would not influence each other.
 
 The A/B test showed improvements at each major conversion point:
 
@@ -114,7 +119,7 @@ The A/B test showed improvements at each major conversion point:
 | Successful online payments | **16.55% uplift** |
 | Pay-at-hotel bookings | **20.14% uplift** |
 
-The results confirmed that the fundamental flow problems were worth fixing. We could then move upstream to search results and hotel details.
+The results showed that fixing the core flow could materially improve conversion and gave us the confidence to move upstream to search results and hotel details.
 
 ## Improving Discovery and Navigation
 
@@ -137,21 +142,11 @@ The product contained a lot of information. Removing all of it was not an option
 
 ## Working Through the Structure
 
-I used wireframes to work through the hierarchy and flow before moving into detailed interface design.
-
-They helped me:
-
-- Group related information
-- Remove unnecessary clutter
-- Place actions where users needed them
-- Make navigation clearer
-- Communicate the proposed structure to the Product Manager and engineers
+I used wireframes to group related information, remove clutter, clarify navigation and align the proposed structure with the Product Manager and engineers before moving into detailed interface design.
 
 | Search results | Hotel details | Room grouping |
 |---:|---:|---:|
 | ![Search results wireframe](src/zen-web-wireframe1.png "Search results wireframe") | ![Hotel details wireframe](src/zen-web-wireframe2.png "Hotel details wireframe") | ![Room grouping wireframe](src/zen-web-wireframe3.png "Room grouping wireframe") |
-
-The wireframes gave us something concrete to discuss before time was spent on polished screens.
 
 ## Creating a Basic Design System
 
@@ -159,7 +154,7 @@ There was no established visual language when I joined.
 
 Components were created as they were needed, often without clear design instructions. Developers sometimes had to decide how a component should look or behave during implementation.
 
-I created a basic design system on my own initiative.
+I built a basic design system as part of the redesign. The prototypes made its consistency and scalability benefits clear to the Product Manager and engineers.
 
 It gave the team:
 
@@ -169,11 +164,13 @@ It gave the team:
 - Better handoff documentation
 - A common reference for design and engineering
 
+We added components only when the product required them, allowing the system to grow without turning it into a speculative library.
+
 ![Interface guidelines](src/zen-web-ds1.png "iso Interface guidelines for design and engineering")
 
 ![Reusable components](src/zen-web-ds2.png "iso Reusable components used across the booking journey")
 
-The system made handoffs easier and implementation faster. It also became the established visual language for the product after the redesign.
+The system made handoffs easier and implementation faster. I established it as the product’s visual language, and it later informed the native app design, including several components planned for the shared React Native library with platform-specific exceptions.
 
 ## Designing Across Three Surfaces
 
@@ -210,7 +207,7 @@ The improvement continued through the later stages of the tested journey:
 
 ## Outcome
 
-The concise headline for the project is a **16% conversion uplift across more than 10,000 tested sessions**.
+The redesign increased successful online payments by 16%. Testing covered more than 15,000 sessions across desktop, mobile web and the web-view app.
 
 The detailed tests also showed improvements at specific points across checkout, search, hotel details, online payment, and pay-at-hotel booking.
 
