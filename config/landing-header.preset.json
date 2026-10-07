@@ -14,7 +14,7 @@
       "layout": {
         "titleColumnSpan": 12,
         "copyColumnSpan": 12,
-        "minHeight": "66vh"
+        "minHeight": "80dvh"
       },
       "glyph": {
         "colors": [

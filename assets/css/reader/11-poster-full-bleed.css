@@ -84,7 +84,7 @@
   align-content: start;
   width: 100%;
   max-width: none;
-  min-height: min(30dvh, 20rem);
+  min-height: 80dvh;
   margin: 0;
   --poster-pad-top-min-modules: 2;
   --poster-pad-top-max-modules: 3;
@@ -103,7 +103,7 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: stretch;
-  min-height: var(--landing-header-min-height, 66vh);
+  min-height: var(--landing-header-min-height, 80dvh);
   --poster-title-columns: var(--landing-header-title-columns, 1 / span 9);
   --poster-copy-columns: var(--landing-header-copy-columns, 1 / span 5);
 }
@@ -295,11 +295,11 @@
   }
 
   #landing-posters > .post-card-wrap:not(.reader-more-cases-wrap) > .post-card {
-    min-height: min(28dvh, 18rem);
+    min-height: 80dvh;
   }
 
   .page-landing #landing-name > .post-card.landing-name-card {
-    min-height: var(--landing-header-min-height, 66vh);
+    min-height: var(--landing-header-min-height, 80dvh);
     justify-content: flex-end;
   }
 
