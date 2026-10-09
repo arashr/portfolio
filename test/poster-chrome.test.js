@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { groundForSlug } from '../lib/grounds.js';
-import { titleFaceForIndex } from '../lib/title-faces.js';
-import { setGalleryConfig } from '../lib/gallery-config.js';
+import { getTitleFaces, titleFaceForIndex } from '../lib/title-faces.js';
+import { fontsHrefFromConfig, setGalleryConfig } from '../lib/gallery-config.js';
 
 test('groundForSlug avoids immediate repeat in sequence', () => {
   const slugs = ['atolls-design-system-case-study', 'zenrooms-app'];
@@ -62,4 +62,19 @@ test('titleFaceForIndex avoids immediate repeat when index maps to same face', (
   const first = titleFaceForIndex(0);
   const second = titleFaceForIndex(faces, first.id);
   assert.notEqual(first.id, second.id);
+});
+
+test('getTitleFaces skips faces with enabled:false', () => {
+  setGalleryConfig({
+    fonts: {
+      titleFaces: [
+        { id: 'space-grotesk', google: 'Space+Grotesk' },
+        { id: 'ultra', enabled: false, google: 'Ultra' },
+        { id: 'anton', google: 'Anton' }
+      ]
+    }
+  });
+  const ids = getTitleFaces().map((f) => f.id);
+  assert.deepEqual(ids, ['space-grotesk', 'anton']);
+  assert.doesNotMatch(fontsHrefFromConfig(), /Ultra/);
 });

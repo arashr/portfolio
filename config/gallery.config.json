@@ -474,6 +474,7 @@
       },
       {
         "id": "ultra",
+        "enabled": false,
         "google": "Ultra",
         "lineHeight": "1.02",
         "letterSpacing": "-0.01em",

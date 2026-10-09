@@ -91,7 +91,7 @@
 }
 .prose h2,
 .prose h3 {
-  font-family: Ultra, serif;
+  font-family: 'Archivo Black', Georgia, serif;
   color: var(--red);
   line-height: 1.1;
 }
