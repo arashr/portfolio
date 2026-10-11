@@ -1,0 +1,16 @@
+/* Match iso caption badge: --on-ground-edge fill, white type */
+
+::selection,
+*::selection {
+  background-color: var(--on-ground-edge, #000);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  text-shadow: none;
+}
+
+::-moz-selection,
+*::-moz-selection {
+  background-color: var(--on-ground-edge, #000);
+  color: #fff;
+  text-shadow: none;
+}

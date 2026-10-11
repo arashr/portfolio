@@ -14,10 +14,12 @@
 }
 
 .custom-cursor {
-  --cursor-ease-expand: ease-out;
+  /* Expand: slow start → snap finish (hairline → button) */
+  --cursor-ease-expand: cubic-bezier(0.65, 0.05, 0.9, 0.35);
   --cursor-ease-collapse: cubic-bezier(0.34, 1.45, 0.64, 1);
   --cursor-ease-active: var(--cursor-ease-expand);
   --cursor-duration: 0.2s;
+  --cursor-duration-expand: 0.34s;
   --cursor-stagger: 50ms;
   --cursor-link-size: 40px;
   --cursor-link-dot: 8px;
@@ -52,6 +54,9 @@
   transition:
     width var(--cursor-duration) var(--cursor-ease-active),
     height var(--cursor-duration) var(--cursor-ease-active),
+    min-width var(--cursor-duration) var(--cursor-ease-active),
+    min-height var(--cursor-duration) var(--cursor-ease-active),
+    max-width var(--cursor-duration) var(--cursor-ease-active),
     padding var(--cursor-duration) var(--cursor-ease-active),
     gap var(--cursor-duration) var(--cursor-ease-active),
     border-radius var(--cursor-duration) var(--cursor-ease-active),
@@ -99,6 +104,8 @@
 
 .custom-cursor--default {
   --cursor-ease-active: var(--cursor-ease-collapse);
+  /* Invert against the surface so the hairline reads on light and dark grounds */
+  mix-blend-mode: difference;
 }
 
 .custom-cursor--cta,
@@ -106,23 +113,32 @@
 .custom-cursor--close,
 .custom-cursor--link {
   --cursor-ease-active: var(--cursor-ease-expand);
+  --cursor-duration: var(--cursor-duration-expand);
 }
 
+/* Pill *is* the hairline — grows into the button rectangle on expand */
 .custom-cursor--default .custom-cursor__pill {
-  width: 16px;
-  height: 16px;
+  width: 1px;
+  height: 22px;
+  min-width: 1px;
+  min-height: 22px;
+  max-width: 1px;
   padding: 0;
   gap: 0;
-  border-radius: 24px;
-  background: transparent;
+  border-radius: 0;
+  background: #fff;
   border-color: transparent;
 }
 
 .custom-cursor--default .custom-cursor__dot {
-  width: 16px;
-  height: 16px;
-  opacity: 1;
-  transform: none;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.custom-cursor--default .custom-cursor__dot::after {
+  content: none;
 }
 
 .custom-cursor--default .custom-cursor__ring {
@@ -152,23 +168,30 @@
   transform: scale(1);
 }
 
+/* Explicit width/height so the pill can tween from 1×22px → rectangle */
 .custom-cursor--cta .custom-cursor__pill,
 .custom-cursor--plus .custom-cursor__pill,
 .custom-cursor--close .custom-cursor__pill {
-  gap: 8px;
-  padding: 16px 32px 16px 24px;
+  height: 48px;
   min-height: 48px;
+  max-width: 20rem;
+  gap: 8px;
   border-radius: 0;
+  background: #000;
+  border-color: transparent;
 }
 
 .custom-cursor--cta .custom-cursor__pill {
+  width: 7.5rem;
   min-width: 7.5rem;
+  padding: 0 32px 0 24px;
 }
 
 .custom-cursor--plus .custom-cursor__pill,
 .custom-cursor--close .custom-cursor__pill {
+  width: 3.75rem;
   min-width: 3.75rem;
-  padding-inline: 24px 28px;
+  padding: 0 28px 0 24px;
 }
 
 .custom-cursor__main {
@@ -177,7 +200,7 @@
   flex: 0 0 auto;
   min-width: 0;
   transition:
-    opacity 0.28s var(--cursor-ease-active),
+    opacity var(--cursor-duration) var(--cursor-ease-active),
     transform var(--cursor-duration) var(--cursor-ease-active);
 }
 
