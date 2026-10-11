@@ -334,6 +334,10 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
 .landing-foot {
   position: relative;
   z-index: 9991;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
   width: 100%;
   max-width: none;
   margin: 0 auto;
@@ -342,6 +346,11 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
   color: var(--ink-mute);
   font-size: 0.75rem;
   letter-spacing: 0.04em;
+}
+
+.landing-foot__copy {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .landing-foot__lead {
@@ -356,4 +365,51 @@ button.mini-poster > *:not(.post-card__glyph-layer) {
 .landing-foot code {
   font-family: inherit;
   font-size: inherit;
+}
+
+/* Packaging-style printer’s marks — registration target + CMYK bar */
+.landing-foot__register {
+  flex: 0 0 auto;
+  color: var(--chrome-ink, var(--ink));
+  line-height: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+.landing-foot__register-svg {
+  display: block;
+  width: 8.25rem;
+  height: auto;
+  overflow: visible;
+}
+
+.landing-foot__swatch {
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.landing-foot__swatch--c {
+  fill: #00a3e0;
+}
+
+.landing-foot__swatch--m {
+  fill: #ec008c;
+}
+
+.landing-foot__swatch--y {
+  fill: #fff200;
+}
+
+.landing-foot__swatch--k {
+  fill: #0c0e10;
+}
+
+@media (max-width: 40rem) {
+  .landing-foot {
+    align-items: flex-start;
+  }
+
+  .landing-foot__register-svg {
+    width: 6.75rem;
+  }
 }

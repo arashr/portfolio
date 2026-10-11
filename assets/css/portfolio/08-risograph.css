@@ -128,9 +128,10 @@ html.has-riso .portfolio-image-expand__frame--iso > .portfolio-image-expand__clo
   z-index: 1;
 }
 
-/* Cursor + back-to-top CTA — same magenta/cyan fringe as page misprint */
+/* Cursor + chrome CTAs / printer marks — same magenta/cyan fringe as page misprint */
 html.has-riso .custom-cursor__pill,
-html.has-riso .back-to-top {
+html.has-riso .back-to-top,
+html.has-riso .landing-foot__register {
   overflow: visible;
   filter: var(--riso-filter-cursor, none);
 }
@@ -217,7 +218,8 @@ html.has-riso .back-to-top {
   }
 
   html.has-riso .custom-cursor__pill,
-  html.has-riso .back-to-top {
+  html.has-riso .back-to-top,
+  html.has-riso .landing-foot__register {
     filter: none;
   }
 }
