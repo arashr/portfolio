@@ -66,7 +66,8 @@ test('applyRisographEffects sets per-target filters and site grain', () => {
           imageBorder: 0.2,
           imageCaption: 0.9,
           tableBorder: 0,
-          isoShadow: 3
+          isoShadow: 3,
+          cursor: 1
         }
       }
     }
@@ -85,6 +86,10 @@ test('applyRisographEffects sets per-target filters and site grain', () => {
   );
   assert.match(
     document.documentElement.style.getPropertyValue('--riso-filter-imageBorder'),
+    /url\(#md-riso-fringe-/
+  );
+  assert.match(
+    document.documentElement.style.getPropertyValue('--riso-filter-cursor'),
     /url\(#md-riso-fringe-/
   );
   assert.ok(document.getElementById('md-riso-site-grain'));

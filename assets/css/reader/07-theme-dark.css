@@ -135,9 +135,10 @@ html[data-theme='dark'] .toc-item a.is-active {
 }
 
 html[data-theme='dark'] .back-to-top {
-  background: var(--surface);
-  color: var(--chrome-ink);
-  border-color: var(--chrome-stroke);
+  background: #000;
+  color: #fff;
+  border: none;
+  box-shadow: none;
 }
 
 /* Collection hero: follow page chrome in dark mode (no ground background) */

@@ -110,10 +110,16 @@
 
 .custom-cursor--cta,
 .custom-cursor--plus,
-.custom-cursor--close,
-.custom-cursor--link {
+.custom-cursor--close {
   --cursor-ease-active: var(--cursor-ease-expand);
   --cursor-duration: var(--cursor-duration-expand);
+}
+
+.custom-cursor--link {
+  --cursor-ease-active: var(--cursor-ease-expand);
+  --cursor-duration: 0.22s;
+  /* Set from JS: TOC hover text / prose link-hover chip / ink */
+  --cursor-link-ink: var(--red);
 }
 
 /* Pill *is* the hairline — grows into the button rectangle on expand */
@@ -146,24 +152,42 @@
   transform: scale(0.55);
 }
 
+/* Link: snap the pill box (no white hairline→rect morph); ring/dot ease in */
 .custom-cursor--link .custom-cursor__pill {
   width: var(--cursor-link-size);
   height: var(--cursor-link-size);
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
   padding: 0;
   gap: 0;
   border-radius: 50%;
   background: transparent;
   border-color: transparent;
+  transition:
+    background-color 0s,
+    width 0s,
+    height 0s,
+    min-width 0s,
+    min-height 0s,
+    max-width 0s,
+    padding 0s,
+    gap 0s,
+    border-radius 0s,
+    border-color 0s;
 }
 
 .custom-cursor--link .custom-cursor__dot {
   width: var(--cursor-link-dot);
   height: var(--cursor-link-dot);
+  border-radius: 50%;
+  background: var(--cursor-link-ink, var(--red));
   opacity: 1;
   transform: none;
 }
 
 .custom-cursor--link .custom-cursor__ring {
+  color: var(--cursor-link-ink, var(--red));
   opacity: 1;
   transform: scale(1);
 }

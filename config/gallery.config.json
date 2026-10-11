@@ -25,7 +25,8 @@
         "imageBorder": 1,
         "imageCaption": 0.85,
         "tableBorder": 0.6,
-        "isoShadow": 1
+        "isoShadow": 1,
+        "cursor": 1
       }
     },
     "layout": {

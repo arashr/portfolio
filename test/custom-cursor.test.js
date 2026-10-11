@@ -1,7 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
-import { resolveCursorState, ctaKeyForTarget, nextCtaTiltDegrees, CTA_TILT_ANGLES } from '../lib/custom-cursor.js';
+import {
+  resolveCursorState,
+  resolveLinkCursorInk,
+  ctaKeyForTarget,
+  nextCtaTiltDegrees,
+  CTA_TILT_ANGLES
+} from '../lib/custom-cursor.js';
 
 /** @param {string} html */
 function stateAt(html, selector) {
@@ -65,17 +71,10 @@ test('resolveCursorState returns link on prose inline and table links', () => {
   );
 });
 
-test('resolveCursorState returns default on hash anchors', () => {
+test('resolveCursorState returns default on hash anchors outside the TOC', () => {
   assert.equal(
     stateAt(
       '<div id="posters"><div class="post-card-wrap"><article class="post-card"><div class="prose"><a href="#intro">Intro</a></div></article></div></div>',
-      'a'
-    ),
-    'default'
-  );
-  assert.equal(
-    stateAt(
-      '<nav class="toc-panel"><a href="#intro" data-toc-link>Intro</a></nav>',
       'a'
     ),
     'default'
@@ -87,6 +86,40 @@ test('resolveCursorState returns default on hash anchors', () => {
     ),
     'default'
   );
+});
+
+test('resolveCursorState returns link on contents menu jumps', () => {
+  assert.equal(
+    stateAt(
+      '<nav class="toc-panel"><a href="#intro" data-toc-link>Intro</a></nav>',
+      'a'
+    ),
+    'link'
+  );
+  assert.equal(
+    stateAt(
+      '<aside class="reader-toc-rail"><div class="toc-item"><a href="#outcome">Outcome</a></div></aside>',
+      'a'
+    ),
+    'link'
+  );
+});
+
+test('resolveLinkCursorInk prefers TOC hover text on contents links', () => {
+  const dom = new JSDOM(
+    `<nav class="toc-panel ground-indigo" style="--on-ground-toc-hover-text:#fae44f;--on-ground-link-hover-bg:#ffffff">
+      <a href="#intro" data-toc-link>Intro</a>
+    </nav>`
+  );
+  globalThis.getComputedStyle = dom.window.getComputedStyle;
+  const a = dom.window.document.querySelector('a');
+  assert.equal(resolveLinkCursorInk(a), '#fae44f');
+  delete globalThis.getComputedStyle;
+});
+
+test('resolveLinkCursorInk is white on the back-to-top button', () => {
+  const dom = new JSDOM('<button type="button" id="back-to-top" class="back-to-top">↑</button>');
+  assert.equal(resolveLinkCursorInk(dom.window.document.querySelector('button')), '#fff');
 });
 
 test('resolveCursorState returns cta on reader more-case picks', () => {
