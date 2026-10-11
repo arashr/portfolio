@@ -50,6 +50,16 @@ test('bleedExitDistance respects minimum exit height and viewport cap', () => {
   assert.equal(late, 80);
 });
 
+test('bleedExitDistance at progress 1 stays fully exited (no snap-back at section top)', () => {
+  // When the next section lands at scrollY = childTop, progress clamps to 1.
+  // Exit must remain at full travel so the previous title does not reappear.
+  assert.equal(sectionBoundaryProgress(300, 100, 300), 1);
+  const visibleStrip = 48;
+  const atBoundary = bleedExitDistance(1, 800, 0.08, 'easeIn', visibleStrip, 0.1);
+  assert.equal(atBoundary, Math.max(0.08 * 800, visibleStrip));
+  assert.ok(atBoundary >= visibleStrip);
+});
+
 test('resolveScrollParallaxConfig clamps ratios and keeps defaults', () => {
   const cfg = resolveScrollParallaxConfig({
     titleRatio: 2,
